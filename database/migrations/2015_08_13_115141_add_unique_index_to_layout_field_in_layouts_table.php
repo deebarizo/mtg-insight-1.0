@@ -16,7 +16,6 @@ class AddUniqueIndexToLayoutFieldInLayoutsTable extends Migration
         { 
             $table->unique('layout');
         });
-
     }
 
     /**
