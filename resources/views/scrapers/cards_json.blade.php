@@ -7,13 +7,24 @@
 
 			<h3>Cards JSON</h3>
 
-			<hr>
+			@if(Session::has('message'))
+				<div class="alert alert-{{ Session::get('alert') }} fade in" role="alert" style="width: 50%">
+					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+					{{ Session::get('message') }}
+			    </div>
+			@endif
 
-			{!! Form::open() !!}
+			{!! Form::open(array('url' => 'scrapers/store_cards_json', 'files' => true)) !!}
 				<div class="form-group">
 					{!! Form::label('set', 'Set') !!}
-					{!! Form::select('set', array('L' => 'Large', 'S' => 'Small'), null, 
-									['class' => 'form-control', 'style' => 'width: 30%']) !!}
+					{!! Form::select('set', $sets, null, 
+									['class' => 'form-control', 'style' => 'width: 30%; margin-bottom: 20px']) !!}
+
+					{!! Form::label('json_file', 'JSON File') !!}
+					{!! Form::file('json_file') !!}
+
+					{!! Form::submit('Submit', 
+									['class' => 'form-control btn btn-primary', 'style' => 'width: 15%; margin-top: 40px']) !!}
 				</div>
 			{!! Form::close() !!}
 		</div>
