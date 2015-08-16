@@ -47,7 +47,7 @@ class Scraper {
 
 		$set['id'] = Set::where('code', $set['code'])->pluck('id'); 
 
-		$setCardExists = SetCard::where('set_id', $set['code'])->first();
+		$setCardExists = SetCard::where('set_id', $set['id'])->first();
 
 		if ($setCardExists) {
 
@@ -124,10 +124,30 @@ class Scraper {
 		$card = new Card;
 
 		$card->name = $input['name'];
-		$card->mana_cost = $input['manaCost'];
-		$card->cmc = $input['cmc'];
+
+		if (isset($input['manaCost'])) {
+			$manaCost = $input['manaCost'];
+		} else {
+			$manaCost = null;
+		} 		
+		$card->mana_cost = $manaCost;
+
+		if (isset($input['cmc'])) {
+			$cmc = $input['cmc'];
+		} else {
+			$cmc = 0;
+		} 
+		$card->cmc = $cmc;
+
 		$card->middle_text = $input['type'];
-		$card->rules_text = $input['text'];
+
+		if (isset($input['text'])) {
+			$text = $input['text'];
+		} else {
+			$text = '';
+		} 
+		$card->rules_text = $text;
+
 		$card->layout_id = Layout::where('layout', $input['layout'])->pluck('id');
 
 		$card->save();
@@ -193,6 +213,19 @@ class Scraper {
 				$cardSupertype->supertype = $supertype;
 
 				$cardSupertype->save();
+			}
+		}	
+
+		if (isset($input['types'])) {
+			
+			foreach ($input['types'] as $type) {
+				
+				$cardType = new CardType;
+
+				$cardType->card_id = $cardId;
+				$cardType->type = $type;
+
+				$cardType->save();
 			}
 		}		
 
