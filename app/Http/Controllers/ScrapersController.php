@@ -18,9 +18,7 @@ class ScrapersController extends Controller {
 	public function cardsJson() {
 		$titleTag = 'Cards JSON - Scrapers | ';
 
-		$sets = Set::orderBy('id')->lists('name', 'name')->toArray();
-
-		return view('scrapers/cards_json', compact('titleTag', 'sets'));
+		return view('scrapers/cards_json', compact('titleTag'));
 	}
 
 	public function storeCardsJson(Request $request) {
@@ -30,7 +28,7 @@ class ScrapersController extends Controller {
 
 		$csvFile = $scraper->getCsvFile($input);
 
-		$scraper->storeCsvFile($input['set'], $csvFile);
+		$scraper->storeCsvFile($csvFile);
 
 		$message = 'Success!';
         Session::flash('alert', 'info');

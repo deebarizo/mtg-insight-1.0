@@ -29,21 +29,7 @@ class Scraper {
 		$jsonString = file_get_contents($csvFile);
 		$set = json_decode($jsonString, true);
 
-
-
-		ddAll($json);
-
-		if (($handle = fopen($csvFile, 'r')) !== false) {
-			$row = 0;
-
-			while (($csvData = fgetcsv($handle, 5000, ',')) !== false) {
-				prf($csvData);
-
-				$row++;
-			}
-		}
-
-		exit();
+		ddAll($set);
 	}
 
 }

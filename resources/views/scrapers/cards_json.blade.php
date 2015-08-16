@@ -16,15 +16,11 @@
 
 			{!! Form::open(array('url' => 'scrapers/store_cards_json', 'files' => true)) !!}
 				<div class="form-group">
-					{!! Form::label('set', 'Set') !!}
-					{!! Form::select('set', $sets, null, 
-									['class' => 'form-control', 'style' => 'width: 30%; margin-bottom: 20px']) !!}
-
 					{!! Form::label('json_file', 'JSON File') !!}
 					{!! Form::file('json_file') !!}
 
 					{!! Form::submit('Submit', 
-									['class' => 'form-control btn btn-primary', 'style' => 'width: 15%; margin-top: 40px']) !!}
+									['class' => 'form-control btn btn-primary', 'style' => 'width: 15%; margin-top: 20px']) !!}
 				</div>
 			{!! Form::close() !!}
 		</div>
