@@ -6,6 +6,13 @@ use App\Models\Set;
 use App\Models\SetCard;
 use App\Models\Card;
 use App\Models\Layout;
+use App\Models\Color;
+use App\Models\CardColor;
+use App\Models\CardLoyalty;
+use App\Models\CardPowerToughness;
+use App\Models\CardSubtype;
+use App\Models\CardSupertype;
+use App\Models\CardType;
 
 use vendor\symfony\DomCrawler\Symfony\Component\DomCrawler\Crawler;
 use Goutte\Client;
@@ -125,9 +132,19 @@ class Scraper {
 		
 		$cardId = $card->id;
 
-		
+		if (isset($input['colors'])) {
+			
+			foreach ($input['colors'] as $color) {
+				
+				$colorId = Color::where('color', $color)->pluck('id');
 
-		ddAll($card);
+				$cardColor = new CardColor;
+
+				$cardColor->card_id
+			}
+		}	
+
+		
 	}
 
 }
