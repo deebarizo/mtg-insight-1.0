@@ -2,6 +2,8 @@
 
 namespace App\Domain;
 
+ini_set('max_execution_time', 10800); // 10800 seconds = 3 hours
+
 use App\Models\Set;
 use App\Models\SetCard;
 use App\Models\Card;
@@ -86,8 +88,8 @@ class Scraper {
 
 		$setCard->set_id = $setId;
 		$setCard->card_id = $cardId;
-		$setCard->rarity = $input['rarity'];
-		$setCard->multiverseid = $input['multiverseid'];
+		$setCard->rarity = $card['rarity'];
+		$setCard->multiverseid = $card['multiverseid'];
 
 		$setCard->save();
 	}
@@ -140,11 +142,61 @@ class Scraper {
 
 				$cardColor = new CardColor;
 
-				$cardColor->card_id
+				$cardColor->card_id = $cardId;
+				$cardColor->color_id = $colorId;
+
+				$cardColor->save();
 			}
 		}	
 
+		if (isset($input['loyalty'])) {
+			
+			$cardLoyalty = new CardLoyalty;
+
+			$cardLoyalty->card_id = $cardId;
+			$cardLoyalty->loyalty = $input['loyalty'];
+
+			$cardLoyalty->save();
+		}	
+
+		if (isset($input['power']) && isset($input['toughness'])) {
+			
+			$cardPowerToughness = new CardPowerToughness;
+
+			$cardPowerToughness->card_id = $cardId;
+			$cardPowerToughness->power = $input['power'];
+			$cardPowerToughness->toughness = $input['toughness'];
+
+			$cardPowerToughness->save();
+		}			
 		
+		if (isset($input['subtypes'])) {
+			
+			foreach ($input['subtypes'] as $subtype) {
+				
+				$cardSubtype = new CardSubtype;
+
+				$cardSubtype->card_id = $cardId;
+				$cardSubtype->subtype = $subtype;
+
+				$cardSubtype->save();
+			}
+		}	
+
+		if (isset($input['supertypes'])) {
+			
+			foreach ($input['supertypes'] as $supertype) {
+				
+				$cardSupertype = new CardSupertype;
+
+				$cardSupertype->card_id = $cardId;
+				$cardSupertype->supertype = $supertype;
+
+				$cardSupertype->save();
+			}
+		}		
+
+		$this->storeSetCard($setId, $cardId, $input);	
 	}
 
 }
