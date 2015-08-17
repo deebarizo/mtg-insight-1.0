@@ -20,6 +20,7 @@
 				<thead>
 					<tr>
 						<th>Name</th>
+						<th>Mod</th>
 						<th>Mana Cost</th>
 						<th>Middle Text</th>
 					</tr>
@@ -27,7 +28,17 @@
 				<tbody>
 					@foreach ($cardsData as $card)
 						<tr>
-							<td><a target="_blank" href="/cards/{{ $card->id }}">{{ $card->name }}</a></td>
+							<td>
+								<a target="_blank" href="/cards/{{ $card->id }}">{{ $card->name }}</a>
+								<div style="display: none" class="tool-tip-card-image">
+									<img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid={{ $card->multiverseid }}&type=card">
+								</div>
+							</td>
+							<td>
+								<a target="_blank" href="/cards/{{ $card->id }}/edit">
+									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+								</a>
+							</td>							
 							<td>{!! $card->mana_cost !!}</td>
 							<td>{{ $card->middle_text }}</td>
 						</tr>
@@ -37,5 +48,18 @@
 		</div>
 
 	</div>
+
+	<script>
+	$(document).ready(function() {
+	    $('a').each(function() {
+	        $(this).qtip({
+	            content: {
+	                text: $(this).next('.tool-tip-card-image')
+	            }
+	        });
+	    });
+	 });
+
+	</script>
 
 @stop
