@@ -43,11 +43,11 @@ class Scraper {
 	public function storeCsvFile($csvFile) {
 
 		$jsonString = file_get_contents($csvFile);
-		$set = json_decode($jsonString, true);
+		$setData = json_decode($jsonString, true);
 
-		$set['id'] = Set::where('code', $set['code'])->pluck('id'); 
+		$setData['id'] = Set::where('code', $setData['code'])->pluck('id'); 
 
-		$setCardExists = SetCard::where('set_id', $set['id'])->first();
+		$setCardExists = SetCard::where('set_id', $setData['id'])->first();
 
 		if ($setCardExists) {
 
@@ -56,25 +56,25 @@ class Scraper {
 			return 'This SetCard already exists.';
 		}
 
-		foreach ($set['cards'] as $card) {
-			$cardExists = Card::where('name', $card['name'])->first();
+		foreach ($setData['cards'] as $cardData) {
+			$cardExists = Card::where('name', $cardData['name'])->first();
 
 			if ($cardExists) {
 
-				$cardId = Card::where('name', $card['name'])->pluck('id');
+				$cardData['id'] = Card::where('name', $cardData['name'])->pluck('id');
 
-				$this->storeSetCard($set['id'], $cardId, $card);
+				$this->storeSetCard($setData['id'], $cardData['id'], $cardData);
 
 				continue;
 			}
 
-			$cardIsBasicLand = $this->checkIfCardIsBasicLand($card);
+			$cardIsBasicLand = $this->checkIfCardIsBasicLand($cardData);
 
 			if ($cardIsBasicLand) {
 				continue;
 			}
 
-			$this->storeCardArray($card, $set['id']);
+			$this->storeCardArray($cardData, $setData['id']);
 		}
 
 		Session::flash('alert', 'info');
@@ -82,154 +82,154 @@ class Scraper {
 		return 'Success!';
 	}
 
-	private function storeSetCard($setId, $cardId, $card) {
+	private function storeSetCard($setId, $cardId, $cardData) {
 		
 		$setCard = new SetCard;
 
 		$setCard->set_id = $setId;
 		$setCard->card_id = $cardId;
-		$setCard->rarity = $card['rarity'];
-		$setCard->multiverseid = $card['multiverseid'];
+		$setCard->rarity = $cardData['rarity'];
+		$setCard->multiverseid = $cardData['multiverseid'];
 
 		$setCard->save();
 	}
 
-	private function checkIfCardIsBasicLand($input) {
+	private function checkIfCardIsBasicLand($cardData) {
 
-		if ($input['name'] == 'Plains') {
+		if ($cardData['name'] == 'Plains') {
 			return true;
 		}
 
-		if ($input['name'] == 'Island') {
+		if ($cardData['name'] == 'Island') {
 			return true;
 		}
 
-		if ($input['name'] == 'Swamp') {
+		if ($cardData['name'] == 'Swamp') {
 			return true;
 		}
 
-		if ($input['name'] == 'Mountain') {
+		if ($cardData['name'] == 'Mountain') {
 			return true;
 		}
 
-		if ($input['name'] == 'Forest') {
+		if ($cardData['name'] == 'Forest') {
 			return true;
 		}
 
 		return false;
 	}
 
-	private function storeCardArray($input, $setId) {
+	private function storeCardArray($cardData, $setId) {
 
 		$card = new Card;
 
-		$card->name = $input['name'];
+		$card->name = $cardData['name'];
 
-		if (isset($input['manaCost'])) {
-			$manaCost = $input['manaCost'];
+		if (isset($cardData['manaCost'])) {
+			$manaCost = $cardData['manaCost'];
 		} else {
 			$manaCost = null;
 		} 		
 		$card->mana_cost = $manaCost;
 
-		if (isset($input['cmc'])) {
-			$cmc = $input['cmc'];
+		if (isset($cardData['cmc'])) {
+			$cmc = $cardData['cmc'];
 		} else {
 			$cmc = 0;
 		} 
 		$card->cmc = $cmc;
 
-		$card->middle_text = $input['type'];
+		$card->middle_text = $cardData['type'];
 
-		if (isset($input['text'])) {
-			$text = $input['text'];
+		if (isset($cardData['text'])) {
+			$text = $cardData['text'];
 		} else {
 			$text = '';
 		} 
 		$card->rules_text = $text;
 
-		$card->layout_id = Layout::where('layout', $input['layout'])->pluck('id');
+		$card->layout_id = Layout::where('layout', $cardData['layout'])->pluck('id');
 
 		$card->save();
 		
-		$cardId = $card->id;
+		$cardData['id'] = $card->id;
 
-		if (isset($input['colors'])) {
+		if (isset($cardData['colors'])) {
 			
-			foreach ($input['colors'] as $color) {
+			foreach ($cardData['colors'] as $color) {
 				
 				$colorId = Color::where('color', $color)->pluck('id');
 
 				$cardColor = new CardColor;
 
-				$cardColor->card_id = $cardId;
+				$cardColor->card_id = $cardData['id'];
 				$cardColor->color_id = $colorId;
 
 				$cardColor->save();
 			}
 		}	
 
-		if (isset($input['loyalty'])) {
+		if (isset($cardData['loyalty'])) {
 			
 			$cardLoyalty = new CardLoyalty;
 
-			$cardLoyalty->card_id = $cardId;
-			$cardLoyalty->loyalty = $input['loyalty'];
+			$cardLoyalty->card_id = $cardData['id'];
+			$cardLoyalty->loyalty = $cardData['loyalty'];
 
 			$cardLoyalty->save();
 		}	
 
-		if (isset($input['power']) && isset($input['toughness'])) {
+		if (isset($cardData['power']) && isset($cardData['toughness'])) {
 			
 			$cardPowerToughness = new CardPowerToughness;
 
-			$cardPowerToughness->card_id = $cardId;
-			$cardPowerToughness->power = $input['power'];
-			$cardPowerToughness->toughness = $input['toughness'];
+			$cardPowerToughness->card_id = $cardData['id'];
+			$cardPowerToughness->power = $cardData['power'];
+			$cardPowerToughness->toughness = $cardData['toughness'];
 
 			$cardPowerToughness->save();
 		}			
 		
-		if (isset($input['subtypes'])) {
+		if (isset($cardData['subtypes'])) {
 			
-			foreach ($input['subtypes'] as $subtype) {
+			foreach ($cardData['subtypes'] as $subtype) {
 				
 				$cardSubtype = new CardSubtype;
 
-				$cardSubtype->card_id = $cardId;
+				$cardSubtype->card_id = $cardData['id'];
 				$cardSubtype->subtype = $subtype;
 
 				$cardSubtype->save();
 			}
 		}	
 
-		if (isset($input['supertypes'])) {
+		if (isset($cardData['supertypes'])) {
 			
-			foreach ($input['supertypes'] as $supertype) {
+			foreach ($cardData['supertypes'] as $supertype) {
 				
 				$cardSupertype = new CardSupertype;
 
-				$cardSupertype->card_id = $cardId;
+				$cardSupertype->card_id = $cardData['id'];
 				$cardSupertype->supertype = $supertype;
 
 				$cardSupertype->save();
 			}
 		}	
 
-		if (isset($input['types'])) {
+		if (isset($cardData['types'])) {
 			
-			foreach ($input['types'] as $type) {
+			foreach ($cardData['types'] as $type) {
 				
 				$cardType = new CardType;
 
-				$cardType->card_id = $cardId;
+				$cardType->card_id = $cardData['id'];
 				$cardType->type = $type;
 
 				$cardType->save();
 			}
 		}		
 
-		$this->storeSetCard($setId, $cardId, $input);	
+		$this->storeSetCard($setId, $cardData['id'], $cardData);	
 	}
 
 }
