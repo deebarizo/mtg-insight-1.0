@@ -30,7 +30,7 @@
 			{!! Form::open(array('action' => ['CardsController@update', $cardData->id],'method' => 'PUT')) !!}
 				<div class="form-group">
 					{!! Form::label('actual_cmc', 'Actual CMC') !!}
-					{!! Form::text('actual_cmc', null, ['class' => 'form-control', 'style' => 'width: 25%']) !!}
+					{!! Form::text('actual_cmc', $cardData->actual_cmc, ['class' => 'form-control', 'style' => 'width: 25%']) !!}
 
 					{!! Form::submit('Submit', 
 									['class' => 'form-control btn btn-primary', 'style' => 'width: 15%; margin-top: 20px']) !!}

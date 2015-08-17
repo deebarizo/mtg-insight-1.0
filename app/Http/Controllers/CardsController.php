@@ -65,7 +65,7 @@ class CardsController extends Controller
 
         $titleTag = $cardData->name.' - Cards | ';
 
-        return view('cards/show', compact('titleTag', 'cardData'));
+        return view('cards/show', compact('titleTag', 'cardData', 'message'));
     }
 
     /**
@@ -98,7 +98,17 @@ class CardsController extends Controller
 
         $message = $cardsProcessor->updateCard($request, $id);
 
-        return redirect()->action('CardsController@edit', [$id])->with('message', $message);
+        if ($message == 'Success!') {
+
+            return redirect()->action('CardsController@show', [$id])->with('message', $message);
+        
+        } else {
+
+            return redirect()->action('CardsController@edit', [$id])->with('message', $message);
+        }
+
+
+        
     }
 
     /**
