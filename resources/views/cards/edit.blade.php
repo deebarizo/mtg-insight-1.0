@@ -12,7 +12,7 @@
 	<div class="row">
 		
 		<div class="col-lg-12">
-			<h3>{{ $cardData->name }}</h3>
+			<h3>{{ $cardData->name }} | <a href="/cards/{{ $cardData->id }}">Show</a></h3>
 
 			@if(Session::has('message'))
 				<div class="alert alert-{{ Session::get('alert') }} fade in" role="alert" style="width: 50%">

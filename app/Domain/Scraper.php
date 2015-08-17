@@ -71,6 +71,7 @@ class Scraper {
 			$cardIsBasicLand = $this->checkIfCardIsBasicLand($cardData);
 
 			if ($cardIsBasicLand) {
+
 				continue;
 			}
 
@@ -97,22 +98,27 @@ class Scraper {
 	private function checkIfCardIsBasicLand($cardData) {
 
 		if ($cardData['name'] == 'Plains') {
+
 			return true;
 		}
 
 		if ($cardData['name'] == 'Island') {
+
 			return true;
 		}
 
 		if ($cardData['name'] == 'Swamp') {
+
 			return true;
 		}
 
 		if ($cardData['name'] == 'Mountain') {
+
 			return true;
 		}
 
 		if ($cardData['name'] == 'Forest') {
+
 			return true;
 		}
 
@@ -126,27 +132,43 @@ class Scraper {
 		$card->name = $cardData['name'];
 
 		if (isset($cardData['manaCost'])) {
+
 			$manaCost = $cardData['manaCost'];
+
 		} else {
+
 			$manaCost = null;
+
 		} 		
+
 		$card->mana_cost = $manaCost;
 
 		if (isset($cardData['cmc'])) {
+
 			$cmc = $cardData['cmc'];
+
 		} else {
+
 			$cmc = 0;
+
 		} 
+
 		$card->cmc = $cmc;
 
 		$card->middle_text = $cardData['type'];
 
 		if (isset($cardData['text'])) {
+
 			$text = $cardData['text'];
+
 		} else {
+
 			$text = '';
+
 		} 
+
 		$card->rules_text = $text;
+		
 
 		$card->layout_id = Layout::where('layout', $cardData['layout'])->pluck('id');
 

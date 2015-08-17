@@ -42,6 +42,7 @@ class CardsProcessor {
 						->get();
 
 		foreach ($cardsData as $card) {
+
 			$card->mana_cost = getManaSymbols($card->mana_cost);
 		}
 
@@ -54,6 +55,7 @@ class CardsProcessor {
 						->select('cards.id',
 									'cards.name',
 									'cards.mana_cost',
+									'cards.cmc',
 									'cards.middle_text',
 									'sets_cards.multiverseid',
 									'cards_actual_cmcs.actual_cmc')
@@ -63,6 +65,11 @@ class CardsProcessor {
 						->first();
 
 		$cardData->mana_cost = getManaSymbols($cardData->mana_cost);
+
+		if (is_null($cardData->actual_cmc)) {
+
+			$cardData->actual_cmc = 'N/A';
+		}
 	
 		return $cardData;
 	}
@@ -93,7 +100,7 @@ class CardsProcessor {
 
 		} else {
 
-			if ($input['actual_cmc'] != 'variable') {
+			if ($input['actual_cmc'] != 'variable' && $input['actual_cmc'] != '') {
 				
 				Session::flash('alert', 'warning');
 
@@ -102,6 +109,22 @@ class CardsProcessor {
 		}
 
 		$cardActualCmc = CardActualCmc::where('card_id', $id)->first();
+
+		if (!is_null($cardActualCmc) && $input['actual_cmc'] == '') {
+			
+			$cardActualCmc->delete();
+
+			Session::flash('alert', 'info');
+
+			return 'Success!';	
+		}
+
+		if ($input['actual_cmc'] == '') {
+
+			Session::flash('alert', 'warning');
+
+			return 'Invalid actual CMC.';				
+		}
 
 		if ($cardActualCmc) {
 

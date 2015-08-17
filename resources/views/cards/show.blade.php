@@ -19,8 +19,21 @@
 			<img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid={{ $cardData->multiverseid }}&type=card">
 		</div>
 
-		<div class="col-lg-9">
-			<strong>Actual CMC:</strong> {{ $cardData->actual_cmc }}
+		<div class="col-lg-3">
+			<table class="table table-striped table-bordered table-hover table-condensed">
+				<thead>
+					<tr>
+						<th>CMC</th>
+						<th>Actual CMC</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{ $cardData->cmc }}</a></td>
+						<td>{{ $cardData->actual_cmc }}</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 
 	</div>

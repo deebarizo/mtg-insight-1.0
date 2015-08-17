@@ -16,7 +16,7 @@
 		</div>
 
 		<div class="col-lg-12">
-			<table id="daily" class="table table-striped table-bordered table-hover table-condensed">
+			<table class="table table-striped table-bordered table-hover table-condensed">
 				<thead>
 					<tr>
 						<th>Name</th>
