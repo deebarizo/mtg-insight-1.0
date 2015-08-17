@@ -15,6 +15,7 @@ use App\Models\CardSupertype;
 use App\Models\CardType;
 
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
 
 use Session;
 
@@ -26,7 +27,21 @@ class CardsProcessor {
 
 	public function getDataForIndex() {
 		
-		
+		$cardsData = DB::table('cards')
+						->select('cards.name',
+									'cards.mana_cost',
+									'cards.middle_text',
+									'sets_cards.multiverseid')
+						->join('sets_cards', 'sets_cards.card_id', '=', 'cards.id')
+						->orderBy('cards.name')
+						->groupBy('cards.name')
+						->get();
+
+		foreach ($cardsData as $card) {
+			$card->mana_cost = getManaSymbols($card->mana_cost);
+		}
+
+		return $cardsData;
 	}
 
 }

@@ -7,8 +7,12 @@ use Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Domain\CardsProcessor;
+
 class CardsController extends Controller
 {
+    private $format = 'Battle for Zendikar Standard';
+
     /**
      * Display a listing of the resource.
      *
@@ -17,12 +21,13 @@ class CardsController extends Controller
     public function index()
     {
         $titleTag = 'Cards | ';
+        $format = $this->format;
 
         $cardsProcessor = new CardsProcessor;
 
         $cardsData = $cardsProcessor->getDataForIndex();
 
-        return view('cards/index', compact('titleTag'));
+        return view('cards/index', compact('titleTag', 'format', 'cardsData'));
     }
 
     /**
