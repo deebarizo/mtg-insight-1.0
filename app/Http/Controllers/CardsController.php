@@ -20,12 +20,12 @@ class CardsController extends Controller
      */
     public function index()
     {
-        $titleTag = 'Cards | ';
-        $format = $this->format;
-
         $cardsProcessor = new CardsProcessor;
 
         $cardsData = $cardsProcessor->getDataForIndex();
+
+        $titleTag = 'Cards | ';
+        $format = $this->format;
 
         return view('cards/index', compact('titleTag', 'format', 'cardsData'));
     }
@@ -59,7 +59,13 @@ class CardsController extends Controller
      */
     public function show($id)
     {
-        //
+        $cardsProcessor = new CardsProcessor;
+
+        $cardData = $cardsProcessor->getDataForShow($id);
+
+        $titleTag = $cardData->name.' - Cards | ';
+
+        return view('cards/show', compact('titleTag', 'cardData'));
     }
 
     /**

@@ -27,7 +27,7 @@
 				<tbody>
 					@foreach ($cardsData as $card)
 						<tr>
-							<td>{{ $card->name }}</td>
+							<td><a target="_blank" href="/cards/{{ $card->id }}">{{ $card->name }}</a></td>
 							<td>{!! $card->mana_cost !!}</td>
 							<td>{{ $card->middle_text }}</td>
 						</tr>

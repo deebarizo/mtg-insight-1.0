@@ -28,7 +28,8 @@ class CardsProcessor {
 	public function getDataForIndex() {
 		
 		$cardsData = DB::table('cards')
-						->select('cards.name',
+						->select('cards.id',
+									'cards.name',
 									'cards.mana_cost',
 									'cards.middle_text',
 									'sets_cards.multiverseid')
@@ -42,6 +43,23 @@ class CardsProcessor {
 		}
 
 		return $cardsData;
+	}
+
+	public function getDataForShow($id) {
+		
+		$cardData = DB::table('cards')
+						->select('cards.id',
+									'cards.name',
+									'cards.mana_cost',
+									'cards.middle_text',
+									'sets_cards.multiverseid')
+						->join('sets_cards', 'sets_cards.card_id', '=', 'cards.id')
+						->where('cards.id', $id)
+						->first();
+
+		$cardData->mana_cost = getManaSymbols($cardData->mana_cost);
+	
+		return $cardData;
 	}
 
 }
