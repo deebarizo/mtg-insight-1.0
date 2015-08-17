@@ -22,7 +22,7 @@ class CardsController extends Controller
     {
         $cardsProcessor = new CardsProcessor;
 
-        $cardsData = $cardsProcessor->getDataForIndex();
+        $cardsData = $cardsProcessor->getCardsData();
 
         $titleTag = 'Cards | ';
         $format = $this->format;
@@ -61,7 +61,7 @@ class CardsController extends Controller
     {
         $cardsProcessor = new CardsProcessor;
 
-        $cardData = $cardsProcessor->getDataForShow($id);
+        $cardData = $cardsProcessor->getCardData($id);
 
         $titleTag = $cardData->name.' - Cards | ';
 
@@ -76,7 +76,13 @@ class CardsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cardsProcessor = new CardsProcessor;
+
+        $cardData = $cardsProcessor->getCardData($id);
+
+        $titleTag = $cardData->name.' - Edit Cards | ';
+
+        return view('cards/edit', compact('titleTag', 'cardData', 'message'));
     }
 
     /**
@@ -88,7 +94,11 @@ class CardsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cardsProcessor = new CardsProcessor;
+
+        $message = $cardsProcessor->updateCard($request, $id);
+
+        return redirect()->action('CardsController@edit', [$id])->with('message', $message);
     }
 
     /**
