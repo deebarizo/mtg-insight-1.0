@@ -35,10 +35,16 @@ class CardsProcessor {
 		$cardsData = DB::table('cards')
 						->select('cards.id',
 									'cards.name',
+									'cards.cmc',
 									'cards.mana_cost',
 									'cards.middle_text',
-									'sets_cards.multiverseid')
+									'sets_cards.multiverseid',
+									'cards_actual_cmcs.actual_cmc',
+									'cards_ratings.rating',
+									'cards_ratings.note')
 						->join('sets_cards', 'sets_cards.card_id', '=', 'cards.id')
+						->leftJoin('cards_actual_cmcs', 'cards_actual_cmcs.card_id', '=', 'cards.id')
+						->leftJoin('cards_ratings', 'cards_ratings.card_id', '=', 'cards.id')
 						->orderBy('cards.name')
 						->groupBy('cards.name')
 						->get();
@@ -46,9 +52,17 @@ class CardsProcessor {
 		foreach ($cardsData as $card) {
 
 			$card->mana_cost = getManaSymbols($card->mana_cost);
+
+			if (is_null($card->actual_cmc)) {
+				$card->actual_cmc = $card->cmc;
+			}
 		}
 
-		return $cardsData;
+		$actualCmcs = Card::select('cmc')->orderBy('cmc')->groupBy('cmc')->get()->toArray();
+
+		array_push($actualCmcs, array('cmc' => 'variable'));
+
+		return array($cardsData, $actualCmcs);
 	}
 
 	public function getCardData($id) {

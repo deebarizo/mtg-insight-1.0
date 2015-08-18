@@ -22,12 +22,12 @@ class CardsController extends Controller
     {
         $cardsProcessor = new CardsProcessor;
 
-        $cardsData = $cardsProcessor->getCardsData();
+        list($cardsData, $actualCmcs) = $cardsProcessor->getCardsData();
 
         $titleTag = 'Cards | ';
         $format = $this->format;
 
-        return view('cards/index', compact('titleTag', 'format', 'cardsData'));
+        return view('cards/index', compact('titleTag', 'format', 'cardsData', 'actualCmcs'));
     }
 
     /**
