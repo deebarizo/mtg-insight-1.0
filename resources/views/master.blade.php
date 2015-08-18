@@ -9,6 +9,7 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 		<link rel="stylesheet" href="/css/mtgicons.css" /> <!-- Mana Symbols -->
 		<link rel="stylesheet" href="/css/jquery.qtip.min.css">
+		<link rel="stylesheet" href="/css/style.css">
 
 		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>

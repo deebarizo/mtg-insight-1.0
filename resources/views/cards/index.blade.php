@@ -41,11 +41,11 @@
 				</thead>
 				<tbody>
 					@foreach ($cardsData as $card)
-						<tr data-actual-cmc="{{ $card->actual_cmc }}">
+						<tr class="card-row" data-actual-cmc="{{ $card->actual_cmc }}">
 							<td>
 								<a class="card-name" target="_blank" href="/cards/{{ $card->id }}">{{ $card->name }}</a>
 								<div style="display: none" class="tool-tip-card-image">
-									<img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid={{ $card->multiverseid }}&type=card">
+									<!-- <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid={{ $card->multiverseid }}&type=card"> -->
 								</div>
 							</td>
 							<td>
@@ -64,17 +64,6 @@
 
 	</div>
 
-	<script>
-	$(document).ready(function() {
-	    $('a.card-name').each(function() {
-	        $(this).qtip({
-	            content: {
-	                text: $(this).next('.tool-tip-card-image')
-	            }
-	        });
-	    });
-	 });
-
-	</script>
+	<script src="/js/cards/index.js"></script>
 
 @stop
