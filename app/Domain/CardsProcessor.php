@@ -16,6 +16,8 @@ use App\Models\CardSubtype;
 use App\Models\CardSupertype;
 use App\Models\CardType;
 use App\Models\CardActualCmc;
+use App\Models\CardRating;
+use App\Models\CardTag;
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
@@ -58,9 +60,12 @@ class CardsProcessor {
 									'cards.cmc',
 									'cards.middle_text',
 									'sets_cards.multiverseid',
-									'cards_actual_cmcs.actual_cmc')
+									'cards_actual_cmcs.actual_cmc',
+									'cards_ratings.rating',
+									'cards_ratings.note')
 						->join('sets_cards', 'sets_cards.card_id', '=', 'cards.id')
 						->leftJoin('cards_actual_cmcs', 'cards_actual_cmcs.card_id', '=', 'cards.id')
+						->leftJoin('cards_ratings', 'cards_ratings.card_id', '=', 'cards.id')
 						->where('cards.id', $id)
 						->first();
 
@@ -70,7 +75,7 @@ class CardsProcessor {
 
 			$cardData->actual_cmc = 'N/A';
 		}
-	
+
 		return $cardData;
 	}
 
@@ -78,57 +83,86 @@ class CardsProcessor {
 
 		$input = Request::all();
 
-		if (is_numeric($input['actual_cmc'])) {
+		$processActualCmcMsg = $this->processActualCmc($input['actual_cmc'], $id);
 
-			$input['actual_cmc'] = intval($input['actual_cmc']);
+		if ($processActualCmcMsg === false) {
 
-			if (is_int($input['actual_cmc'])) {
+			Session::flash('alert', 'warning');
 
-				if ($input['actual_cmc'] < 0) {
+			return 'Invalid actual CMC.';	
+		}
 
-					Session::flash('alert', 'warning');
+		$processRatingMsg = $this->processRating($input['rating'], $id);
 
-					return 'Invalid actual CMC.';	
+		if ($processRatingMsg === false) {
+
+			Session::flash('alert', 'warning');
+
+			return 'Invalid rating.';	
+		}
+
+		$processNoteMsg = $this->processNote($input['note'], $id);
+
+		if ($processNoteMsg === false) {
+
+			Session::flash('alert', 'warning');
+
+			return 'Invalid note.';	
+		}
+
+		Session::flash('alert', 'info');
+
+		return 'Success!';			
+	}
+
+	private function processActualCmc($actualCmc, $id) {
+
+		if ($actualCmc == 'N/A') {
+			
+			return true;
+		}
+
+		if (is_numeric($actualCmc)) {
+
+			$actualCmc = intval($actualCmc);
+
+			if (is_int($actualCmc)) {
+
+				if ($actualCmc < 0) {
+
+					return false;
 				}
 
 			} else {
 
-				Session::flash('alert', 'warning');
-
-				return 'Invalid actual CMC.';		
+				return false;	
 			}
 
 		} else {
 
-			if ($input['actual_cmc'] != 'variable' && $input['actual_cmc'] != '') {
+			if ($actualCmc != 'variable' && $actualCmc != '') {
 				
-				Session::flash('alert', 'warning');
-
-				return 'Invalid actual CMC.';	
+				return false;
 			}		
 		}
 
 		$cardActualCmc = CardActualCmc::where('card_id', $id)->first();
 
-		if (!is_null($cardActualCmc) && $input['actual_cmc'] == '') {
+		if (!is_null($cardActualCmc) && $actualCmc == '') {
 			
 			$cardActualCmc->delete();
 
-			Session::flash('alert', 'info');
-
-			return 'Success!';	
+			return true;
 		}
 
-		if ($input['actual_cmc'] == '') {
+		if ($actualCmc == '') {
 
-			Session::flash('alert', 'warning');
-
-			return 'Invalid actual CMC.';				
+			return false;			
 		}
 
 		if ($cardActualCmc) {
 
-			$cardActualCmc->actual_cmc = $input['actual_cmc'];
+			$cardActualCmc->actual_cmc = $actualCmc;
 
 			$cardActualCmc->save();
 		
@@ -137,14 +171,79 @@ class CardsProcessor {
 			$cardActualCmc = new CardActualCmc;
 
 			$cardActualCmc->card_id = $id;
-			$cardActualCmc->actual_cmc = $input['actual_cmc'];
+			$cardActualCmc->actual_cmc = $actualCmc;
 
 			$cardActualCmc->save();
 		}
 
-		Session::flash('alert', 'info');
+		return true;	
+	}
 
-		return 'Success!';			
+	private function processRating($rating, $id) {
+
+		if (is_numeric($rating)) {
+
+			$rating = intval($rating);
+
+			if (is_int($rating)) {
+
+				if ($rating < 1) {
+
+					return false;
+				}
+
+			} else {
+
+				return false;	
+			}
+
+		} else {
+
+			return false;
+		}
+
+		$cardRating = CardRating::where('card_id', $id)->first();
+
+		if ($cardRating) {
+
+			$cardRating->rating = $rating;
+
+			$cardRating->save();
+		
+		} else {
+
+			$cardRating = new CardRating;
+
+			$cardRating->card_id = $id;
+			$cardRating->rating = $rating;
+
+			$cardRating->save();
+		}
+
+		return true;
+	}
+
+	private function processNote($note, $id) {
+
+		$cardRating = CardRating::where('card_id', $id)->first();
+
+		if ($cardRating) {
+
+			$cardRating->note = $note;
+
+			$cardRating->save();
+		
+		} else {
+
+			$cardRating = new CardRating;
+
+			$cardRating->card_id = $id;
+			$cardRating->note = $note;
+
+			$cardRating->save();
+		}
+
+		return true;
 	}
 
 }

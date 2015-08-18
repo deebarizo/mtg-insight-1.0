@@ -41,6 +41,16 @@
 					{!! Form::label('actual_cmc', 'Actual CMC') !!}
 					{!! Form::text('actual_cmc', $cardData->actual_cmc, ['class' => 'form-control', 'style' => 'width: 25%']) !!}
 				</div>
+
+				<div class="form-group">
+					{!! Form::label('rating', 'Rating') !!}
+					{!! Form::text('rating', $cardData->rating, ['class' => 'form-control', 'style' => 'width: 25%']) !!}
+				</div>
+
+				<div class="form-group">
+					{!! Form::label('Note', 'Note') !!}
+					{!! Form::textarea('note', $cardData->note, ['class' => 'form-control']) !!}
+				</div>
 		
 				<div class="form-group">		
 					{!! Form::submit('Submit', ['class' => 'form-control btn btn-primary', 'style' => 'width: 15%']) !!}
