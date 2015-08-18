@@ -25,9 +25,7 @@
 		</div>
 
 		<div class="col-lg-3">
-
 			<img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid={{ $cardData->multiverseid }}&type=card">
-		
 		</div>
 
 		<div class="col-lg-6">

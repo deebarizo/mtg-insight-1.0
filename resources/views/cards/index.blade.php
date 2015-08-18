@@ -29,7 +29,7 @@
 		</div>
 		
 		<div class="col-lg-12">
-			<table class="table table-striped table-bordered table-hover table-condensed">
+			<table id="cards" class="table table-striped table-bordered table-hover table-condensed">
 				<thead>
 					<tr>
 						<th>Name</th>
