@@ -7,7 +7,7 @@ $(document).ready(function() {
 	$('#cards').dataTable({
 		"scrollY": "600px",
 		"paging": false,
-		"order": [[0, "asc"]]
+		"order": [[2, "desc"]]
 	});
 
 	$('#cards_filter').hide();

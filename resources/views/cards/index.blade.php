@@ -34,6 +34,7 @@
 					<tr>
 						<th>Name</th>
 						<th>Mod</th>
+						<th>Rating</th>
 						<th>Actual CMC</th>
 						<th>Mana Cost</th>
 						<th>Middle Text</th>
@@ -52,7 +53,8 @@
 								<a target="_blank" href="/cards/{{ $card->id }}/edit">
 									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 								</a>
-							</td>		
+							</td>	
+							<td>{!! $card->rating !!}</td>		
 							<td>{!! $card->actual_cmc !!}</td>					
 							<td>{!! $card->mana_cost !!}</td>
 							<td>{{ $card->middle_text }}</td>
