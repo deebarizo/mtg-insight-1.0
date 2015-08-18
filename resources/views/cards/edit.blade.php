@@ -12,6 +12,7 @@
 	<div class="row">
 		
 		<div class="col-lg-12">
+		
 			<h3>{{ $cardData->name }} | <a href="/cards/{{ $cardData->id }}">Show</a></h3>
 
 			@if(Session::has('message'))
@@ -20,6 +21,7 @@
 					{{ Session::get('message') }}
 			    </div>
 			@endif
+		
 		</div>
 
 		<div class="col-lg-3">
@@ -27,15 +29,25 @@
 		</div>
 
 		<div class="col-lg-9">
+
 			{!! Form::open(array('action' => ['CardsController@update', $cardData->id],'method' => 'PUT')) !!}
+		
+				<div class="form-group">
+					{!! Form::label('cmc', 'CMC') !!}
+					{!! Form::text('cmc', $cardData->cmc, ['class' => 'form-control', 'style' => 'width: 25%', 'disabled']) !!}
+				</div>
+		
 				<div class="form-group">
 					{!! Form::label('actual_cmc', 'Actual CMC') !!}
 					{!! Form::text('actual_cmc', $cardData->actual_cmc, ['class' => 'form-control', 'style' => 'width: 25%']) !!}
-
-					{!! Form::submit('Submit', 
-									['class' => 'form-control btn btn-primary', 'style' => 'width: 15%; margin-top: 20px']) !!}
 				</div>
+		
+				<div class="form-group">		
+					{!! Form::submit('Submit', ['class' => 'form-control btn btn-primary', 'style' => 'width: 15%']) !!}
+				</div>
+		
 			{!! Form::close() !!}
+		
 		</div>
 
 	</div>

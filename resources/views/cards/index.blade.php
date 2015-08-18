@@ -29,7 +29,7 @@
 					@foreach ($cardsData as $card)
 						<tr>
 							<td>
-								<a target="_blank" href="/cards/{{ $card->id }}">{{ $card->name }}</a>
+								<a class="card-name" target="_blank" href="/cards/{{ $card->id }}">{{ $card->name }}</a>
 								<div style="display: none" class="tool-tip-card-image">
 									<img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid={{ $card->multiverseid }}&type=card">
 								</div>
@@ -51,7 +51,7 @@
 
 	<script>
 	$(document).ready(function() {
-	    $('a').each(function() {
+	    $('a.card-name').each(function() {
 	        $(this).qtip({
 	            content: {
 	                text: $(this).next('.tool-tip-card-image')
