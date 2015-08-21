@@ -10,8 +10,6 @@ $(document).ready(function() {
 		"order": [[2, "desc"]]
 	});
 
-	$('#cards_filter').hide();
-
 
 	/****************************************************************************************
 	TOOLTIP (CARD IMAGE)
@@ -24,8 +22,14 @@ $(document).ready(function() {
             content: {
         
                 text: $(this).next('.tool-tip-card-image')
-            }
-        
+			},
+
+			position: {
+
+				my: 'top left',
+				at: 'bottom right',
+				target: $(this)
+			}
         });
 	});
 
