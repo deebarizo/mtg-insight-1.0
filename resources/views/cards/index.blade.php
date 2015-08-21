@@ -46,7 +46,7 @@
 							<td>
 								<a class="card-name" target="_blank" href="/cards/{{ $card->id }}">{{ $card->name }}</a>
 								<div style="display: none" class="tool-tip-card-image">
-									<!-- <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid={{ $card->multiverseid }}&type=card"> -->
+									<img src="/files/card_images/{{ $card->multiverseid }}.jpg">
 								</div>
 							</td>
 							<td>
