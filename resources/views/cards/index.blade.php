@@ -21,7 +21,7 @@
 				<select class="form-control actual-cmc-filter" style="width: 10%; margin-right: 20px">
 				  	<option value="All">All</option>
 				  	@foreach ($actualCmcs as $actualCmc)
-					  	<option value="{{ $actualCmc['cmc'] }}">{{ $actualCmc['cmc'] }}</option>
+					  	<option value="{{ $actualCmc }}">{{ $actualCmc }}</option>
 				  	@endforeach
 				</select>	
 

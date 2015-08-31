@@ -49,6 +49,8 @@ class CardsProcessor {
 						->groupBy('cards.name')
 						->get();
 
+		$actualCmcs = [];
+
 		foreach ($cardsData as $card) {
 
 			$card->mana_cost = getManaSymbols($card->mana_cost);
@@ -56,11 +58,18 @@ class CardsProcessor {
 			if (is_null($card->actual_cmc)) {
 				$card->actual_cmc = $card->cmc;
 			}
+
+			if ($card->actual_cmc != 'variable') {
+
+				array_push($actualCmcs, $card->actual_cmc);
+			}
 		}
 
-		$actualCmcs = Card::select('cmc')->orderBy('cmc')->groupBy('cmc')->get()->toArray();
+		$actualCmcs = array_unique($actualCmcs);
 
-		array_push($actualCmcs, array('cmc' => 'variable'));
+		sort($actualCmcs);
+
+		array_push($actualCmcs, 'variable');
 
 		return array($cardsData, $actualCmcs);
 	}

@@ -26,8 +26,8 @@ $(document).ready(function() {
 
 			position: {
 
-				my: 'top left',
-				at: 'bottom right',
+				my: 'bottom left',
+				at: 'top right',
 				target: $(this)
 			}
         });
