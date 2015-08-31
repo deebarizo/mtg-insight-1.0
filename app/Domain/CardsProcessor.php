@@ -205,7 +205,7 @@ class CardsProcessor {
 
 			if (is_int($rating)) {
 
-				if ($rating < 1) {
+				if ($rating < 0) {
 
 					return false;
 				}
@@ -224,11 +224,23 @@ class CardsProcessor {
 
 		if ($cardRating) {
 
+			if ($rating == '0') {
+
+				$cardRating->delete();
+
+				return true;
+			}
+
 			$cardRating->rating = $rating;
 
 			$cardRating->save();
-		
+
 		} else {
+
+			if ($rating == '0') {
+
+				return true;
+			}
 
 			$cardRating = new CardRating;
 
@@ -252,6 +264,11 @@ class CardsProcessor {
 			$cardRating->save();
 		
 		} else {
+
+			if ($note == '') {
+
+				return true;
+			}
 
 			$cardRating = new CardRating;
 
