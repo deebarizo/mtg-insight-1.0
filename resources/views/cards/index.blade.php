@@ -50,9 +50,12 @@
 								</div>
 							</td>
 							<td>
-								<a target="_blank" href="/cards/{{ $card->id }}/edit">
+								<a class="card-edit" target="_blank" href="/cards/{{ $card->id }}/edit">
 									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 								</a>
+								<div style="display: none" class="tool-tip-card-image">
+									<img src="/files/card_images/{{ $card->multiverseid }}.jpg">
+								</div>
 							</td>	
 							<td>{!! $card->rating !!}</td>		
 							<td>{!! $card->actual_cmc !!}</td>					

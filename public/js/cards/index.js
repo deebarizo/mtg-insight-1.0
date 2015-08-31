@@ -33,6 +33,24 @@ $(document).ready(function() {
         });
 	});
 
+	$('a.card-edit').each(function() {
+
+        $(this).qtip({
+        
+            content: {
+        
+                text: $(this).next('.tool-tip-card-image')
+			},
+
+			position: {
+
+				my: 'bottom left',
+				at: 'top right',
+				target: $(this)
+			}
+        });
+	});
+
 
 	/****************************************************************************************
 	FILTER
