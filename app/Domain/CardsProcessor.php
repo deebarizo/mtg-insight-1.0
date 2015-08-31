@@ -140,6 +140,15 @@ class CardsProcessor {
 
 	private function processActualCmc($actualCmc, $id) {
 
+		$cardActualCmc = CardActualCmc::where('card_id', $id)->first();
+
+		if (!is_null($cardActualCmc) && $actualCmc == 'N/A') {
+			
+			$cardActualCmc->delete();
+
+			return true;
+		}
+
 		if ($actualCmc == 'N/A') {
 			
 			return true;
@@ -163,24 +172,10 @@ class CardsProcessor {
 
 		} else {
 
-			if ($actualCmc != 'variable' && $actualCmc != '') {
+			if ($actualCmc != 'variable') {
 				
 				return false;
 			}		
-		}
-
-		$cardActualCmc = CardActualCmc::where('card_id', $id)->first();
-
-		if (!is_null($cardActualCmc) && $actualCmc == '') {
-			
-			$cardActualCmc->delete();
-
-			return true;
-		}
-
-		if ($actualCmc == '') {
-
-			return false;			
 		}
 
 		if ($cardActualCmc) {
