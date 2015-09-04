@@ -106,7 +106,7 @@ $(document).ready(function() {
 
 	function hideActualCmcsNotSelected(cardRow, actualCmc) {
 
-		var cardRowActualCmc = $(cardRow).data('actual-cmc');
+		var cardRowActualCmc = $(cardRow).data('card-actual-cmc');
 
 		if (cardRowActualCmc == actualCmc) {
 

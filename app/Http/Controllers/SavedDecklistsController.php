@@ -11,6 +11,8 @@ use App\Domain\CardsProcessor;
 
 class SavedDecklistsController extends Controller
 {
+    private $format = CURRENT_FORMAT;
+
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +30,14 @@ class SavedDecklistsController extends Controller
      */
     public function create()
     {
-        //
+        $cardsProcessor = new CardsProcessor;
+
+        list($cardsData, $actualCmcs) = $cardsProcessor->getCardsData();
+
+        $titleTag = 'Saved Decklists | ';
+        $format = $this->format;
+
+        return view('saved_decklists/create', compact('titleTag', 'format', 'cardsData', 'actualCmcs'));
     }
 
     /**
