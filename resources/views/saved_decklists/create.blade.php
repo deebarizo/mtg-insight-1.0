@@ -77,9 +77,10 @@
 		</div>
 
 		<div class="col-lg-4">
-			<h4 class="lineup">Decklist</h4>
+			<h4>Decklist</h4>
 
 			<table id="decklist" class="table table-striped table-bordered table-hover table-condensed">
+				
 				<thead>
 					<tr>
 						<th style="width: 10%">Q</th>					
@@ -87,9 +88,11 @@
 						<th style="width: 10%">Remove</th>
 					</tr>
 				</thead>
+				
 				<tbody>
 
 				</tbody>
+			
 			</table>
 
 			<button style="width: 128px" class="btn btn-primary pull-right submit-decklist" type="submit">Submit Decklist</button>

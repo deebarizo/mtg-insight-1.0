@@ -18,6 +18,8 @@ $(document).ready(function() {
 		card['actual-cmc'] = cardRow.data('card-actual-cmc');
 
 		console.log(card);
+
+		$("#decklist tbody").append('<tr><td>'+1+'</td><td>'+card['name']+'</td><td><a class="remove-card" href=""><div class="circle-minus-icon"><span class="glyphicon glyphicon-plus"></span></div></a></td></tr>');
 	});
 
 });
