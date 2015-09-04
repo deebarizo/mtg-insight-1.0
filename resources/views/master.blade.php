@@ -30,6 +30,7 @@
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li class="{!! setActive('cards*') !!}"><a href="/cards">Cards</a></li>
+						<li class="{!! setActive('saved_decklists*') !!}"><a href="/saved_decklists">Saved Decklists</a></li>
 						<li class="{!! setActive('scrapers*') !!}"><a href="/scrapers">Scrapers</a></li>
 					</ul>
 				</div>

@@ -9,10 +9,8 @@ use App\Http\Controllers\Controller;
 
 use App\Domain\CardsProcessor;
 
-class CardsController extends Controller
+class SavedDecklistsController extends Controller
 {
-    private $format = CURRENT_FORMAT;
-
     /**
      * Display a listing of the resource.
      *
@@ -20,14 +18,7 @@ class CardsController extends Controller
      */
     public function index()
     {
-        $cardsProcessor = new CardsProcessor;
-
-        list($cardsData, $actualCmcs) = $cardsProcessor->getCardsData();
-
-        $titleTag = 'Cards | ';
-        $format = $this->format;
-
-        return view('cards/index', compact('titleTag', 'format', 'cardsData', 'actualCmcs'));
+        //
     }
 
     /**
@@ -59,13 +50,7 @@ class CardsController extends Controller
      */
     public function show($id)
     {
-        $cardsProcessor = new CardsProcessor;
-
-        $cardData = $cardsProcessor->getCardData($id);
-
-        $titleTag = $cardData->name.' - Cards | ';
-
-        return view('cards/show', compact('titleTag', 'cardData', 'message'));
+        //
     }
 
     /**
@@ -76,13 +61,7 @@ class CardsController extends Controller
      */
     public function edit($id)
     {
-        $cardsProcessor = new CardsProcessor;
-
-        $cardData = $cardsProcessor->getCardData($id);
-
-        $titleTag = $cardData->name.' - Edit Cards | ';
-
-        return view('cards/edit', compact('titleTag', 'cardData', 'message'));
+        //
     }
 
     /**
@@ -94,21 +73,7 @@ class CardsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $cardsProcessor = new CardsProcessor;
-
-        $message = $cardsProcessor->updateCard($request, $id);
-
-        if ($message == 'Success!') {
-
-            return redirect()->action('CardsController@show', [$id])->with('message', $message);
-        
-        } else {
-
-            return redirect()->action('CardsController@edit', [$id])->with('message', $message);
-        }
-
-
-        
+        //
     }
 
     /**
