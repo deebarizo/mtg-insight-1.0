@@ -27,14 +27,16 @@ $(document).ready(function() {
 
 			card['quantity']++;
 
-			if (card['quantity'] > 4) {
+			var cardIsBasicLand = isCardBasicLand(copyRow);
+
+			if (card['quantity'] > 4 && !cardIsBasicLand) {
 
 				return false;
 			}
 
 			copyRow.find('td.quantity').text(card['quantity']);
 		
-		} else if (card['is-in-decklist'] == false) {
+		} else if (!card['is-in-decklist']) {
 
 			card['is-in-decklist'] = 1;
 
@@ -112,6 +114,38 @@ $(document).ready(function() {
 		var quantityTd = copyRow.find('td.quantity');
 		
 		return Number(quantityTd.text());
+	}
+
+	var isCardBasicLand = function(copyRow) {
+
+		var cardName = copyRow.find('td.card-name').text();
+
+		if (cardName == 'Plains') {
+
+			return true;
+		}
+
+		if (cardName == 'Island') {
+
+			return true;
+		}
+
+		if (cardName == 'Swamp') {
+
+			return true;
+		}
+
+		if (cardName == 'Mountain') {
+
+			return true;
+		}
+
+		if (cardName == 'Forest') {
+
+			return true;
+		}		
+
+		return false;
 	}
 
 });
