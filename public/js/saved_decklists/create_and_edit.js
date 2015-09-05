@@ -23,8 +23,8 @@ $(document).ready(function() {
 
 		if (card['is-in-decklist']) {
 
-			var quantityTd = copyRow.find('td.quantity');
-			card['quantity'] = Number(quantityTd.text());
+			card['quantity'] = getQuantity(copyRow);
+
 			card['quantity']++;
 
 			if (card['quantity'] > 4) {
@@ -32,7 +32,7 @@ $(document).ready(function() {
 				return false;
 			}
 
-			quantityTd.text(card['quantity']);
+			copyRow.find('td.quantity').text(card['quantity']);
 		
 		} else if (card['is-in-decklist'] == false) {
 
@@ -40,7 +40,7 @@ $(document).ready(function() {
 
 			card['quantity'] = 1;
 
-			$("#decklist tbody").append('<tr class="copy-row" data-card-id="'+card['id']+'"><td class="quantity">'+card['quantity']+'<td class="card-name"><a class="card-name" target="_blank" href="/cards/'+card['id']+'" data-card-img="/files/card_images/'+card['multiverseid']+'.jpg">'+card['name']+'</a><div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/'+card['multiverseid']+'.jpg"></div></td><td><a class="remove-card" href=""><div class="circle-minus-icon"><span class="glyphicon glyphicon-minus"></span></div></a></td></tr>');
+			$("#decklist tbody").append('<tr class="copy-row" data-card-id="'+card['id']+'"><td class="quantity">'+card['quantity']+'<td class="card-name"><a class="card-name" target="_blank" href="/cards/'+card['id']+'">'+card['name']+'</a><div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/'+card['multiverseid']+'.jpg"></div></td><td><a class="remove-card" href=""><div class="circle-minus-icon"><span class="glyphicon glyphicon-minus"></span></div></a></td></tr>');
 
 
 			/****************************************************************************************
@@ -66,6 +66,7 @@ $(document).ready(function() {
 		            overwrite: false, // Don't overwrite tooltips already bound
 
 		            show: {
+		            	
 		                event: event.type, // Use the same event type as above
 		                ready: true // Show immediately - important!
 		            }
@@ -73,5 +74,44 @@ $(document).ready(function() {
 		    });
 		}
 	});
+
+
+	/****************************************************************************************
+	REMOVE CARD FROM DECKLIST
+	****************************************************************************************/
+
+	$('#decklist').on('click', 'a.remove-card', function(e) { // syntax for dynamic content
+
+		e.preventDefault();
+
+		var copyRow = $(this).closest('tr.copy-row');
+
+		var card = {};
+
+		card['quantity'] = getQuantity(copyRow);
+
+		if (card['quantity'] == 1) {
+
+			$(copyRow).remove();
+		
+		} else if (card['quantity'] != 1) {
+
+			card['quantity']--;
+
+			copyRow.find('td.quantity').text(card['quantity']);
+		}
+	});
+
+
+	/****************************************************************************************
+	FUNCTION LIBRARY
+	****************************************************************************************/
+
+	var getQuantity = function(copyRow) {
+	
+		var quantityTd = copyRow.find('td.quantity');
+		
+		return Number(quantityTd.text());
+	}
 
 });
