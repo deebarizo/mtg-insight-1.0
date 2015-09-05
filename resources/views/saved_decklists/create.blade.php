@@ -45,7 +45,8 @@
 						<tr class="card-row" 
 							data-card-id="{{ $card->id }}"
 							data-card-name="{{ $card->name }}"
-							data-card-actual-cmc="{{ $card->actual_cmc }}">
+							data-card-actual-cmc="{{ $card->actual_cmc }}"
+							data-card-multiverseid="{{ $card->multiverseid }}">
 							<td>
 								<a class="card-name" target="_blank" href="/cards/{{ $card->id }}">{{ $card->name }}</a>
 								<div style="display: none" class="tool-tip-card-image">
