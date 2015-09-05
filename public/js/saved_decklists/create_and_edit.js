@@ -1,22 +1,3 @@
-/****************************************************************************************
-TOOLTIP (DYNAMIC CONTENT)
-****************************************************************************************/
-
-var qtipConfig = {
-
-    content: {
-
-    	attr: 'data-card-img'
-    },
-
-	position: {
-
-		my: 'bottom left',
-		at: 'top right'
-	}
-
-}; 
-
 $(document).ready(function() {
 
 	/****************************************************************************************
@@ -59,29 +40,38 @@ $(document).ready(function() {
 
 			card['quantity'] = 1;
 
-			$("#decklist tbody").append('<tr class="copy-row" data-card-id="'+card['id']+'"><td class="quantity">'+card['quantity']+'<td class="card-name"><div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/'+card['multiverseid']+'.jpg"></div></td><td><a class="remove-card" href=""><div class="circle-minus-icon"><span class="glyphicon glyphicon-minus"></span></div></a></td></tr>');
+			$("#decklist tbody").append('<tr class="copy-row" data-card-id="'+card['id']+'"><td class="quantity">'+card['quantity']+'<td class="card-name"><a class="card-name" target="_blank" href="/cards/'+card['id']+'" data-card-img="/files/card_images/'+card['multiverseid']+'.jpg">'+card['name']+'</a><div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/'+card['multiverseid']+'.jpg"></div></td><td><a class="remove-card" href=""><div class="circle-minus-icon"><span class="glyphicon glyphicon-minus"></span></div></a></td></tr>');
 
-			var copyRow = $('tr.copy-row[data-card-id="'+card['id']+'"]');
 
-			$(copyRow).find('td.card-name').prepend($('<a class="card-name" target="_blank" href="/cards/'+card['id']+'" data-card-img="/files/card_images/'+card['multiverseid']+'.jpg">'+card['name']+'</a>').qtip(qtipConfig));
+			/****************************************************************************************
+			TOOLTIPS FOR DYNAMIC CONTENT
+			****************************************************************************************/
 
-	        $(this).qtip({
-	        
-	            content: {
-	        
-	                text: $(this).next('.tool-tip-card-image')
-				},
+		    $('#decklist').on('mouseenter', 'a.card-name', function (event) {
+		        
+		        $(this).qtip({
 
-				position: {
+		            content: {
+		        
+		                text: $(this).next('.tool-tip-card-image')
+					},
 
-					my: 'bottom left',
-					at: 'top right',
-					target: $(this)
-				}
-	        });
+					position: {
+
+						my: 'bottom left',
+						at: 'top right',
+						target: $(this)
+					},
+
+		            overwrite: false, // Don't overwrite tooltips already bound
+
+		            show: {
+		                event: event.type, // Use the same event type as above
+		                ready: true // Show immediately - important!
+		            }
+		        });
+		    });
 		}
-
-		console.log(card);
 	});
 
 });
