@@ -16,6 +16,7 @@ $(document).ready(function() {
 		card['name'] = cardRow.data('card-name');
 		card['actual-cmc'] = cardRow.data('card-actual-cmc');
 		card['multiverseid'] = cardRow.data('card-multiverseid');
+		card['middle_text'] = cardRow.data('card-middle-text');
 
 		var copyRow = $('tr.copy-row[data-card-id="'+card['id']+'"]');
 
@@ -35,46 +36,68 @@ $(document).ready(function() {
 			}
 
 			copyRow.find('td.quantity').text(card['quantity']);
-		
-		} else if (!card['is-in-decklist']) {
 
-			card['is-in-decklist'] = 1;
+			return false;
+		} 
 
-			card['quantity'] = 1;
+		card['is-in-decklist'] = 1;
 
-			$("#decklist tbody").append('<tr class="copy-row" data-card-id="'+card['id']+'"><td class="quantity">'+card['quantity']+'<td class="card-name"><a class="card-name" target="_blank" href="/cards/'+card['id']+'">'+card['name']+'</a><div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/'+card['multiverseid']+'.jpg"></div></td><td><a class="remove-card" href=""><div class="circle-minus-icon"><span class="glyphicon glyphicon-minus"></span></div></a></td></tr>');
+		card['quantity'] = 1;
 
+		var decklistHasCards = $('tr.copy-row').length;
 
-			/****************************************************************************************
-			TOOLTIPS FOR DYNAMIC CONTENT
-			****************************************************************************************/
+		var copyRowHtml = '<tr class="copy-row" data-card-id="'+card['id']+'" data-card-actual-cmc="'+card['actual-cmc']+'"><td class="quantity">'+card['quantity']+'<td class="card-name"><a class="card-name" target="_blank" href="/cards/'+card['id']+'">'+card['name']+'</a><div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/'+card['multiverseid']+'.jpg"></div></td><td><a class="remove-card" href=""><div class="circle-minus-icon"><span class="glyphicon glyphicon-minus"></span></div></a></td></tr>';
 
-		    $('#decklist').on('mouseenter', 'a.card-name', function (event) {
-		        
-		        $(this).qtip({
+		if (decklistHasCards) {
 
-		            content: {
-		        
-		                text: $(this).next('.tool-tip-card-image')
-					},
+			var insertSpot = getInsertSpotForCopyRow(card);
 
-					position: {
+			if (insertSpot['howToInsert'] == 'before') {
 
-						my: 'bottom left',
-						at: 'top right',
-						target: $(this)
-					},
+				insertSpot['spot'].before(copyRowHtml);
+			}
 
-		            overwrite: false, // Don't overwrite tooltips already bound
+			if (insertSpot['howToInsert'] == 'after') {
 
-		            show: {
-		            	
-		                event: event.type, // Use the same event type as above
-		                ready: true // Show immediately - important!
-		            }
-		        });
-		    });
+				insertSpot['spot'].after(copyRowHtml);
+			}			
 		}
+
+		if (!decklistHasCards) {
+
+			$("#decklist tbody").append(copyRowHtml);
+		}
+
+
+		/****************************************************************************************
+		TOOLTIPS FOR DYNAMIC CONTENT
+		****************************************************************************************/
+
+	    $('#decklist').on('mouseenter', 'a.card-name', function (event) {
+	        
+	        $(this).qtip({
+
+	            content: {
+	        
+	                text: $(this).next('.tool-tip-card-image')
+				},
+
+				position: {
+
+					my: 'bottom left',
+					at: 'top right',
+					target: $(this)
+				},
+
+	            overwrite: false, // Don't overwrite tooltips already bound
+
+	            show: {
+	            	
+	                event: event.type, // Use the same event type as above
+	                ready: true // Show immediately - important!
+	            }
+	        });
+	    });
 	});
 
 
@@ -95,13 +118,13 @@ $(document).ready(function() {
 		if (card['quantity'] == 1) {
 
 			$(copyRow).remove();
-		
-		} else if (card['quantity'] != 1) {
 
-			card['quantity']--;
+			return false;
+		} 
 
-			copyRow.find('td.quantity').text(card['quantity']);
-		}
+		card['quantity']--;
+
+		copyRow.find('td.quantity').text(card['quantity']);
 	});
 
 
@@ -146,6 +169,49 @@ $(document).ready(function() {
 		}		
 
 		return false;
+	}
+
+	var getInsertSpotForCopyRow = function(card) {
+
+		var insertSpot = {
+
+			spot: null,
+
+			howToInsert: null
+		};
+
+		$('tr.copy-row').each(function(index) {
+
+			var copyRow = {};
+
+			copyRow['actual-cmc'] = $(this).data('card-actual-cmc');
+
+			if (copyRow['actual-cmc'] == 'variable') {
+
+				copyRow['actual-cmc'] = 100;
+			}
+
+			if (card['actual-cmc'] == 'variable') {
+
+				card['actual-cmc'] = 100;
+			}
+
+			if (copyRow['actual-cmc'] > card['actual-cmc']) {
+
+				insertSpot['spot'] = $(this);
+				insertSpot['howToInsert'] = 'before';
+
+				return false;
+			}
+		});
+
+		if (insertSpot['spot'] === null) {
+
+			insertSpot['spot'] = $('tr.copy-row').last();
+			insertSpot['howToInsert'] = 'after';
+		}
+
+		return insertSpot;
 	}
 
 });
