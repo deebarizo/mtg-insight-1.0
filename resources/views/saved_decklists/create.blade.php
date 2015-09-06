@@ -28,15 +28,14 @@
 			</form>
 		</div>
 		
-		<div class="col-lg-8">
-			<table id="cards" class="table table-striped table-bordered table-hover table-condensed">
+		<div class="col-lg-6">
+			<table style="font-size: 90%" id="cards" class="table table-striped table-bordered table-hover table-condensed">
 				<thead>
 					<tr>
 						<th>Name</th>
-						<th>Mod</th>
-						<th>Rating</th>
-						<th>Actual CMC</th>
-						<th>Mana Cost</th>
+						<th>R</th>
+						<th>aCMC</th>
+						<th>MC</th>
 						<th>Add</th>
 					</tr>
 				</thead>
@@ -45,7 +44,9 @@
 						<tr class="card-row" 
 							data-card-id="{{ $card->id }}"
 							data-card-name="{{ $card->name }}"
+							data-card-rating="{{ $card->rating }}"
 							data-card-actual-cmc="{{ $card->actual_cmc }}"
+							data-card-mana-cost="{{ $card->mana_cost }}"
 							data-card-multiverseid="{{ $card->multiverseid }}"
 							data-card-middle-text="{{ $card->middle_text }}">
 							<td>
@@ -54,18 +55,10 @@
 									<img src="/files/card_images/{{ $card->multiverseid }}.jpg">
 								</div>
 							</td>
-							<td>
-								<a class="card-edit" target="_blank" href="/cards/{{ $card->id }}/edit">
-									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-								</a>
-								<div style="display: none" class="tool-tip-card-image">
-									<img src="/files/card_images/{{ $card->multiverseid }}.jpg">
-								</div>
-							</td>	
-							<td>{!! $card->rating !!}</td>		
-							<td>{!! $card->actual_cmc !!}</td>					
-							<td>{!! $card->mana_cost !!}</td>
-							<td>
+							<td style="width: 10%">{{ $card->rating }}</td>		
+							<td style="width: 15%">{{ $card->actual_cmc }}</td>					
+							<td style="width: 20%">{!! $card->mana_cost !!}</td>
+							<td style="width: 12%">
 								<a class="add-card" href="">
 									<div class="circle-plus-icon">
 										<span class="glyphicon glyphicon-plus"></span>
@@ -78,16 +71,19 @@
 			</table>
 		</div>
 
-		<div class="col-lg-4">
+		<div class="col-lg-6">
 			<h4>Decklist</h4>
 
 			<table id="decklist" class="table table-striped table-bordered table-hover table-condensed">
 				
 				<thead>
 					<tr>
-						<th style="width: 10%">Q</th>					
+						<th style="width: 7%">Q</th>					
 						<th>Name</th>
-						<th style="width: 10%">Remove</th>
+						<th style="width: 7%">R</th>
+						<th style="width: 15%">aCMC</th>
+						<th style="width: 20%">MC</th>
+						<th style="width: 7%">Rmv</th>
 					</tr>
 				</thead>
 				
@@ -101,6 +97,20 @@
 		</div>
 
 	</div>
+
+	<script type="text/javascript">
+
+		/****************************************************************************************
+		DATA TABLE
+		****************************************************************************************/
+
+		$('#cards').dataTable({
+			"scrollY": "600px",
+			"paging": false,
+			"order": [[1, "desc"]]
+		});
+
+	</script>
 
 	<script src="/js/cards/index.js"></script>
 

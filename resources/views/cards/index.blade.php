@@ -70,6 +70,20 @@
 
 	</div>
 
+	<script type="text/javascript">
+
+		/****************************************************************************************
+		DATA TABLE
+		****************************************************************************************/
+
+		$('#cards').dataTable({
+			"scrollY": "600px",
+			"paging": false,
+			"order": [[2, "desc"]]
+		});
+
+	</script>
+
 	<script src="/js/cards/index.js"></script>
 
 @stop

@@ -14,7 +14,9 @@ $(document).ready(function() {
 
 		card['id'] = cardRow.data('card-id');
 		card['name'] = cardRow.data('card-name');
-		card['actual-cmc'] = cardRow.data('card-actual-cmc');
+		card['rating'] = cardRow.data('card-rating');
+		card['actual_cmc'] = cardRow.data('card-actual-cmc');
+		card['mana_cost'] = cardRow.data('card-mana-cost');
 		card['multiverseid'] = cardRow.data('card-multiverseid');
 		card['middle_text'] = cardRow.data('card-middle-text');
 
@@ -46,7 +48,7 @@ $(document).ready(function() {
 
 		var decklistHasCards = $('tr.copy-row').length;
 
-		var copyRowHtml = '<tr class="copy-row" data-card-id="'+card['id']+'" data-card-actual-cmc="'+card['actual-cmc']+'" data-card-middle-text="'+card['middle_text']+'"><td class="quantity">'+card['quantity']+'<td class="card-name"><a class="card-name" target="_blank" href="/cards/'+card['id']+'">'+card['name']+'</a><div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/'+card['multiverseid']+'.jpg"></div></td><td><a class="remove-card" href=""><div class="circle-minus-icon"><span class="glyphicon glyphicon-minus"></span></div></a></td></tr>';
+		var copyRowHtml = '<tr class="copy-row" data-card-id="'+card['id']+'" data-card-actual-cmc="'+card['actual_cmc']+'" data-card-middle-text="'+card['middle_text']+'"><td class="quantity">'+card['quantity']+'<td class="card-name"><a class="card-name" target="_blank" href="/cards/'+card['id']+'">'+card['name']+'</a><div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/'+card['multiverseid']+'.jpg"></div></td><td>'+card['rating']+'</td><td>'+card['actual_cmc']+'</td><td>'+card['mana_cost']+'</td><td><a class="remove-card" href=""><div class="circle-minus-icon"><span class="glyphicon glyphicon-minus"></span></div></a></td></tr>';
 
 		if (decklistHasCards) {
 
@@ -202,19 +204,19 @@ $(document).ready(function() {
 				return false;
 			}
 
-			copyRow['actual-cmc'] = $(this).data('card-actual-cmc');
+			copyRow['actual_cmc'] = $(this).data('card-actual-cmc');
 
-			if (copyRow['actual-cmc'] == 'variable') {
+			if (copyRow['actual_cmc'] == 'variable') {
 
-				copyRow['actual-cmc'] = 100;
+				copyRow['actual_cmc'] = 100;
 			}
 
-			if (card['actual-cmc'] == 'variable') {
+			if (card['actual_cmc'] == 'variable') {
 
-				card['actual-cmc'] = 100;
+				card['actual_cmc'] = 100;
 			}
 
-			if (copyRow['actual-cmc'] > card['actual-cmc']) {
+			if (copyRow['actual_cmc'] > card['actual_cmc']) {
 
 				insertSpot['spot'] = $(this);
 				insertSpot['howToInsert'] = 'before';
