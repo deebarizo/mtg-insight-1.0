@@ -46,7 +46,7 @@ $(document).ready(function() {
 
 		var decklistHasCards = $('tr.copy-row').length;
 
-		var copyRowHtml = '<tr class="copy-row" data-card-id="'+card['id']+'" data-card-actual-cmc="'+card['actual-cmc']+'"><td class="quantity">'+card['quantity']+'<td class="card-name"><a class="card-name" target="_blank" href="/cards/'+card['id']+'">'+card['name']+'</a><div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/'+card['multiverseid']+'.jpg"></div></td><td><a class="remove-card" href=""><div class="circle-minus-icon"><span class="glyphicon glyphicon-minus"></span></div></a></td></tr>';
+		var copyRowHtml = '<tr class="copy-row" data-card-id="'+card['id']+'" data-card-actual-cmc="'+card['actual-cmc']+'" data-card-middle-text="'+card['middle_text']+'"><td class="quantity">'+card['quantity']+'<td class="card-name"><a class="card-name" target="_blank" href="/cards/'+card['id']+'">'+card['name']+'</a><div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/'+card['multiverseid']+'.jpg"></div></td><td><a class="remove-card" href=""><div class="circle-minus-icon"><span class="glyphicon glyphicon-minus"></span></div></a></td></tr>';
 
 		if (decklistHasCards) {
 
@@ -182,7 +182,25 @@ $(document).ready(function() {
 
 		$('tr.copy-row').each(function(index) {
 
+			if (isCardALand(card)) {
+
+				insertSpot['spot'] = $('tr.copy-row').last();
+				insertSpot['howToInsert'] = 'after';
+
+				return false;
+			}
+
 			var copyRow = {};
+
+			copyRow['middle_text'] = $(this).data('card-middle-text');
+
+			if (isCardALand(copyRow)) {
+
+				insertSpot['spot'] = $(this);
+				insertSpot['howToInsert'] = 'before';
+
+				return false;
+			}
 
 			copyRow['actual-cmc'] = $(this).data('card-actual-cmc');
 
@@ -212,6 +230,16 @@ $(document).ready(function() {
 		}
 
 		return insertSpot;
+	}
+
+	var isCardALand =  function(card) {
+
+		if (card['middle_text'].search('Land') > -1) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 });
