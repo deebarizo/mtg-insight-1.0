@@ -26,9 +26,11 @@ $(document).ready(function() {
 
 		card['rows-in-decklist'] = copyRow.length; // 0 = not in decklist, 1 = in md OR sb but not BOTH, 2 = in md AND sb
 
-		if (card['rows-in-decklist'] == 1) {
+		if (card['rows-in-decklist'] > 0) {
 
-			if (role == getRole(copyRow.find('a.remove-card'))) {
+			var roleMatchesCopyRow = copyRow.filter('.'+role).length; 
+
+			if (roleMatchesCopyRow) {
 
 				var totalQuantityIsValid = validateTotalQuantity(copyRow, card);
 
@@ -37,31 +39,15 @@ $(document).ready(function() {
 					return false;
 				}
 
-				card['quantity'] = getQuantity(copyRow, 'add card');
+				card['quantity'] = getQuantity(copyRow, role, 'add card');
 
-				copyRow.find('td.quantity').text(card['quantity']);
+				copyRow.filter('.'+role).find('td.quantity').text(card['quantity']);
 
 				updateDecklistCount(role);
 
 				return false;
 			}
 		} 
-
-		if (card['rows-in-decklist'] == 2) {
-
-			var totalQuantityIsValid = validateTotalQuantity(copyRow, card);
-
-			if (!totalQuantityIsValid) {
-
-				return false;
-			}
-
-			$('table#'+role+' tr.copy-row[data-card-id="'+card['id']+'"]').find('td.quantity').text(card['quantity']);
-
-			updateDecklistCount(role);
-
-			return false;
-		}
 
 		card['quantity'] = 1;
 
@@ -74,7 +60,7 @@ $(document).ready(function() {
 
 		decklistHasCards[role] = $('table#'+role+' tr.copy-row').length;
 
-		var copyRowHtml = '<tr class="copy-row" data-card-id="'+card['id']+'" data-card-actual-cmc="'+card['actual_cmc']+'" data-card-middle-text="'+card['middle_text']+'"><td class="quantity">'+card['quantity']+'<td class="card-name"><a class="card-name" target="_blank" href="/cards/'+card['id']+'">'+card['name']+'</a><div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/'+card['multiverseid']+'.jpg"></div></td><td>'+card['rating']+'</td><td>'+card['actual_cmc']+'</td><td>'+card['mana_cost']+'</td><td><a class="remove-card '+role+'" href=""><div class="icon minus"><span class="glyphicon glyphicon-minus"></span></div></a></td></tr>';
+		var copyRowHtml = '<tr class="copy-row '+role+'" data-card-id="'+card['id']+'" data-card-actual-cmc="'+card['actual_cmc']+'" data-card-middle-text="'+card['middle_text']+'"><td class="quantity">'+card['quantity']+'<td class="card-name"><a class="card-name" target="_blank" href="/cards/'+card['id']+'">'+card['name']+'</a><div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/'+card['multiverseid']+'.jpg"></div></td><td>'+card['rating']+'</td><td>'+card['actual_cmc']+'</td><td>'+card['mana_cost']+'</td><td><a class="remove-card '+role+'" href=""><div class="icon minus"><span class="glyphicon glyphicon-minus"></span></div></a></td></tr>';
 
 		if (decklistHasCards[role]) {
 
@@ -142,9 +128,9 @@ $(document).ready(function() {
 
 		var card = {};
 
-		card['quantity'] = getQuantity(copyRow, 'remove card');
-
 		var role = getRole($(this));
+
+		card['quantity'] = getQuantity(copyRow, role, 'remove card');
 
 		if (card['quantity'] == 0) {
 
@@ -195,9 +181,9 @@ $(document).ready(function() {
 		return true;
 	}
 
-	var getQuantity = function(copyRow, change) {
+	var getQuantity = function(copyRow, role, change) {
 
-		var quantity = Number(copyRow.find('td.quantity').text());
+		var quantity = Number(copyRow.filter('.'+role).find('td.quantity').text());
 
 		if (change == 'add card') {
 
