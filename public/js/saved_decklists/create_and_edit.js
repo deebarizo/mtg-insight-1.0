@@ -39,15 +39,36 @@ $(document).ready(function() {
 					return false;
 				}
 
+				var decklistCount = getDecklistCount(role);
+
+				if (!validateDecklist(decklistCount, role)) {
+
+					return false;
+				}
+
 				card['quantity'] = getQuantity(copyRow, role, 'add card');
 
 				copyRow.filter('.'+role).find('td.quantity').text(card['quantity']);
 
-				updateDecklistCount(role);
+				updateDecklistCount(role, decklistCount);
 
 				return false;
 			}
 		} 
+
+		var totalQuantityIsValid = validateTotalQuantity(copyRow, card);
+
+		if (!totalQuantityIsValid) {
+
+			return false;
+		}
+
+		var decklistCount = getDecklistCount(role);
+
+		if (!validateDecklist(decklistCount, role)) {
+
+			return false;
+		}
 
 		card['quantity'] = 1;
 
@@ -82,7 +103,7 @@ $(document).ready(function() {
 			$('table#'+role+' tbody').append(copyRowHtml);
 		}
 
-		updateDecklistCount(role);
+		updateDecklistCount(role, decklistCount);
 
 		/****************************************************************************************
 		TOOLTIPS FOR DYNAMIC CONTENT
@@ -132,18 +153,20 @@ $(document).ready(function() {
 
 		card['quantity'] = getQuantity(copyRow, role, 'remove card');
 
+		var decklistCount = getDecklistCount(role);
+
 		if (card['quantity'] == 0) {
 
 			$(copyRow).remove();
 
-			updateDecklistCount(role);
+			updateDecklistCount(role, decklistCount);
 
 			return false;
 		} 
 
 		copyRow.find('td.quantity').text(card['quantity']);
 
-		updateDecklistCount(role);
+		updateDecklistCount(role, decklistCount);
 	});
 
 
@@ -200,20 +223,49 @@ $(document).ready(function() {
 
 
 	/****************************************************************************************
-	FUNCTION LIBRARY
+	FUNCTION LIBRARY (DECKLIST)
 	****************************************************************************************/
 
-	var updateDecklistCount = function(role) {
+	var getDecklistCount = function(role) {
 
-		var count = 0;
+		var decklistCount = {
+
+			md: 0,
+			
+			sb: 0
+		};
 
 		$('table#'+role+' td.quantity').each(function(index) {
 
-			count += Number($(this).text());
-		});
+			decklistCount[role] += Number($(this).text());
+		});	
 
-		$('span.count.'+role).text(count);
+		decklistCount[role]++;
+
+		return decklistCount;	
 	}
+
+	var validateDecklist = function(decklistCount, role) {
+
+		if (role == 'sb' && decklistCount[role] > 15) {
+
+			alert('You have reached the maximum sideboard limit of 15 cards');
+
+			return false;
+		}
+
+		return true;
+	}
+
+	var updateDecklistCount = function(role, decklistCount) {
+
+		$('span.decklist-count.'+role).text(decklistCount[role]);
+	}
+
+
+	/****************************************************************************************
+	FUNCTION LIBRARY
+	****************************************************************************************/
 
 	var isCardBasicLand = function(copyRow) {
 
