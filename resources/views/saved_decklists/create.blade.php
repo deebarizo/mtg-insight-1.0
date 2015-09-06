@@ -11,14 +11,14 @@
 
 	<div class="row">
 		
-		<div class="col-lg-12">
+		<div class="col-lg-6">
 
-			<h3>{{ $format }}</h3>
+			<h3>Cards</h3>
 
 			<form class="form-inline" style="margin: 0 0 10px 0">
 
 				<label>Actual CMCs</label>
-				<select class="form-control actual-cmc-filter" style="width: 10%; margin-right: 20px">
+				<select class="form-control actual-cmc-filter" style="width: 20%; margin-right: 20px">
 				  	<option value="All">All</option>
 				  	@foreach ($actualCmcs as $actualCmc)
 					  	<option value="{{ $actualCmc }}">{{ $actualCmc }}</option>
@@ -26,9 +26,7 @@
 				</select>	
 
 			</form>
-		</div>
-		
-		<div class="col-lg-6">
+
 			<table style="font-size: 90%" id="cards" class="table table-striped table-bordered table-hover table-condensed">
 				<thead>
 					<tr>
@@ -59,8 +57,13 @@
 							<td style="width: 15%">{{ $card->actual_cmc }}</td>					
 							<td style="width: 20%">{!! $card->mana_cost !!}</td>
 							<td style="width: 12%">
-								<a class="add-card" href="">
-									<div class="circle-plus-icon">
+								<a class="add-card md" href="">
+									<div class="circle-plus-icon md">
+										<span class="glyphicon glyphicon-plus"></span>
+									</div>
+								</a>
+								<a class="add-card sb" href="">
+									<div class="circle-plus-icon sb">
 										<span class="glyphicon glyphicon-plus"></span>
 									</div>
 								</a>
@@ -71,10 +74,12 @@
 			</table>
 		</div>
 
-		<div class="col-lg-6">
-			<h4>Decklist</h4>
+		<div class="col-lg-6 decklist">
+			<h3>New Decklist</h3>
 
-			<table id="decklist" class="table table-striped table-bordered table-hover table-condensed">
+			<h4>Main Deck (<span class="md-count">0</span>)</h4>
+
+			<table id="main-deck" class="table table-striped table-bordered table-hover table-condensed">
 				
 				<thead>
 					<tr>

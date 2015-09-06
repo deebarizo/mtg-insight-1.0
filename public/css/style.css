@@ -12,11 +12,25 @@ tr.hide-card-row {
 SAVED DECKLISTS (CREATE)
 ****************************************************************************************/
 
+a.add-card, a.add-card:hover, a.add-card:active, a.add-card:visited {
+    text-decoration:none;
+}
+
 .circle-plus-icon {
 
-    color: green;
     text-align:center;
     margin: 0 auto;
+    display: inline;
+}
+
+.circle-plus-icon.md {
+
+    color: green;
+}
+
+.circle-plus-icon.sb {
+
+    color: lightgreen;
 }
 
 .circle-minus-icon {

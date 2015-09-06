@@ -39,6 +39,8 @@ $(document).ready(function() {
 
 			copyRow.find('td.quantity').text(card['quantity']);
 
+			updateDecklistCount('md');
+
 			return false;
 		} 
 
@@ -67,15 +69,16 @@ $(document).ready(function() {
 
 		if (!decklistHasCards) {
 
-			$("#decklist tbody").append(copyRowHtml);
+			$("#main-deck tbody").append(copyRowHtml);
 		}
 
+		updateDecklistCount('md');
 
 		/****************************************************************************************
 		TOOLTIPS FOR DYNAMIC CONTENT
 		****************************************************************************************/
 
-	    $('#decklist').on('mouseenter', 'a.card-name', function (event) {
+	    $('#main-deck').on('mouseenter', 'a.card-name', function (event) {
 	        
 	        $(this).qtip({
 
@@ -107,7 +110,7 @@ $(document).ready(function() {
 	REMOVE CARD FROM DECKLIST
 	****************************************************************************************/
 
-	$('#decklist').on('click', 'a.remove-card', function(e) { // syntax for dynamic content
+	$('div.decklist').on('click', 'a.remove-card', function(e) { // syntax for dynamic content
 
 		e.preventDefault();
 
@@ -121,18 +124,39 @@ $(document).ready(function() {
 
 			$(copyRow).remove();
 
+			updateDecklistCount('md');
+
 			return false;
 		} 
 
 		card['quantity']--;
 
 		copyRow.find('td.quantity').text(card['quantity']);
+
+		updateDecklistCount('md');
 	});
 
 
 	/****************************************************************************************
 	FUNCTION LIBRARY
 	****************************************************************************************/
+
+	var updateDecklistCount = function(role) {
+
+		var count = 0;
+
+		if (role == 'md') {
+
+			$('table#main-deck td.quantity').each(function(index) {
+
+				count += Number($(this).text());
+			});
+
+			$('span.md-count').text(count);
+
+			return false;
+		}
+	}
 
 	var getQuantity = function(copyRow) {
 	
