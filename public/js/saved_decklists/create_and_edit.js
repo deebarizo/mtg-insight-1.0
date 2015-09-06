@@ -39,7 +39,7 @@ $(document).ready(function() {
 					return false;
 				}
 
-				var decklistCount = getDecklistCount(role);
+				var decklistCount = getDecklistCount(role, 'add card');
 
 				if (!validateDecklist(decklistCount, role)) {
 
@@ -63,7 +63,7 @@ $(document).ready(function() {
 			return false;
 		}
 
-		var decklistCount = getDecklistCount(role);
+		var decklistCount = getDecklistCount(role, 'add card');
 
 		if (!validateDecklist(decklistCount, role)) {
 
@@ -153,7 +153,7 @@ $(document).ready(function() {
 
 		card['quantity'] = getQuantity(copyRow, role, 'remove card');
 
-		var decklistCount = getDecklistCount(role);
+		var decklistCount = getDecklistCount(role, 'remove card');
 
 		if (card['quantity'] == 0) {
 
@@ -192,7 +192,7 @@ $(document).ready(function() {
 
 		card['total_quantity'] = getTotalQuantity(copyRow);
 
-		var cardIsBasicLand = isCardBasicLand(copyRow);
+		var cardIsBasicLand = isCardBasicLand(card);
 
 		if (card['total_quantity'] > 4 && !cardIsBasicLand) {
 
@@ -226,7 +226,7 @@ $(document).ready(function() {
 	FUNCTION LIBRARY (DECKLIST)
 	****************************************************************************************/
 
-	var getDecklistCount = function(role) {
+	var getDecklistCount = function(role, change) {
 
 		var decklistCount = {
 
@@ -240,7 +240,15 @@ $(document).ready(function() {
 			decklistCount[role] += Number($(this).text());
 		});	
 
-		decklistCount[role]++;
+		if (change == 'add card') {
+
+			decklistCount[role]++;
+		}
+
+		if (change == 'remove card') {
+
+			decklistCount[role]--;
+		}
 
 		return decklistCount;	
 	}
@@ -267,31 +275,29 @@ $(document).ready(function() {
 	FUNCTION LIBRARY
 	****************************************************************************************/
 
-	var isCardBasicLand = function(copyRow) {
+	var isCardBasicLand = function(card) {
 
-		var cardName = copyRow.find('td.card-name').text();
-
-		if (cardName == 'Plains') {
+		if (card['name'] == 'Plains') {
 
 			return true;
 		}
 
-		if (cardName == 'Island') {
+		if (card['name'] == 'Island') {
 
 			return true;
 		}
 
-		if (cardName == 'Swamp') {
+		if (card['name'] == 'Swamp') {
 
 			return true;
 		}
 
-		if (cardName == 'Mountain') {
+		if (card['name'] == 'Mountain') {
 
 			return true;
 		}
 
-		if (cardName == 'Forest') {
+		if (card['name'] == 'Forest') {
 
 			return true;
 		}		

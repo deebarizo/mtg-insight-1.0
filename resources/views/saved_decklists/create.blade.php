@@ -62,6 +62,7 @@
 										<span class="glyphicon glyphicon-plus"></span>
 									</div>
 								</a>
+								&nbsp;
 								<a class="add-card sb" href="">
 									<div class="icon plus sb">
 										<span class="glyphicon glyphicon-plus"></span>
