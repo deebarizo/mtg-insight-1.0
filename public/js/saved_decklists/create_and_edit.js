@@ -24,31 +24,44 @@ $(document).ready(function() {
 
 		var role = getRole($(this));
 
-		console.log(role);
+		card['rows-in-decklist'] = copyRow.length; // 0 = not in decklist, 1 = in md OR sb but not BOTH, 2 = in md AND sb
 
-		card['is-in-decklist'] = copyRow.length;
+		if (card['rows-in-decklist'] == 1) {
 
-		if (card['is-in-decklist']) {
+			if (role == getRole(copyRow.find('a.remove-card'))) {
 
-			card['quantity'] = getQuantity(copyRow);
+				var totalQuantityIsValid = validateTotalQuantity(copyRow, card);
 
-			card['quantity']++;
+				if (!totalQuantityIsValid) {
 
-			var cardIsBasicLand = isCardBasicLand(copyRow);
+					return false;
+				}
 
-			if (card['quantity'] > 4 && !cardIsBasicLand) {
+				card['quantity'] = getQuantity(copyRow, 'add card');
+
+				copyRow.find('td.quantity').text(card['quantity']);
+
+				updateDecklistCount(role);
+
+				return false;
+			}
+		} 
+
+		if (card['rows-in-decklist'] == 2) {
+
+			var totalQuantityIsValid = validateTotalQuantity(copyRow, card);
+
+			if (!totalQuantityIsValid) {
 
 				return false;
 			}
 
-			copyRow.find('td.quantity').text(card['quantity']);
+			$('table#'+role+' tr.copy-row[data-card-id="'+card['id']+'"]').find('td.quantity').text(card['quantity']);
 
 			updateDecklistCount(role);
 
 			return false;
-		} 
-
-		card['is-in-decklist'] = 1;
+		}
 
 		card['quantity'] = 1;
 
@@ -60,8 +73,6 @@ $(document).ready(function() {
 		}
 
 		decklistHasCards[role] = $('table#'+role+' tr.copy-row').length;
-
-		console.log(decklistHasCards);
 
 		var copyRowHtml = '<tr class="copy-row" data-card-id="'+card['id']+'" data-card-actual-cmc="'+card['actual_cmc']+'" data-card-middle-text="'+card['middle_text']+'"><td class="quantity">'+card['quantity']+'<td class="card-name"><a class="card-name" target="_blank" href="/cards/'+card['id']+'">'+card['name']+'</a><div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/'+card['multiverseid']+'.jpg"></div></td><td>'+card['rating']+'</td><td>'+card['actual_cmc']+'</td><td>'+card['mana_cost']+'</td><td><a class="remove-card '+role+'" href=""><div class="icon minus"><span class="glyphicon glyphicon-minus"></span></div></a></td></tr>';
 
@@ -131,11 +142,11 @@ $(document).ready(function() {
 
 		var card = {};
 
-		card['quantity'] = getQuantity(copyRow);
+		card['quantity'] = getQuantity(copyRow, 'remove card');
 
 		var role = getRole($(this));
 
-		if (card['quantity'] == 1) {
+		if (card['quantity'] == 0) {
 
 			$(copyRow).remove();
 
@@ -144,12 +155,62 @@ $(document).ready(function() {
 			return false;
 		} 
 
-		card['quantity']--;
-
 		copyRow.find('td.quantity').text(card['quantity']);
 
 		updateDecklistCount(role);
 	});
+
+
+	/****************************************************************************************
+	FUNCTION LIBRARY (QUANTITY)
+	****************************************************************************************/
+
+	var getTotalQuantity = function(copyRow) {
+
+		var totalQuantity = 0;
+
+		copyRow.each(function(index) {
+
+			totalQuantity += Number($(this).find('td.quantity').text());
+		});
+
+		totalQuantity++;
+
+		return totalQuantity;
+	}
+
+	var validateTotalQuantity = function(copyRow, card) {
+
+		card['total_quantity'] = getTotalQuantity(copyRow);
+
+		var cardIsBasicLand = isCardBasicLand(copyRow);
+
+		if (card['total_quantity'] > 4 && !cardIsBasicLand) {
+
+			alert('You already have 4 copies between main deck and sideboard.');
+
+			return false;
+		}
+
+		return true;
+	}
+
+	var getQuantity = function(copyRow, change) {
+
+		var quantity = Number(copyRow.find('td.quantity').text());
+
+		if (change == 'add card') {
+
+			quantity++;
+		}
+
+		if (change == 'remove card') {
+
+			quantity--;
+		}
+
+		return quantity;
+	}
 
 
 	/****************************************************************************************
@@ -166,13 +227,6 @@ $(document).ready(function() {
 		});
 
 		$('span.count.'+role).text(count);
-	}
-
-	var getQuantity = function(copyRow) {
-	
-		var quantityTd = copyRow.find('td.quantity');
-		
-		return Number(quantityTd.text());
 	}
 
 	var isCardBasicLand = function(copyRow) {
