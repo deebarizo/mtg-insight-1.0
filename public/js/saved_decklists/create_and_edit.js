@@ -22,6 +22,10 @@ $(document).ready(function() {
 
 		var copyRow = $('tr.copy-row[data-card-id="'+card['id']+'"]');
 
+		var role = getRole($(this));
+
+		console.log(role);
+
 		card['is-in-decklist'] = copyRow.length;
 
 		if (card['is-in-decklist']) {
@@ -39,7 +43,7 @@ $(document).ready(function() {
 
 			copyRow.find('td.quantity').text(card['quantity']);
 
-			updateDecklistCount('md');
+			updateDecklistCount(role);
 
 			return false;
 		} 
@@ -48,13 +52,22 @@ $(document).ready(function() {
 
 		card['quantity'] = 1;
 
-		var decklistHasCards = $('tr.copy-row').length;
+		var decklistHasCards = {
 
-		var copyRowHtml = '<tr class="copy-row" data-card-id="'+card['id']+'" data-card-actual-cmc="'+card['actual_cmc']+'" data-card-middle-text="'+card['middle_text']+'"><td class="quantity">'+card['quantity']+'<td class="card-name"><a class="card-name" target="_blank" href="/cards/'+card['id']+'">'+card['name']+'</a><div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/'+card['multiverseid']+'.jpg"></div></td><td>'+card['rating']+'</td><td>'+card['actual_cmc']+'</td><td>'+card['mana_cost']+'</td><td><a class="remove-card" href=""><div class="icon minus"><span class="glyphicon glyphicon-minus"></span></div></a></td></tr>';
+			md: null,
 
-		if (decklistHasCards) {
+			sb: null
+		}
 
-			var insertSpot = getInsertSpotForCopyRow(card);
+		decklistHasCards[role] = $('table#'+role+' tr.copy-row').length;
+
+		console.log(decklistHasCards);
+
+		var copyRowHtml = '<tr class="copy-row" data-card-id="'+card['id']+'" data-card-actual-cmc="'+card['actual_cmc']+'" data-card-middle-text="'+card['middle_text']+'"><td class="quantity">'+card['quantity']+'<td class="card-name"><a class="card-name" target="_blank" href="/cards/'+card['id']+'">'+card['name']+'</a><div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/'+card['multiverseid']+'.jpg"></div></td><td>'+card['rating']+'</td><td>'+card['actual_cmc']+'</td><td>'+card['mana_cost']+'</td><td><a class="remove-card '+role+'" href=""><div class="icon minus"><span class="glyphicon glyphicon-minus"></span></div></a></td></tr>';
+
+		if (decklistHasCards[role]) {
+
+			var insertSpot = getInsertSpotForCopyRow(card, role);
 
 			if (insertSpot['howToInsert'] == 'before') {
 
@@ -67,18 +80,18 @@ $(document).ready(function() {
 			}			
 		}
 
-		if (!decklistHasCards) {
+		if (!decklistHasCards[role]) {
 
-			$("#main-deck tbody").append(copyRowHtml);
+			$('table#'+role+' tbody').append(copyRowHtml);
 		}
 
-		updateDecklistCount('md');
+		updateDecklistCount(role);
 
 		/****************************************************************************************
 		TOOLTIPS FOR DYNAMIC CONTENT
 		****************************************************************************************/
 
-	    $('#main-deck').on('mouseenter', 'a.card-name', function (event) {
+	    $('#md').on('mouseenter', 'a.card-name', function (event) {
 	        
 	        $(this).qtip({
 
@@ -120,11 +133,13 @@ $(document).ready(function() {
 
 		card['quantity'] = getQuantity(copyRow);
 
+		var role = getRole($(this));
+
 		if (card['quantity'] == 1) {
 
 			$(copyRow).remove();
 
-			updateDecklistCount('md');
+			updateDecklistCount(role);
 
 			return false;
 		} 
@@ -133,7 +148,7 @@ $(document).ready(function() {
 
 		copyRow.find('td.quantity').text(card['quantity']);
 
-		updateDecklistCount('md');
+		updateDecklistCount(role);
 	});
 
 
@@ -145,17 +160,12 @@ $(document).ready(function() {
 
 		var count = 0;
 
-		if (role == 'md') {
+		$('table#'+role+' td.quantity').each(function(index) {
 
-			$('table#main-deck td.quantity').each(function(index) {
+			count += Number($(this).text());
+		});
 
-				count += Number($(this).text());
-			});
-
-			$('span.md-count').text(count);
-
-			return false;
-		}
+		$('span.count.'+role).text(count);
 	}
 
 	var getQuantity = function(copyRow) {
@@ -197,7 +207,7 @@ $(document).ready(function() {
 		return false;
 	}
 
-	var getInsertSpotForCopyRow = function(card) {
+	var getInsertSpotForCopyRow = function(card, role) {
 
 		var insertSpot = {
 
@@ -206,11 +216,11 @@ $(document).ready(function() {
 			howToInsert: null
 		};
 
-		$('tr.copy-row').each(function(index) {
+		$('table#'+role+' tr.copy-row').each(function(index) {
 
 			if (isCardALand(card)) {
 
-				insertSpot['spot'] = $('tr.copy-row').last();
+				insertSpot['spot'] = $('table#'+role+' tr.copy-row').last();
 				insertSpot['howToInsert'] = 'after';
 
 				return false;
@@ -251,14 +261,14 @@ $(document).ready(function() {
 
 		if (insertSpot['spot'] === null) {
 
-			insertSpot['spot'] = $('tr.copy-row').last();
+			insertSpot['spot'] = $('table#'+role+' tr.copy-row').last();
 			insertSpot['howToInsert'] = 'after';
 		}
 
 		return insertSpot;
 	}
 
-	var isCardALand =  function(card) {
+	var isCardALand = function(card) {
 
 		if (card['middle_text'].search('Land') > -1) {
 
@@ -266,6 +276,19 @@ $(document).ready(function() {
 		}
 
 		return false;
+	}
+
+	var getRole = function(anchorTag) {
+
+		if (anchorTag.hasClass('md')) {
+
+			return 'md';
+		}
+
+		if (anchorTag.hasClass('sb')) {
+
+			return 'sb';
+		}
 	}
 
 });

@@ -77,9 +77,30 @@
 		<div class="col-lg-6 decklist">
 			<h3>New Decklist</h3>
 
-			<h4>Main Deck (<span class="md-count">0</span>)</h4>
+			<h4>Main Deck (<span class="count md">0</span>)</h4>
 
-			<table id="main-deck" class="table table-striped table-bordered table-hover table-condensed">
+			<table id="md" class="table table-striped table-bordered table-hover table-condensed">
+				
+				<thead>
+					<tr>
+						<th style="width: 7%">Q</th>					
+						<th>Name</th>
+						<th style="width: 7%">R</th>
+						<th style="width: 15%">aCMC</th>
+						<th style="width: 20%">MC</th>
+						<th style="width: 7%">Rmv</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+
+				</tbody>
+			
+			</table>
+
+			<h4>Sideboard (<span class="count sb">0</span>)</h4>
+
+			<table id="sb" class="table table-striped table-bordered table-hover table-condensed">
 				
 				<thead>
 					<tr>
