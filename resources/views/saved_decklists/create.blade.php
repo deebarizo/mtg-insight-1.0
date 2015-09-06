@@ -58,12 +58,12 @@
 							<td style="width: 20%">{!! $card->mana_cost !!}</td>
 							<td style="width: 12%">
 								<a class="add-card md" href="">
-									<div class="circle-plus-icon md">
+									<div class="icon plus md">
 										<span class="glyphicon glyphicon-plus"></span>
 									</div>
 								</a>
 								<a class="add-card sb" href="">
-									<div class="circle-plus-icon sb">
+									<div class="icon plus sb">
 										<span class="glyphicon glyphicon-plus"></span>
 									</div>
 								</a>
