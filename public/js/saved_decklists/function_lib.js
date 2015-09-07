@@ -4,15 +4,7 @@ UPDATE DECKLIST
 
 var updateDecklist = function(role, change) {
 
-	var decklist = {
-
-		totals: {
-
-			md: null,
-
-			sb: null
-		}
-	};
+	var decklist = {};
 
 	decklist['totals'] = getDecklistTotals();
 
@@ -22,7 +14,7 @@ var updateDecklist = function(role, change) {
 
 	$('span.decklist-totals.'+role).text(decklist['totals'][role]);
 
-	// console.log(decklist['totals']);
+	console.log(decklist['totals']);
 }
 
 
@@ -49,15 +41,50 @@ var getDecklistTotals = function() {
 
 	for (var i = 0; i < roles.length; i++) {
 		
-		$('table#'+roles[i]+' td.quantity').each(function(index) {
+		$('table#'+roles[i]+' tr.copy-row').each(function(index) {
 
-			decklistTotals[roles[i]] += Number($(this).text());
+			var copyRow = $(this);
+
+			var card = {
+
+				quantity: null,
+
+				middleText: null,
+
+				type: null
+			};
+
+			card['quantity'] = copyRow.find('td.quantity').text();
+
+			decklistTotals[roles[i]] += Number(card['quantity']);
+
+			if (roles[i] == 'md') {
+
+				card['middleText'] = copyRow.data('card-middle-text');
+
+				card['type'] = getCardType(card['middleText']);
+
+				decklistTotals[card['type']] += Number(card['quantity']);
+			}
 		});	
 	};
 
-
-
 	return decklistTotals;	
+}
+
+var getCardType = function(middleText) {
+
+	if (middleText.search('Land') > -1) {
+
+		return 'lands'; // plural to match the property in decklistTotals object
+	}
+
+	if (middleText.search('Creature') > -1) {
+
+		return 'creatureSpells';
+	}
+
+	return 'noncreatureSpells';
 }
 
 
