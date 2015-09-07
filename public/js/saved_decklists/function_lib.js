@@ -4,9 +4,47 @@ UPDATE DECKLIST
 
 var updateDecklist = function(role, change) {
 
-	var decklistCount = getDecklistCount(role, change);
+	var decklist = {
 
-	$('span.decklist-count.'+role).text(decklistCount[role]);
+		totals: {
+
+			md: null,
+
+			sb: null
+		}
+	};
+
+	decklist['totals'] = getDecklistTotals(role, change);
+
+	/****************************************************************************************
+	UPDATE DECKLIST VIEW
+	****************************************************************************************/
+
+	$('span.decklist-totals.'+role).text(decklist['totals'][role]);
+
+	console.log(decklist['totals']);
+}
+
+var getDecklistTotals = function(role, change) {
+
+	var decklistTotals = {
+
+		md: 0,
+		
+		sb: 0
+	};
+
+	var roles = ['md', 'sb'];
+
+	for (var i = 0; i < roles.length; i++) {
+		
+		$('table#'+roles[i]+' td.quantity').each(function(index) {
+
+			decklistTotals[roles[i]] += Number($(this).text());
+		});	
+	};
+
+	return decklistTotals;	
 }
 
 
@@ -50,38 +88,6 @@ var showErrorAlerts = function(errorAlerts) {
 		
 		alert(errorAlerts[i]);
 	};
-}
-
-
-/****************************************************************************************
-DECKLIST COUNT
-****************************************************************************************/
-
-var getDecklistCount = function(role, change) {
-
-	var decklistCount = {
-
-		md: 0,
-		
-		sb: 0
-	};
-
-	$('table#'+role+' td.quantity').each(function(index) {
-
-		decklistCount[role] += Number($(this).text());
-	});	
-
-	if (change == 'add card') {
-
-		decklistCount[role]++;
-	}
-
-	if (change == 'remove card') {
-
-		decklistCount[role]--;
-	}
-
-	return decklistCount;	
 }
 
 

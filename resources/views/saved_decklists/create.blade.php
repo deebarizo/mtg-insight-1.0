@@ -78,7 +78,7 @@
 		<div class="col-lg-6 decklist">
 			<h3>New Decklist</h3>
 
-			<h4>Main Deck (<span class="decklist-count md">0</span>)</h4>
+			<h4>Main Deck (<span class="decklist-totals md">0</span>)</h4>
 
 			<table id="md" class="table table-striped table-bordered table-hover table-condensed">
 				
@@ -99,7 +99,7 @@
 			
 			</table>
 
-			<h4>Sideboard (<span class="decklist-count sb">0</span>)</h4>
+			<h4>Sideboard (<span class="decklist-totals sb">0</span>)</h4>
 
 			<table id="sb" class="table table-striped table-bordered table-hover table-condensed">
 				

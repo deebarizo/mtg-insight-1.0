@@ -32,13 +32,6 @@ $(document).ready(function() {
 
 			if (roleMatchesCopyRow) {
 
-				var decklistIsValid = validateDecklist(card, copyRow, role, 'add card');
-
-				if (!decklistIsValid) {
-
-					return false;
-				}
-
 				card['quantity'] = getQuantity(copyRow, role, 'add card');
 
 				copyRow.filter('.'+role).find('td.quantity').text(card['quantity']);
@@ -48,13 +41,6 @@ $(document).ready(function() {
 				return false;
 			}
 		} 
-
-		var decklistIsValid = validateDecklist(card, copyRow, role, 'add card');
-
-		if (!decklistIsValid) {
-
-			return false;
-		}
 
 		card['quantity'] = 1;
 
@@ -138,13 +124,6 @@ $(document).ready(function() {
 		var role = getRole($(this));
 
 		card['quantity'] = getQuantity(copyRow, role, 'remove card');
-
-		var decklistIsValid = validateDecklist(card, copyRow, role, 'remove card');
-
-		if (!decklistIsValid) {
-
-			return false;
-		}
 
 		if (card['quantity'] == 0) {
 
