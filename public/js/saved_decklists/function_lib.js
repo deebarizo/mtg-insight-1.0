@@ -14,7 +14,7 @@ var updateDecklist = function(role, change) {
 		}
 	};
 
-	decklist['totals'] = getDecklistTotals(role, change);
+	decklist['totals'] = getDecklistTotals();
 
 	/****************************************************************************************
 	UPDATE DECKLIST VIEW
@@ -22,16 +22,27 @@ var updateDecklist = function(role, change) {
 
 	$('span.decklist-totals.'+role).text(decklist['totals'][role]);
 
-	console.log(decklist['totals']);
+	// console.log(decklist['totals']);
 }
 
-var getDecklistTotals = function(role, change) {
+
+/****************************************************************************************
+GET DECKLIST TOTALS
+****************************************************************************************/
+
+var getDecklistTotals = function() {
 
 	var decklistTotals = {
 
 		md: 0,
 		
-		sb: 0
+		sb: 0,
+
+		creatureSpells: 0,
+
+		noncreatureSpells: 0,
+
+		lands: 0
 	};
 
 	var roles = ['md', 'sb'];
@@ -44,6 +55,8 @@ var getDecklistTotals = function(role, change) {
 		});	
 	};
 
+
+
 	return decklistTotals;	
 }
 
@@ -52,24 +65,29 @@ var getDecklistTotals = function(role, change) {
 VALIDATE DECKLIST
 ****************************************************************************************/
 
-var validateDecklist = function(card, copyRow, role, change) {
+var validateDecklist = function() {
+
+	var copyRows = $('tr.copy-row');
 
 	var errorAlerts = [];
 
-	var totalQuantityIsValid = validateTotalQuantity(card, copyRow);
+	var totalQuantityIsValid = validateTotalQuantity(copyRows);
 
 	if (!totalQuantityIsValid) {
 
-		errorAlerts.push('You already have 4 copies between main deck and sideboard.');
+		errorAlerts.push('You have cards with more than 4 copies between main deck and sideboard.');
 	}
 
-	var decklistCount = getDecklistCount(role, change);
+	var decklistTotals = getDecklistTotals();
 
-	if (role == 'sb' && 
-		change == 'add card' && 
-		decklistCount[role] > 15) {
+	if (decklistTotals['md'] < 60) {
 
-		errorAlerts.push('You reached the maximum sideboard limit of 15 cards.');
+		errorAlerts.push('You have less than 60 main deck cards.');
+	}	
+
+	if (decklistTotals['sb'] > 15) {
+
+		errorAlerts.push('You have more than 15 sideboard cards.');
 	}		
 
 	if (errorAlerts.length > 0) {
@@ -95,30 +113,50 @@ var showErrorAlerts = function(errorAlerts) {
 TOTAL QUANTITY
 ****************************************************************************************/
 
-var validateTotalQuantity = function(card, copyRow) {
+var validateTotalQuantity = function(copyRows) {
 
-	card['total_quantity'] = getTotalQuantity(copyRow);
+	var totalQuantityIsValid = true;
 
-	var cardIsBasicLand = isCardBasicLand(card);
+	copyRows.each(function(index) {
 
-	if (card['total_quantity'] > 4 && !cardIsBasicLand) {
+		var card = {
 
-		return false;
-	}
+			id: null,
 
-	return true;
+			name: null,
+
+			copyRows: null
+		};
+
+		card['id'] = $(this).data('card-id');
+
+		card['name'] = $(this).data('card-name');
+
+		card['copyRows'] = $('tr.copy-row[data-card-id="'+card['id']+'"]');
+		
+		var totalQuantity = getTotalQuantity(card['copyRows']);
+
+		var cardIsBasicLand = isCardBasicLand(card['name']);
+
+		if (totalQuantity > 4 && !cardIsBasicLand) {
+
+			totalQuantityIsValid = false;
+
+			return false;
+		}
+	});
+
+	return totalQuantityIsValid;
 }
 
-var getTotalQuantity = function(copyRow) {
+var getTotalQuantity = function(cardCopyRows) {
 
 	var totalQuantity = 0;
 
-	copyRow.each(function(index) {
+	cardCopyRows.each(function(index) {
 
 		totalQuantity += Number($(this).find('td.quantity').text());
 	});
-
-	totalQuantity++;
 
 	return totalQuantity;
 }
@@ -160,29 +198,29 @@ var isCardALand = function(card) {
 	return false;
 }
 
-var isCardBasicLand = function(card) {
+var isCardBasicLand = function(cardName) {
 
-	if (card['name'] == 'Plains') {
-
-		return true;
-	}
-
-	if (card['name'] == 'Island') {
+	if (cardName == 'Plains') {
 
 		return true;
 	}
 
-	if (card['name'] == 'Swamp') {
+	if (cardName == 'Island') {
 
 		return true;
 	}
 
-	if (card['name'] == 'Mountain') {
+	if (cardName == 'Swamp') {
 
 		return true;
 	}
 
-	if (card['name'] == 'Forest') {
+	if (cardName == 'Mountain') {
+
+		return true;
+	}
+
+	if (cardName == 'Forest') {
 
 		return true;
 	}		

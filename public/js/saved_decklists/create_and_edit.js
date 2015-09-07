@@ -53,7 +53,7 @@ $(document).ready(function() {
 
 		decklistHasCards[role] = $('table#'+role+' tr.copy-row').length;
 
-		var copyRowHtml = '<tr class="copy-row '+role+'" data-card-id="'+card['id']+'" data-card-actual-cmc="'+card['actual_cmc']+'" data-card-middle-text="'+card['middle_text']+'"><td class="quantity">'+card['quantity']+'<td class="card-name"><a class="card-name" target="_blank" href="/cards/'+card['id']+'">'+card['name']+'</a><div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/'+card['multiverseid']+'.jpg"></div></td><td>'+card['rating']+'</td><td>'+card['actual_cmc']+'</td><td>'+card['mana_cost']+'</td><td><a class="remove-card '+role+'" href=""><div class="icon minus"><span class="glyphicon glyphicon-minus"></span></div></a></td></tr>';
+		var copyRowHtml = '<tr class="copy-row '+role+'" data-card-id="'+card['id']+'" data-card-name="'+card['name']+'" data-card-actual-cmc="'+card['actual_cmc']+'" data-card-middle-text="'+card['middle_text']+'"><td class="quantity">'+card['quantity']+'<td class="card-name"><a class="card-name" target="_blank" href="/cards/'+card['id']+'">'+card['name']+'</a><div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/'+card['multiverseid']+'.jpg"></div></td><td>'+card['rating']+'</td><td>'+card['actual_cmc']+'</td><td>'+card['mana_cost']+'</td><td><a class="remove-card '+role+'" href=""><div class="icon minus"><span class="glyphicon glyphicon-minus"></span></div></a></td></tr>';
 
 		if (decklistHasCards[role]) {
 
@@ -137,6 +137,23 @@ $(document).ready(function() {
 		copyRow.find('td.quantity').text(card['quantity']);
 
 		updateDecklist(role, 'remove card');
+	});
+
+
+	/****************************************************************************************
+	SUBMIT DECKLIST
+	****************************************************************************************/
+
+	$('button.submit-decklist').on('click', function() {
+
+		var decklistIsValid = validateDecklist();
+
+		if (!decklistIsValid) {
+
+			return false;
+		}
+
+		console.log('Decklist was successfully submitted.');
 	});
 
 });
