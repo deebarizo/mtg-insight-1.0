@@ -14,7 +14,7 @@ var updateDecklist = function(role, change) {
 
 	$('span.decklist-totals.'+role).text(decklist['totals'][role]);
 
-	console.log(decklist['totals']);
+	console.log(decklist['totals']['mana']);
 }
 
 
@@ -34,7 +34,45 @@ var getDecklistTotals = function() {
 
 		noncreatureSpells: 0,
 
-		lands: 0
+		lands: 0,
+
+		mana: {					
+
+			white: {
+
+				symbols: 0,
+
+				sources: 0
+			},
+
+			blue: {
+
+				symbols: 0,
+
+				sources: 0
+			},
+
+			black: {
+
+				symbols: 0,
+
+				sources: 0
+			},
+
+			red: {
+
+				symbols: 0,
+
+				sources: 0
+			},
+
+			green: {
+
+				symbols: 0,
+
+				sources: 0
+			}
+		}
 	};
 
 	var roles = ['md', 'sb'];
@@ -51,12 +89,16 @@ var getDecklistTotals = function() {
 
 				middleText: null,
 
-				type: null
+				type: null,
+
+				manaCost: null, 
+
+				mana: {}
 			};
 
-			card['quantity'] = copyRow.find('td.quantity').text();
+			card['quantity'] = Number(copyRow.find('td.quantity').text());
 
-			decklistTotals[roles[i]] += Number(card['quantity']);
+			decklistTotals[roles[i]] += card['quantity'];
 
 			if (roles[i] == 'md') {
 
@@ -64,7 +106,19 @@ var getDecklistTotals = function() {
 
 				card['type'] = getCardType(card['middleText']);
 
-				decklistTotals[card['type']] += Number(card['quantity']);
+				decklistTotals[card['type']] += card['quantity'];
+
+				card['manaCost'] = copyRow.find('td.card-mana-cost').html();
+
+				card['mana'] = getCardMana(card['manaCost'], card['type']);
+
+				for (var color in card['mana']) {
+
+					for (var manaType in card['mana'][color]) {
+
+						decklistTotals['mana'][color][manaType] += card['mana'][color][manaType] * card['quantity'];
+					}
+				}
 			}
 		});	
 	};
@@ -85,6 +139,49 @@ var getCardType = function(middleText) {
 	}
 
 	return 'noncreatureSpells';
+}
+
+var getCardMana = function(manaCost, type) {
+
+	var cardMana = {};
+
+	if (type != 'lands') {
+
+		var colors = {
+
+			white: /mana\-w/g,
+
+			blue: /mana\-u/g,
+
+			black: /mana\-b/g,
+
+			red: /mana\-r/g,
+
+			green: /mana\-g/g
+		};
+
+		for (var color in colors) {
+
+			if (manaCost.match(colors[color]) === null) {
+
+				var numOfSymbols = 0;
+			}
+
+			if (manaCost.match(colors[color]) !== null) {
+
+				var numOfSymbols = manaCost.match(colors[color]).length;
+
+				cardMana[color] = {
+
+					symbols: numOfSymbols
+				};
+			}
+		}
+
+		return cardMana;
+	}
+
+	return {};
 }
 
 
