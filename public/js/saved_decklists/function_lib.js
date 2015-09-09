@@ -14,7 +14,7 @@ var updateDecklist = function(role, change) {
 
 	$('span.decklist-totals.'+role).text(decklist['totals'][role]);
 
-	// console.log(decklist['totals']['mana']);
+	console.log(decklist['totals']['mana']);
 }
 
 
@@ -95,7 +95,7 @@ var getDecklistTotals = function() {
 
 				mana: {},
 
-				name: null
+				id: null
 			};
 
 			card['quantity'] = Number(copyRow.find('td.quantity').text());
@@ -112,17 +112,17 @@ var getDecklistTotals = function() {
 
 				card['manaCost'] = copyRow.find('td.card-mana-cost').html();
 
-				card['name'] = copyRow.data('card-name');
+				card['id'] = copyRow.data('card-id');
 
-				card['mana'] = getCardMana(card['manaCost'], card['type'], card['name']);
+				card['mana'] = getCardMana(card['manaCost'], card['type'], card['id']);
 
 				for (var color in card['mana']) {
 
 					for (var manaType in card['mana'][color]) {
 
 						decklistTotals['mana'][color][manaType] += card['mana'][color][manaType] * card['quantity'];
-					}
-				}
+					};
+				};
 			}
 		});	
 	};
@@ -145,7 +145,7 @@ var getCardType = function(middleText) {
 	return 'noncreatureSpells';
 }
 
-var getCardMana = function(manaCost, type, name) {
+var getCardMana = function(manaCost, type, id) {
 
 	var cardMana = {};
 
@@ -180,13 +180,61 @@ var getCardMana = function(manaCost, type, name) {
 					symbols: numOfSymbols
 				};
 			}
-		}
+		};
 	}
 
 	if (type == 'lands') {
 
-		cardMana = getSourcesOfLand(name);
+		cardMana = getLandSources(id);
 	}
+
+	return cardMana;
+}
+
+var getLandSources = function(id) {
+
+	var cardId = id;
+
+	var cardMana = {
+
+		white: {
+
+			sources: 0
+		},
+
+		blue: {
+
+			sources: 0
+		},
+
+		black: {
+
+			sources: 0
+		},
+
+		red: {
+
+			sources: 0
+		},
+
+		green: {
+
+			sources: 0
+		}
+	};
+
+	for (var i = 0; i < lands.length; i++) {
+
+		if (cardId == lands[i][0]['card_id']) {
+
+			for (var n = 0; n < lands[i].length; n++) {
+
+				cardMana[lands[i][n]['color']]['sources'] += lands[i][n]['sources'];
+			};
+		}
+
+		break;
+	};
 
 	return cardMana;
 }

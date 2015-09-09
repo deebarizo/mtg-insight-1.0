@@ -18,6 +18,7 @@ use App\Models\CardType;
 use App\Models\CardActualCmc;
 use App\Models\CardRating;
 use App\Models\CardTag;
+use App\Models\CardSource;
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
@@ -313,12 +314,16 @@ class CardsProcessor {
 
 	public function getLands() {
 
-		return DB::table('cards')
-						->select('cards.name')
-						->join('sets_cards', 'sets_cards.card_id', '=', 'cards.id')
-						->where('cards.middle_text', 'LIKE', '%Land%')
-						->groupBy('cards.name')
-						->get();
+		$landSources = Card::has('sources')->where('cards.middle_text', 'LIKE', '%Land%')->get();
+
+		$lands = [];
+
+        foreach ($landSources as $landSource) {
+
+        	array_push($lands, $landSource->sources()->get());
+        }   
+
+        return $lands;
 	}
 
 }
