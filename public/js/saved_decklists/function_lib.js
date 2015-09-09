@@ -14,7 +14,7 @@ var updateDecklist = function(role, change) {
 
 	$('span.decklist-totals.'+role).text(decklist['totals'][role]);
 
-	console.log(decklist['totals']['mana']);
+	// console.log(decklist['totals']['mana']);
 }
 
 
@@ -93,7 +93,9 @@ var getDecklistTotals = function() {
 
 				manaCost: null, 
 
-				mana: {}
+				mana: {},
+
+				name: null
 			};
 
 			card['quantity'] = Number(copyRow.find('td.quantity').text());
@@ -110,7 +112,9 @@ var getDecklistTotals = function() {
 
 				card['manaCost'] = copyRow.find('td.card-mana-cost').html();
 
-				card['mana'] = getCardMana(card['manaCost'], card['type']);
+				card['name'] = copyRow.data('card-name');
+
+				card['mana'] = getCardMana(card['manaCost'], card['type'], card['name']);
 
 				for (var color in card['mana']) {
 
@@ -141,7 +145,7 @@ var getCardType = function(middleText) {
 	return 'noncreatureSpells';
 }
 
-var getCardMana = function(manaCost, type) {
+var getCardMana = function(manaCost, type, name) {
 
 	var cardMana = {};
 
@@ -177,11 +181,14 @@ var getCardMana = function(manaCost, type) {
 				};
 			}
 		}
-
-		return cardMana;
 	}
 
-	return {};
+	if (type == 'lands') {
+
+		cardMana = getSourcesOfLand(name);
+	}
+
+	return cardMana;
 }
 
 

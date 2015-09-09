@@ -27,7 +27,7 @@ use Session;
 class CardsProcessor {
 
 	/****************************************************************************************
-	REST
+	GET CARDS
 	****************************************************************************************/
 
 	public function getCardsData() {
@@ -74,6 +74,11 @@ class CardsProcessor {
 		return array($cardsData, $actualCmcs);
 	}
 
+
+	/****************************************************************************************
+	GET CARD
+	****************************************************************************************/
+
 	public function getCardData($id) {
 		
 		$cardData = DB::table('cards')
@@ -101,6 +106,11 @@ class CardsProcessor {
 
 		return $cardData;
 	}
+
+
+	/****************************************************************************************
+	UPDATE CARD
+	****************************************************************************************/
 
 	public function updateCard($request, $id) {
 
@@ -137,6 +147,11 @@ class CardsProcessor {
 
 		return 'Success!';			
 	}
+
+
+	/****************************************************************************************
+	PROCESS ACTUAL CMC
+	****************************************************************************************/
 
 	private function processActualCmc($actualCmc, $id) {
 
@@ -197,6 +212,11 @@ class CardsProcessor {
 		return true;	
 	}
 
+
+	/****************************************************************************************
+	PROCESS RATING
+	****************************************************************************************/
+
 	private function processRating($rating, $id) {
 
 		if (is_numeric($rating)) {
@@ -215,7 +235,7 @@ class CardsProcessor {
 				return false;	
 			}
 
-		} else {
+		} else if ($rating != '') {
 
 			return false;
 		}
@@ -224,7 +244,7 @@ class CardsProcessor {
 
 		if ($cardRating) {
 
-			if ($rating == '0') {
+			if ($rating == '0' || $rating == '') {
 
 				$cardRating->delete();
 
@@ -237,7 +257,7 @@ class CardsProcessor {
 
 		} else {
 
-			if ($rating == '0') {
+			if ($rating == '0' || $rating == '') {
 
 				return true;
 			}
@@ -252,6 +272,11 @@ class CardsProcessor {
 
 		return true;
 	}
+
+
+	/****************************************************************************************
+	PROCESS NOTE
+	****************************************************************************************/
 
 	private function processNote($note, $id) {
 
@@ -279,6 +304,21 @@ class CardsProcessor {
 		}
 
 		return true;
+	}
+
+
+	/****************************************************************************************
+	GET LANDS
+	****************************************************************************************/
+
+	public function getLands() {
+
+		return DB::table('cards')
+						->select('cards.name')
+						->join('sets_cards', 'sets_cards.card_id', '=', 'cards.id')
+						->where('cards.middle_text', 'LIKE', '%Land%')
+						->groupBy('cards.name')
+						->get();
 	}
 
 }

@@ -137,9 +137,17 @@
 			"order": [[1, "desc"]]
 		});
 
+		/****************************************************************************************
+		GLOBAL VARIABLES
+		****************************************************************************************/	
+
+		var lands = <?php echo $lands; ?>;
+
 	</script>
 
 	<script src="/js/cards/index.js"></script>
+
+	<script src="function_lib_cards.js"></script>
 
 	<script src="/js/saved_decklists/function_lib.js"></script>
 

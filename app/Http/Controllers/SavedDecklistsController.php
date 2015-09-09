@@ -34,10 +34,12 @@ class SavedDecklistsController extends Controller
 
         list($cardsData, $actualCmcs) = $cardsProcessor->getCardsData();
 
+        $lands = json_encode($cardsProcessor->getLands());
+
         $titleTag = 'Saved Decklists | ';
         $format = $this->format;
 
-        return view('saved_decklists/create', compact('titleTag', 'format', 'cardsData', 'actualCmcs'));
+        return view('saved_decklists/create', compact('titleTag', 'format', 'cardsData', 'actualCmcs', 'lands'));
     }
 
     /**
