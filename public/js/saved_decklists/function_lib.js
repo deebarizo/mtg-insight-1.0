@@ -231,9 +231,9 @@ var getLandSources = function(id) {
 
 				cardMana[lands[i][n]['color']]['sources'] += lands[i][n]['sources'];
 			};
-		}
 
-		break;
+			break;
+		}
 	};
 
 	return cardMana;
