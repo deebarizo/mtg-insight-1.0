@@ -14,7 +14,18 @@ var updateDecklist = function(role, change) {
 
 	$('span.decklist-totals.'+role).text(decklist['totals'][role]);
 
-	console.log(decklist['totals']['mana']);
+	$('td.breakdown.creature-spells').text(decklist['totals']['creatureSpells']);
+	$('td.breakdown.noncreature-spells').text(decklist['totals']['noncreatureSpells']);
+	$('td.breakdown.lands').text(decklist['totals']['lands']);
+
+	var colors = ['white', 'blue', 'black', 'red', 'green'];
+
+	for (var i = 0; i < colors.length; i++) {
+		
+		$('td.breakdown.'+colors[i]+'-symbols').text(decklist['totals']['mana'][colors[i]]['symbols']);
+		$('td.breakdown.'+colors[i]+'-sources').text(decklist['totals']['mana'][colors[i]]['sources']);
+	};
+	
 }
 
 

@@ -78,6 +78,82 @@
 		<div class="col-lg-6 decklist">
 			<h3>New Decklist</h3>
 
+			<h4>Breakdown</h4>
+
+			<div class="col-lg-4" style="padding-left: 0">
+
+				<table style="font-size: 85%" class="table table-striped table-bordered table-hover table-condensed">
+						
+					<thead>
+						<tr>
+							<th>Type</th>
+							<th style="width: 14%">Cards</th>					
+						</tr>
+					</thead>
+					
+					<tbody>
+						<tr>
+							<td>Creature Spells</td>
+							<td class="breakdown creature-spells">0</td>					
+						</tr>
+						<tr>
+							<td>Noncreature Spells</td>
+							<td class="breakdown noncreature-spells">0</td>					
+						</tr>
+						<tr>
+							<td>Lands</td>
+							<td class="breakdown lands">0</td>					
+						</tr>
+					</tbody>
+				
+				</table>				
+
+			</div>
+
+			<div class="col-lg-8">
+
+				<table style="font-size: 85%" class="table table-striped table-bordered table-hover table-condensed">
+					
+					<thead>
+						<tr>
+							<th>Color</th>
+							<th>Mana Symbols</th>
+							<th>Mana Sources</th>
+						</tr>
+					</thead>
+					
+					<tbody>
+						<tr>
+							<td><i class="mtg mana-w"></i></td>
+							<td class="breakdown white-symbols">0</td>		
+							<td class="breakdown white-sources">0</td>			
+						</tr>
+						<tr>
+							<td><i class="mtg mana-u"></i></td>
+							<td class="breakdown blue-symbols">0</td>		
+							<td class="breakdown blue-sources">0</td>						
+						</tr>
+						<tr>
+							<td><i class="mtg mana-b"></i></td>
+							<td class="breakdown black-symbols">0</td>		
+							<td class="breakdown black-sources">0</td>						
+						</tr>
+						<tr>
+							<td><i class="mtg mana-r"></i></td>
+							<td class="breakdown red-symbols">0</td>		
+							<td class="breakdown red-sources">0</td>						
+						</tr>
+						<tr>
+							<td><i class="mtg mana-g"></i></td>
+							<td class="breakdown green-symbols">0</td>		
+							<td class="breakdown green-sources">0</td>						
+						</tr>
+					</tbody>
+				
+				</table>		
+
+			</div>
+
 			<h4>Main Deck (<span class="decklist-totals md">0</span>)</h4>
 
 			<table id="md" class="table table-striped table-bordered table-hover table-condensed">
