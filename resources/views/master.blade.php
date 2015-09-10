@@ -17,6 +17,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script src="//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
 		<script src="/js/jquery.qtip.min.js"></script>
+		<script src="/js/highcharts.js"></script>
 
 		<title>{{ $titleTag }}MTG Insight</title>
 	</head>
