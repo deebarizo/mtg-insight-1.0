@@ -7,6 +7,11 @@ tr.hide-card-row {
 	display: none;
 }
 
+div.dataTables_filter {
+
+	display: none;
+}
+
 
 /****************************************************************************************
 SAVED DECKLISTS (CREATE)
