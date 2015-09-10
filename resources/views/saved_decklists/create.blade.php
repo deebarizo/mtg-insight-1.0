@@ -3,15 +3,8 @@
 @section('content')
 
 	<div class="row">
-		<div class="col-lg-12">
-			<h2>Saved Decklists</h2>
-		</div>
-	</div>
-
-
-	<div class="row">
 		
-		<div class="col-lg-6">
+		<div class="col-lg-5">
 
 			<h3>Cards</h3>
 
@@ -32,7 +25,7 @@
 					<tr>
 						<th>Name</th>
 						<th>R</th>
-						<th>aCMC</th>
+						<th>C</th>
 						<th>MC</th>
 						<th>Add</th>
 					</tr>
@@ -54,7 +47,7 @@
 								</div>
 							</td>
 							<td style="width: 10%">{{ $card->rating }}</td>		
-							<td style="width: 15%">{{ $card->actual_cmc }}</td>					
+							<td style="width: 10%">{{ $card->actual_cmc }}</td>					
 							<td style="width: 20%">{!! $card->mana_cost !!}</td>
 							<td style="width: 12%">
 								<a class="add-card md" href="">
@@ -75,7 +68,7 @@
 			</table>
 		</div>
 
-		<div class="col-lg-6 decklist">
+		<div class="col-lg-5 decklist">
 			<h3>New Decklist</h3>
 
 			<h4>Breakdown</h4>
@@ -163,7 +156,7 @@
 						<th style="width: 7%">Q</th>					
 						<th>Name</th>
 						<th style="width: 7%">R</th>
-						<th style="width: 15%">aCMC</th>
+						<th style="width: 15%">C</th>
 						<th style="width: 20%">MC</th>
 						<th style="width: 7%">Rmv</th>
 					</tr>

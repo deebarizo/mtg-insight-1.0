@@ -3,13 +3,6 @@
 @section('content')
 
 	<div class="row">
-		<div class="col-lg-12">
-			<h2>Cards</h2>
-		</div>
-	</div>
-
-
-	<div class="row">
 		
 		<div class="col-lg-12">
 
