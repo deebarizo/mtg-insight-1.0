@@ -45,6 +45,8 @@ class Scraper {
 		$jsonString = file_get_contents($csvFile);
 		$setData = json_decode($jsonString, true);
 
+		# ddAll($setData);
+
 		$setData['id'] = Set::where('code', $setData['code'])->pluck('id'); 
 
 		$setCardExists = SetCard::where('set_id', $setData['id'])->first();
@@ -57,6 +59,13 @@ class Scraper {
 		}
 
 		foreach ($setData['cards'] as $cardData) {
+			$cardIsBasicLand = $this->checkIfCardIsBasicLand($cardData);
+
+			if ($cardIsBasicLand) {
+
+				continue;
+			}
+			
 			$cardExists = Card::where('name', $cardData['name'])->first();
 
 			if ($cardExists) {
@@ -64,13 +73,6 @@ class Scraper {
 				$cardData['id'] = Card::where('name', $cardData['name'])->pluck('id');
 
 				$this->storeSetCard($setData['id'], $cardData['id'], $cardData);
-
-				continue;
-			}
-
-			$cardIsBasicLand = $this->checkIfCardIsBasicLand($cardData);
-
-			if ($cardIsBasicLand) {
 
 				continue;
 			}
@@ -168,7 +170,6 @@ class Scraper {
 		} 
 
 		$card->rules_text = $text;
-		
 
 		$card->layout_id = Layout::where('layout', $cardData['layout'])->pluck('id');
 
