@@ -7,7 +7,7 @@
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="/css/mtgicons.css" /> <!-- Mana Symbols -->
+		<link rel="stylesheet" href="/css/mtg-font-master/css/magic-font.css" /> <!-- Mana Symbols -->
 		<link rel="stylesheet" href="//cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
 		<link rel="stylesheet" href="/css/jquery.qtip.min.css">
 		<link rel="stylesheet" href="/css/style.css">

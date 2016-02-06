@@ -49,6 +49,12 @@ class Scraper {
 
 		$setData['id'] = Set::where('code', $setData['code'])->pluck('id'); 
 
+		if (!$setData['id']) {
+			Session::flash('alert', 'warning');
+
+			return 'Please add the set manually in the database.';		
+		}
+
 		$setCardExists = SetCard::where('set_id', $setData['id'])->first();
 
 		if ($setCardExists) {
@@ -65,7 +71,7 @@ class Scraper {
 
 				continue;
 			}
-			
+
 			$cardExists = Card::where('name', $cardData['name'])->first();
 
 			if ($cardExists) {

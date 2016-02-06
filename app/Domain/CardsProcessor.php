@@ -48,6 +48,7 @@ class CardsProcessor {
 						->leftJoin('cards_ratings', 'cards_ratings.card_id', '=', 'cards.id')
 						->orderBy('cards.name')
 						->groupBy('cards.name')
+						->where('sets_cards.set_id', '>=', STARTING_SET_ID)
 						->get();
 
 		$actualCmcs = [];

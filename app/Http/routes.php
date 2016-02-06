@@ -4,8 +4,8 @@
 GLOBAL VARIABLES
 ****************************************************************************************/
 
-define('CURRENT_FORMAT','Battle for Zendikar Standard');
-
+define('CURRENT_FORMAT','Shadows over Innistrad Standard');
+define('STARTING_SET_ID','3');
 
 /****************************************************************************************
 PAGES
