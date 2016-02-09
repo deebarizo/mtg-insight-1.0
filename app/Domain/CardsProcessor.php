@@ -92,10 +92,12 @@ class CardsProcessor {
 									'sets_cards.multiverseid',
 									'cards_actual_cmcs.actual_cmc',
 									'cards_ratings.rating',
-									'cards_ratings.note')
+									'cards_ratings.note',
+									'cards_sources.id as cards_sources_id')
 						->join('sets_cards', 'sets_cards.card_id', '=', 'cards.id')
 						->leftJoin('cards_actual_cmcs', 'cards_actual_cmcs.card_id', '=', 'cards.id')
 						->leftJoin('cards_ratings', 'cards_ratings.card_id', '=', 'cards.id')
+						->leftJoin('cards_sources', 'cards_sources.card_id', '=', 'cards.id')
 						->where('cards.id', $id)
 						->first();
 
@@ -105,6 +107,28 @@ class CardsProcessor {
 
 			$cardData->actual_cmc = 'N/A';
 		}
+
+		if (isset($cardData->cards_sources_id)) {
+			
+			$sources = DB::table('cards_sources')
+								->where('cards_sources.card_id', $id)
+								->get();
+
+			$sourcesText = '';
+
+			foreach ($sources as $source) {
+				
+				$sourcesText .= $source->color.' ';
+			}
+
+			$cardData->sourcesText = $sourcesText;
+
+		} else {
+
+			$cardData->sourcesText = '';
+		}
+
+		# ddAll($cardData);
 
 		return $cardData;
 	}

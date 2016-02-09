@@ -41,8 +41,13 @@
 				</div>
 
 				<div class="form-group">
-					{!! Form::label('Note', 'Note') !!}
+					{!! Form::label('note', 'Note') !!}
 					{!! Form::textarea('note', $cardData->note, ['class' => 'form-control']) !!}
+				</div>
+
+				<div class="form-group">
+					{!! Form::label('sources', 'Sources (Only for Lands)') !!}
+					{!! Form::text('sources', $cardData->sourcesText, ['class' => 'form-control', 'style' => 'width: 50%']) !!}
 				</div>
 		
 				<div class="form-group">		

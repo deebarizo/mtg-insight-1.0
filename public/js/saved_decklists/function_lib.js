@@ -231,6 +231,11 @@ var getLandSources = function(id) {
 		green: {
 
 			sources: 0
+		}, 
+
+		colorless: {
+
+			sources: 0
 		}
 	};
 
