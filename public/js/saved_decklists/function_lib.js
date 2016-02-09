@@ -236,14 +236,9 @@ var getLandSources = function(id) {
 
 	for (var i = 0; i < lands.length; i++) {
 
-		if (cardId == lands[i][0]['card_id']) {
+		if (cardId == lands[i]['card_id']) {
 
-			for (var n = 0; n < lands[i].length; n++) {
-
-				cardMana[lands[i][n]['color']]['sources'] += lands[i][n]['sources'];
-			};
-
-			break;
+			cardMana[lands[i]['color']]['sources'] += lands[i]['sources'];
 		}
 	};
 

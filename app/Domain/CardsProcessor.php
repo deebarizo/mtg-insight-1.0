@@ -324,7 +324,7 @@ class CardsProcessor {
 							->where('sets.id', '>=', STARTING_SET_ID)
 							->get();
 
-		$lands = DB::table('cards')
+		$landNames = DB::table('cards')
 							->select('cards.name')
 							->join('sets_cards', 'sets_cards.card_id', '=', 'cards.id')
 							->join('sets', 'sets.id', '=', 'sets_cards.set_id')
@@ -333,16 +333,24 @@ class CardsProcessor {
 							->where('sets.id', '>=', STARTING_SET_ID)
 							->lists('cards.name');
 
-		$lands = array_unique($lands);
+		$landNames = array_unique($landNames);
 
-		ddAll($lands);
+		# ddAll($landNames);
 
-		foreach ($landSources as $landSource) {
+		$lands = [];
 
-        	array_push($lands, $landSource->sources()->get());
-        }   
+		foreach ($landNames as $key => $landName) {
+			
+			foreach ($landSources as $key => $landSource) {
+				
+				if ($landSource->name == $landName) {
 
-        ddAll($lands);
+					array_push($lands, $landSource);
+				}
+			}
+		}
+
+        # ddAll($lands);
 
         return $lands;
 	}
