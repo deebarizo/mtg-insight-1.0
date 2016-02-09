@@ -315,14 +315,34 @@ class CardsProcessor {
 
 	public function getLands() {
 
-		$landSources = Card::has('sources')->where('cards.middle_text', 'LIKE', '%Land%')->get();
+		$landSources = DB::table('cards')
+							->select('cards.name', 'cards_sources.card_id', 'cards_sources.color', 'cards_sources.sources')
+							->join('sets_cards', 'sets_cards.card_id', '=', 'cards.id')
+							->join('sets', 'sets.id', '=', 'sets_cards.set_id')
+							->join('cards_sources', 'cards_sources.card_id', '=', 'cards.id')
+							->where('cards.middle_text', 'LIKE', '%Land%')
+							->where('sets.id', '>=', STARTING_SET_ID)
+							->get();
 
-		$lands = [];
+		$lands = DB::table('cards')
+							->select('cards.name')
+							->join('sets_cards', 'sets_cards.card_id', '=', 'cards.id')
+							->join('sets', 'sets.id', '=', 'sets_cards.set_id')
+							->join('cards_sources', 'cards_sources.card_id', '=', 'cards.id')
+							->where('cards.middle_text', 'LIKE', '%Land%')
+							->where('sets.id', '>=', STARTING_SET_ID)
+							->lists('cards.name');
 
-        foreach ($landSources as $landSource) {
+		$lands = array_unique($lands);
+
+		ddAll($lands);
+
+		foreach ($landSources as $landSource) {
 
         	array_push($lands, $landSource->sources()->get());
         }   
+
+        ddAll($lands);
 
         return $lands;
 	}
