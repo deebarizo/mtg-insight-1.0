@@ -54,15 +54,18 @@ $(document).ready(function() {
 		$('tr.card-row').removeClass('hide-card-row');
 
 		runActualCmcFilter(filter);
+		runTypeFilter(filter);
 	}
 
 	function getFilter() {
 		
 		var actualCmc = $('select.actual-cmc-filter').val();
+		var type = $('select.type-filter').val();
 
 		filter = {
 
-			actualCmc: actualCmc
+			actualCmc: actualCmc,
+			type: type
 		};
 
 		return filter;
@@ -98,6 +101,42 @@ $(document).ready(function() {
 		var cardRowActualCmc = $(cardRow).data('card-actual-cmc');
 
 		if (cardRowActualCmc == actualCmc) {
+
+			return;
+		}
+
+		$(cardRow).addClass('hide-card-row');
+	}
+
+	/********************************************
+	FILTER (TYPE)
+	********************************************/
+
+	$('select.type-filter').on('change', function() {
+
+		runFilter();
+	});
+
+	function runTypeFilter(filter) {
+		
+		if (filter.type == 'All') {
+
+			return;
+		}
+
+		$('tr.card-row').each(function() {
+
+			var cardRow = $(this);
+
+			hideTypeNotSelected(cardRow, filter.type);
+		});				
+	}
+
+	function hideTypeNotSelected(cardRow, type) {
+
+		var cardRowMiddleText = $(cardRow).find('td.middle-text').text();
+
+		if (cardRowMiddleText.indexOf(type) > -1) {
 
 			return;
 		}

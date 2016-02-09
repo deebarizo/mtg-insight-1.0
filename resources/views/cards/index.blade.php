@@ -18,6 +18,12 @@
 				  	@endforeach
 				</select>	
 
+				<label>Type</label>
+				<select class="form-control type-filter" style="width: 10%; margin-right: 20px">
+				  	<option value="All">All</option>
+				  	<option value="Land">Land</option>
+				</select>	
+
 			</form>
 		</div>
 		
@@ -54,7 +60,7 @@
 							<td>{!! $card->rating !!}</td>		
 							<td>{!! $card->actual_cmc !!}</td>					
 							<td>{!! $card->mana_cost !!}</td>
-							<td>{{ $card->middle_text }}</td>
+							<td class="middle-text">{{ $card->middle_text }}</td>
 						</tr>
 					@endforeach
 				</tbody>
@@ -72,7 +78,7 @@
 		$('#cards').dataTable({
 			"scrollY": "600px",
 			"paging": false,
-			"order": [[2, "desc"]]
+			"order": [[0, "asc"]]
 		});
 
 	</script>
