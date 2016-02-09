@@ -18,6 +18,12 @@
 				  	@endforeach
 				</select>	
 
+				<label>Type</label>
+				<select class="form-control type-filter" style="width: 25%; margin-right: 20px">
+				  	<option value="All">All</option>
+				  	<option value="Land">Land</option>
+				</select>	
+
 			</form>
 
 			<table style="font-size: 90%" id="cards" class="table table-striped table-bordered table-hover table-condensed">
@@ -167,37 +173,38 @@
 				
 				<tbody>
 					<tr>
-						<td><i class="mtg mana-w"></i></td>
+						<td><i class="mi mi-mana mi-shadow mi-w"></i></td>
 						<td class="breakdown white-symbols">0</td>		
 						<td class="breakdown white-sources">0</td>			
 					</tr>
 					<tr>
-						<td><i class="mtg mana-u"></i></td>
+						<td><i class="mi mi-mana mi-shadow mi-u"></i></td>
 						<td class="breakdown blue-symbols">0</td>		
 						<td class="breakdown blue-sources">0</td>						
 					</tr>
 					<tr>
-						<td><i class="mtg mana-b"></i></td>
+						<td><i class="mi mi-mana mi-shadow mi-b"></i></td>
 						<td class="breakdown black-symbols">0</td>		
 						<td class="breakdown black-sources">0</td>						
 					</tr>
 					<tr>
-						<td><i class="mtg mana-r"></i></td>
+						<td><i class="mi mi-mana mi-shadow mi-r"></i></td>
 						<td class="breakdown red-symbols">0</td>		
 						<td class="breakdown red-sources">0</td>						
 					</tr>
 					<tr>
-						<td><i class="mtg mana-g"></i></td>
+						<td><i class="mi mi-mana mi-shadow mi-g"></i></td>
 						<td class="breakdown green-symbols">0</td>		
 						<td class="breakdown green-sources">0</td>						
+					</tr>
+					<tr>
+						<td><i class="mi mi-mana mi-shadow mi-c"></i></td>
+						<td class="breakdown colorless-symbols">0</td>		
+						<td class="breakdown colorless-sources">0</td>						
 					</tr>
 				</tbody>
 			
 			</table>
-
-			<h4>Fetchland Sources</h4>
-
-			<div class="fetchland-sources">N/A</div>		
 
 		</div>
 
@@ -278,6 +285,8 @@
 		        credits: false
 		    });
 		});
+
+		console.log(lands);
 
 	</script>
 

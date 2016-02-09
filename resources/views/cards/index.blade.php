@@ -42,7 +42,13 @@
 				<tbody>
 					@foreach ($cardsData as $card)
 						<tr class="card-row" 
-							data-card-actual-cmc="{{ $card->actual_cmc }}">
+							data-card-id="{{ $card->id }}"
+							data-card-name="{{ $card->name }}"
+							data-card-rating="{{ $card->rating }}"
+							data-card-actual-cmc="{{ $card->actual_cmc }}"
+							data-card-mana-cost="{{ $card->mana_cost }}"
+							data-card-multiverseid="{{ $card->multiverseid }}"
+							data-card-middle-text="{{ $card->middle_text }}">
 							<td>
 								<a class="card-name" target="_blank" href="/cards/{{ $card->id }}">{{ $card->name }}</a>
 								<div style="display: none" class="tool-tip-card-image">
@@ -60,7 +66,7 @@
 							<td>{!! $card->rating !!}</td>		
 							<td>{!! $card->actual_cmc !!}</td>					
 							<td>{!! $card->mana_cost !!}</td>
-							<td class="middle-text">{{ $card->middle_text }}</td>
+							<td>{{ $card->middle_text }}</td>
 						</tr>
 					@endforeach
 				</tbody>

@@ -100,6 +100,9 @@ $(document).ready(function() {
 
 		var cardRowActualCmc = $(cardRow).data('card-actual-cmc');
 
+		console.log(cardRowActualCmc);
+		console.log(actualCmc);
+
 		if (cardRowActualCmc == actualCmc) {
 
 			return;
@@ -134,7 +137,7 @@ $(document).ready(function() {
 
 	function hideTypeNotSelected(cardRow, type) {
 
-		var cardRowMiddleText = $(cardRow).find('td.middle-text').text();
+		var cardRowMiddleText = $(cardRow).data('card-middle-text');
 
 		if (cardRowMiddleText.indexOf(type) > -1) {
 
