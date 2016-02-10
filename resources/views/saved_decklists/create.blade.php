@@ -290,6 +290,8 @@
 
 	<script src="/js/cards/index.js"></script>
 
+	<script src="/js/saved_decklists/function_lib_single_cards.js"></script>
+
 	<script src="/js/saved_decklists/function_lib.js"></script>
 
 	<script src="/js/saved_decklists/create_and_edit.js"></script>

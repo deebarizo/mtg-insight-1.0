@@ -246,6 +246,13 @@ var getLandSources = function(id) {
 		}
 	};
 
+	if (cardId == 1063) { // Evolving Wilds
+
+		cardMana = addSourcesForEvolvingWilds(cardMana);
+
+		return cardMana;
+	}
+
 	for (var i = 0; i < lands.length; i++) {
 
 		if (cardId == lands[i]['card_id']) {
@@ -424,6 +431,7 @@ var isCardBasicLand = function(cardName) {
 
 	return false;
 }
+
 
 /****************************************************************************************
 INSERT SPOT FOR COPY ROW
