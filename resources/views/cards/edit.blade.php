@@ -46,8 +46,8 @@
 				</div>
 
 				<div class="form-group">
-					{!! Form::label('sources', 'Sources (Only for Lands)') !!}
-					{!! Form::text('sources', $cardData->sourcesText, ['class' => 'form-control', 'style' => 'width: 50%']) !!}
+					{!! Form::label('sources_text', 'Sources (Only for Lands)') !!}
+					{!! Form::text('sources_text', $cardData->sourcesText, ['class' => 'form-control', 'style' => 'width: 50%']) !!}
 				</div>
 		
 				<div class="form-group">		

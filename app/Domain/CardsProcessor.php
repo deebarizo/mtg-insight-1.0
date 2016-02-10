@@ -169,6 +169,8 @@ class CardsProcessor {
 			return 'Invalid note.';	
 		}
 
+		$this->processSources($input['sources_text'], $id);
+
 		Session::flash('alert', 'info');
 
 		return 'Success!';			
@@ -327,6 +329,38 @@ class CardsProcessor {
 			$cardRating->note = $note;
 
 			$cardRating->save();
+		}
+
+		return true;
+	}
+
+
+	/****************************************************************************************
+	PROCESS SOURCES
+	****************************************************************************************/
+
+	private function processSources($sourcesText, $id) {
+
+		CardSource::where('card_id', $id)->delete();
+
+		if ($sourcesText == '') {
+
+			return true;
+		}
+
+		$sourcesText = trim($sourcesText);
+
+		$sources = explode(' ', $sourcesText);
+
+		foreach ($sources as $source) {
+			
+			$cardSource = new CardSource;
+
+			$cardSource->card_id = $id;
+			$cardSource->color = $source;
+			$cardSource->sources = 1;
+
+			$cardSource->save();
 		}
 
 		return true;
