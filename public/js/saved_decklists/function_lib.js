@@ -18,7 +18,7 @@ var updateDecklist = function(role, change) {
 	$('td.breakdown.noncreature-spells').text(decklist['totals']['noncreatureSpells']);
 	$('td.breakdown.lands').text(decklist['totals']['lands']);
 
-	var colors = ['white', 'blue', 'black', 'red', 'green'];
+	var colors = ['white', 'blue', 'black', 'red', 'green', 'colorless'];
 
 	for (var i = 0; i < colors.length; i++) {
 		
@@ -78,6 +78,13 @@ var getDecklistTotals = function() {
 			},
 
 			green: {
+
+				symbols: 0,
+
+				sources: 0
+			}, 
+
+			colorless: {
 
 				symbols: 0,
 

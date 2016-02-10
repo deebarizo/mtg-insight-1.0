@@ -286,8 +286,6 @@
 		    });
 		});
 
-		console.log(lands);
-
 	</script>
 
 	<script src="/js/cards/index.js"></script>
