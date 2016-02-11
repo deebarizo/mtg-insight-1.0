@@ -248,7 +248,7 @@ var getLandSources = function(id) {
 
 	if (cardId == 1063) { // Evolving Wilds
 
-		cardMana = addSourcesForEvolvingWilds(cardMana);
+		cardMana = calculateSourcesForEvolvingWilds(cardMana);
 
 		return cardMana;
 	}
