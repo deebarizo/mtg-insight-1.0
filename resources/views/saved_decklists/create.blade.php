@@ -75,8 +75,18 @@
 
 		<div class="col-lg-7 decklist">
 		
-			<h3>New Decklist</h3>
+			<h3>Create Decklist</h3>
+			<div class="form-inline">
+				<label for="saved-decklist-name">Name</label>
+				<input class="form-control" name="saved-decklist-name" type="text" value="" id="saved-decklist-name" style="margin-right: 20px">
 
+				<label for="saved-decklist-latest-set-id">Latest Set</label>
+				<select class="form-control saved-decklist-latest-set-id">
+					@foreach ($sets as $set)
+					  	<option value="{{ $set['id'] }}">{{ $set['code'] }}</option>
+					@endforeach
+				</select>
+			</div>
 		</div>
 
 		<div class="col-lg-5 decklist">

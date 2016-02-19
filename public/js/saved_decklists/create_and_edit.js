@@ -155,6 +155,13 @@ $(document).ready(function() {
 			return false;
 		}
 
+		var savedDecklist = {
+
+			id: null,
+			latestSetId: null,
+			name: null
+		};
+
 		console.log('Decklist was successfully submitted.');
 	});
 

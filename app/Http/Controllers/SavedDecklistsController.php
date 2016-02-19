@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Domain\CardsProcessor;
+use App\Domain\SetsProcessor;
 
 class SavedDecklistsController extends Controller
 {
@@ -30,6 +31,10 @@ class SavedDecklistsController extends Controller
      */
     public function create()
     {
+        $setsProcessor = new SetsProcessor;
+
+        $sets = $setsProcessor->getSets();
+
         $cardsProcessor = new CardsProcessor;
 
         list($cardsData, $actualCmcs) = $cardsProcessor->getCardsData();
@@ -39,7 +44,7 @@ class SavedDecklistsController extends Controller
         $titleTag = 'Saved Decklists | ';
         $format = $this->format;
 
-        return view('saved_decklists/create', compact('titleTag', 'format', 'cardsData', 'actualCmcs', 'lands'));
+        return view('saved_decklists/create', compact('titleTag', 'format', 'cardsData', 'actualCmcs', 'lands', 'sets'));
     }
 
     /**
