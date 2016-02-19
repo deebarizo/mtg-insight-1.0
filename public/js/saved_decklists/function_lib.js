@@ -286,12 +286,12 @@ var validateDecklist = function() {
 
 	if (decklistTotals['md'] < 60) {
 
-		errorAlerts.push('You have less than 60 main deck cards.');
+		// errorAlerts.push('You have less than 60 main deck cards.');
 	}	
 
 	if (decklistTotals['sb'] > 15) {
 
-		errorAlerts.push('You have more than 15 sideboard cards.');
+		// errorAlerts.push('You have more than 15 sideboard cards.');
 	}		
 
 	if (errorAlerts.length > 0) {
