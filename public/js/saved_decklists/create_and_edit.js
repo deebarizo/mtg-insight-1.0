@@ -157,10 +157,22 @@ $(document).ready(function() {
 
 		var savedDecklist = {
 
-			latestSetId: $('select#saved-decklist-latest-set-id option["selected"]').val(),
+			latestSetId: $('#saved-decklist-latest-set-id').val(),
 			name: $('input#saved-decklist-name').val(),
 			copies: []
 		};
+
+		$('tr.copy-row').each(function() {
+
+			var copy = {
+
+				quantity: $(this).attr('data-card-quantity'),
+				cardId: $(this).attr('data-card-id'),
+				role: $(this).attr('data-card-role')
+			};
+
+			savedDecklist.copies.push(copy);
+		});
 
 		console.log(savedDecklist);
 

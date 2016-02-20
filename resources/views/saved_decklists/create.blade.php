@@ -81,7 +81,7 @@
 				<input class="form-control" name="saved-decklist-name" type="text" value="" id="saved-decklist-name" style="margin-right: 20px">
 
 				<label for="saved-decklist-latest-set-id">Latest Set</label>
-				<select class="form-control saved-decklist-latest-set-id">
+				<select class="form-control" id="saved-decklist-latest-set-id">
 					@foreach ($sets as $set)
 					  	<option value="{{ $set['id'] }}">{{ $set['code'] }}</option>
 					@endforeach
