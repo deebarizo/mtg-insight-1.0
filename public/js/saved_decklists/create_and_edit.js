@@ -157,10 +157,12 @@ $(document).ready(function() {
 
 		var savedDecklist = {
 
-			id: null,
-			latestSetId: null,
-			name: null
+			latestSetId: $('select#saved-decklist-latest-set-id option["selected"]').val(),
+			name: $('input#saved-decklist-name').val(),
+			copies: []
 		};
+
+		console.log(savedDecklist);
 
 		console.log('Decklist was successfully submitted.');
 	});

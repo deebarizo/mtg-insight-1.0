@@ -275,6 +275,13 @@ var validateDecklist = function() {
 
 	var errorAlerts = [];
 
+	var savedDecklistName = $('input#saved-decklist-name').val();
+
+	if (savedDecklistName == '') {
+
+		errorAlerts.push('Please enter a decklist name.');
+	}
+
 	var totalQuantityIsValid = validateTotalQuantity(copyRows);
 
 	if (!totalQuantityIsValid) {
