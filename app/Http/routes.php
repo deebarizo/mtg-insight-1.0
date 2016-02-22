@@ -33,6 +33,7 @@ Route::resource('cards', 'CardsController');
 SAVED DECKLISTS
 ****************************************************************************************/
 
+Route::post('saved_decklists/store', 'SavedDecklistsController@store'); 
 Route::resource('saved_decklists', 'SavedDecklistsController');
 
 

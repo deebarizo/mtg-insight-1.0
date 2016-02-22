@@ -79,6 +79,7 @@
 			<div class="form-inline">
 				<label for="saved-decklist-name">Name</label>
 				<input class="form-control" name="saved-decklist-name" type="text" value="" id="saved-decklist-name" style="margin-right: 20px">
+				<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 
 				<label for="saved-decklist-latest-set-id">Latest Set</label>
 				<select class="form-control" id="saved-decklist-latest-set-id">
@@ -295,6 +296,8 @@
 		        credits: false
 		    });
 		});
+
+		var baseUrl = '<?php echo url(); ?>';
 
 	</script>
 

@@ -158,7 +158,9 @@ $(document).ready(function() {
 		var savedDecklist = {
 
 			latestSetId: $('#saved-decklist-latest-set-id').val(),
+			
 			name: $('input#saved-decklist-name').val(),
+			
 			copies: []
 		};
 
@@ -167,16 +169,44 @@ $(document).ready(function() {
 			var copy = {
 
 				quantity: $(this).attr('data-card-quantity'),
+				
 				cardId: $(this).attr('data-card-id'),
+				
 				role: $(this).attr('data-card-role')
 			};
 
 			savedDecklist.copies.push(copy);
 		});
 
-		console.log(savedDecklist);
+		$('button.submit-decklist').html('<img src="'+baseUrl+'/images/ajax-loader.gif">');
 
-		console.log('Decklist was successfully submitted.');
+		// CSRF protection
+		$.ajaxSetup({
+
+		    headers: {
+		        
+		        'X-CSRF-Token': $('input[name="_token"]').val()
+		    }
+		});
+
+		$.ajax({
+
+            url: baseUrl+'/saved_decklists/store/',
+           	
+           	type: 'POST',
+           	
+           	data: { 
+
+           		savedDecklist: savedDecklist
+           	},
+            
+            success: function() {
+
+            	$('button.submit-decklist').html('Submit Decklist');
+            
+            	alert('Decklist was successfully submitted.');
+            }
+        }); 
 	});
 
 });
