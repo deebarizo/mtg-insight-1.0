@@ -156,6 +156,17 @@ class SavedDecklistsController extends Controller
      */
     public function destroy($id) {
         
-        echo 'destroy '.$id;
+        $savedDecklistVersions = SavedDecklistVersion::where('saved_decklist_id', $id)->get();
+
+        foreach ($savedDecklistVersions as $savedDecklistVersion) {
+            
+            SavedDecklistVersionCopy::where('saved_decklist_version_id', $savedDecklistVersion->id)->delete();
+        }
+
+        SavedDecklistVersion::where('saved_decklist_id', $id)->delete();
+
+        SavedDecklist::where('id', $id)->delete();
+
+        return redirect('saved_decklists');
     }
 }
