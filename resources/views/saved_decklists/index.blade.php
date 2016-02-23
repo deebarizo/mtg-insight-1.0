@@ -4,7 +4,7 @@
 
 	<div class="row">
 		
-		<div class="col-lg-12">
+		<div class="col-lg-8">
 
 			<h3>Saved Decklists</h3>
 
@@ -23,7 +23,13 @@
 						<tr>
 							<td>{{ $savedDecklist->name }}</td>
 							<td>{{ $savedDecklist->code }}</td>
-							<td><a href="/saved_decklist/{{ $savedDecklist->saved_decklist_id }}">Edit</a> | <a href="/solver_top_plays/{{ $playerPool->site_in_url }}/{{ $playerPool->sport_in_url }}/{{ $playerPool->time_period_in_url }}/{{ $playerPool->date }}/">Delete</a></td>
+							<td>
+								{!! Form::open(['method' => 'DELETE', 'route' => ['saved_decklists.destroy', $savedDecklist->saved_decklist_id]]) !!} 
+									<div class="form-group form-inline" style="margin-bottom: 0">
+										<a href="/saved_decklist/{{ $savedDecklist->saved_decklist_id }}/edit"><button class="btn btn-primary btn-xs">Edit</button></a>  
+										{!! Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) !!}
+									</div>
+								{!! Form::close() !!}
 						</tr>
 					@endforeach
 				</tbody>

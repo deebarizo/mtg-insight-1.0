@@ -40,6 +40,8 @@ class SavedDecklistsController extends Controller
                                       JOIN sets
                                       ON sets.id = saved_decklists.latest_set_id');
 
+        $titleTag = 'Saved Decklists | ';
+
         return view('saved_decklists/index', compact('titleTag', 'savedDecklists'));
     }
 
@@ -60,7 +62,7 @@ class SavedDecklistsController extends Controller
 
         $lands = json_encode($cardsProcessor->getLands());
 
-        $titleTag = 'Saved Decklists | ';
+        $titleTag = 'Create - Saved Decklists | ';
         $format = $this->format;
 
         return view('saved_decklists/create', compact('titleTag', 'format', 'cardsData', 'actualCmcs', 'lands', 'sets'));
@@ -152,8 +154,8 @@ class SavedDecklistsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        
+        echo 'destroy '.$id;
     }
 }
