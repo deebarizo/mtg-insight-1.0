@@ -28,9 +28,19 @@ class SavedDecklistsController extends Controller
      *
      * @return Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        
+        $savedDecklists = DB::select('SELECT t1.id, t1.saved_decklist_id, t1.name, sets.code FROM saved_decklist_versions AS t1
+                                         JOIN (
+                                            SELECT saved_decklist_id, MAX(id) AS latest FROM saved_decklist_versions GROUP BY saved_decklist_id
+                                         ) AS t2
+                                         ON t1.saved_decklist_id = t2.saved_decklist_id AND t1.id = t2.latest
+                                      JOIN saved_decklists
+                                      ON saved_decklists.id = t1.saved_decklist_id
+                                      JOIN sets
+                                      ON sets.id = saved_decklists.latest_set_id');
+
+        return view('saved_decklists/index', compact('titleTag', 'savedDecklists'));
     }
 
     /**
@@ -38,8 +48,8 @@ class SavedDecklistsController extends Controller
      *
      * @return Response
      */
-    public function create()
-    {
+    public function create() {
+
         $setsProcessor = new SetsProcessor;
 
         $sets = $setsProcessor->getSets();
@@ -62,11 +72,10 @@ class SavedDecklistsController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
+
         $request = Request::all();
         $input = $request['savedDecklist'];
-
         
         /****************************************************************************************
         ****************************************************************************************/
@@ -77,7 +86,6 @@ class SavedDecklistsController extends Controller
 
         $savedDecklist->save();
 
-
         /****************************************************************************************
         ****************************************************************************************/        
 
@@ -87,7 +95,6 @@ class SavedDecklistsController extends Controller
         $savedDecklistVersion->name = $input['name'];
 
         $savedDecklistVersion->save();
-
 
         /****************************************************************************************
         ****************************************************************************************/        
