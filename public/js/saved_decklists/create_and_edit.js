@@ -202,10 +202,6 @@ $(document).ready(function() {
             
             success: function() {
 
-            	$('button.submit-decklist').html('Submit Decklist');
-            
-            	// alert('Decklist was successfully submitted.');
-
             	window.location.href = baseUrl+'/saved_decklists';
             }
         }); 

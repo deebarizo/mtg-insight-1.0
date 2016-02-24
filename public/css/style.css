@@ -42,3 +42,13 @@ a.add-card, a.add-card:hover, a.add-card:active, a.add-card:visited {
 
     color: red;
 }
+
+
+/****************************************************************************************
+SAVED DECKLISTS (EDIT)
+****************************************************************************************/
+
+form.submit-delete {
+
+	display: inline;
+}

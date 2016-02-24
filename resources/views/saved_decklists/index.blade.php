@@ -28,7 +28,7 @@
 							<td>
 								<div class="form-group form-inline" style="margin-bottom: 0">
 									<a href="/saved_decklists/{{ $savedDecklist->saved_decklist_id }}/edit"><button class="btn btn-primary btn-xs">Edit</button></a>  
-									{!! Form::open(['method' => 'DELETE', 'route' => ['saved_decklists.destroy', $savedDecklist->saved_decklist_id]]) !!} 
+									{!! Form::open(['method' => 'DELETE', 'route' => ['saved_decklists.destroy', $savedDecklist->saved_decklist_id], 'class' => 'submit-delete']) !!} 
 										{!! Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) !!}
 									{!! Form::close() !!}
 								</div>
