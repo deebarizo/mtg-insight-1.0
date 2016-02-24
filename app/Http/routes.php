@@ -33,7 +33,7 @@ Route::resource('cards', 'CardsController');
 SAVED DECKLISTS
 ****************************************************************************************/
 
-Route::post('saved_decklists/store', 'SavedDecklistsController@store'); 
+Route::post('saved_decklists/store', 'SavedDecklistsController@store'); // this is needed because i'm using ajax
 Route::resource('saved_decklists', 'SavedDecklistsController');
 
 

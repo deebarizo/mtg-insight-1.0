@@ -8,6 +8,8 @@
 
 			<h3>Saved Decklists</h3>
 
+			<h5><a href="/saved_decklists/create">Create New Decklist</a></h5>
+
 			<table class="table table-striped table-bordered table-hover table-condensed">
 	
 				<thead>
@@ -24,12 +26,12 @@
 							<td>{{ $savedDecklist->name }}</td>
 							<td>{{ $savedDecklist->code }}</td>
 							<td>
-								{!! Form::open(['method' => 'DELETE', 'route' => ['saved_decklists.destroy', $savedDecklist->saved_decklist_id]]) !!} 
-									<div class="form-group form-inline" style="margin-bottom: 0">
-										<a href="/saved_decklist/{{ $savedDecklist->saved_decklist_id }}/edit"><button class="btn btn-primary btn-xs">Edit</button></a>  
+								<div class="form-group form-inline" style="margin-bottom: 0">
+									<a href="/saved_decklists/{{ $savedDecklist->saved_decklist_id }}/edit"><button class="btn btn-primary btn-xs">Edit</button></a>  
+									{!! Form::open(['method' => 'DELETE', 'route' => ['saved_decklists.destroy', $savedDecklist->saved_decklist_id]]) !!} 
 										{!! Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) !!}
-									</div>
-								{!! Form::close() !!}
+									{!! Form::close() !!}
+								</div>
 						</tr>
 					@endforeach
 				</tbody>

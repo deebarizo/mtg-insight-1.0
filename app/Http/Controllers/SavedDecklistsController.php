@@ -133,7 +133,24 @@ class SavedDecklistsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $savedDecklist = DB::table('saved_decklists')
+                            ->select('saved_decklists.id', 
+                                     'saved_decklist_versions.name',
+                                     'latest_set_id',
+                                     'quantity', 
+                                     'saved_decklist_version_copies.card_id',
+                                     'role', 
+                                     'cards.name', 
+                                     'actual-cmc', 
+                                     'middle-text')
+                            ->join('sets', 'sets.id', '=', 'saved_decklists.latest_set_id')
+                            ->join('saved_decklist_versions', 'saved_decklist_versions.saved_decklist_id', '=', 'saved_decklists.id')
+                            ->join('saved_decklist_version_copies', 'saved_decklist_version_copies.saved_decklist_version_id', '=', 'saved_decklist_versions.id')
+                            ->leftJoin('cards', 'cards.id', '=', 'saved_decklist_version_copies.card_id')
+                            ->leftJoin('cards_actual_cmcs', 'cards_actual_cmcs.card_id', '=', 'saved_decklist_version_copies.card_id')
+                            ->get();
+
+        ddAll($savedDecklist);
     }
 
     /**
