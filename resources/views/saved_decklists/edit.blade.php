@@ -78,13 +78,14 @@
 			<h3>Edit Decklist</h3>
 			<div class="form-inline">
 				<label for="saved-decklist-name">Name</label>
-				<input class="form-control" name="saved-decklist-name" type="text" value="" id="saved-decklist-name" style="margin-right: 20px">
+				<input class="form-control" name="saved-decklist-name" type="text" value="{{ $savedDecklistVersion['meta']->name }}" id="saved-decklist-name" style="margin-right: 20px">
 				<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+				<input type="hidden" name="saved_decklist_id" value="{{ $savedDecklistVersion['meta']->saved_decklist_id }}">
 
 				<label for="saved-decklist-latest-set-id">Latest Set</label>
 				<select class="form-control" id="saved-decklist-latest-set-id">
 					@foreach ($sets as $set)
-					  	<option value="{{ $set['id'] }}">{{ $set['code'] }}</option>
+					  	<option value="{{ $set['id'] }}" <?php if ($savedDecklistVersion['meta']->latest_set_id == $set['id']) { echo 'selected="selected"'; } ?> >{{ $set['code'] }}</option>
 					@endforeach
 				</select>
 			</div>
@@ -112,7 +113,28 @@
 				</thead>
 				
 				<tbody>
-
+					@if (!empty($savedDecklistVersion['md_copies']))
+						@foreach ($savedDecklistVersion['md_copies'] as $copy)
+							<!-- @yield('saved_decklist_copy_row') -->
+							<tr class="copy-row {{ $copy->role }}" data-card-quantity="{{ $copy->quantity }}" data-card-id="{{ $copy->card_id }}" data-card-role="{{ $copy->role }}" data-card-name="{{ $copy->name }}" data-card-actual-cmc="{{ $copy->actual_cmc }}" data-card-middle-text="{{ $copy->middle_text }}">
+								<td class="quantity">{{ $copy->quantity }}</td>
+								<td class="card-name">
+									<a class="card-name" target="_blank" href="/cards/{{ $copy->card_id }}">{{ $copy->name }}</a>
+									<div style="display: none" class="tool-tip-card-image"><img src="/files/card_images/{{ $copy->multiverseid }}.jpg"></div>
+								</td>
+								<td>{{ $copy->rating }}</td>
+								<td>{{ $copy->actual_cmc }}</td>
+								<td class="card-mana-cost">{!! $copy->mana_cost !!}</td>
+								<td>
+									<a class="remove-card {{ $copy->role }}" href="">
+										<div class="icon minus">
+											<span class="glyphicon glyphicon-minus"></span>
+										</div>
+									</a>
+								</td>
+							</tr>
+						@endforeach
+					@endif
 				</tbody>
 			
 			</table>

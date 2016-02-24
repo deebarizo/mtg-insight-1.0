@@ -63,8 +63,8 @@
 									<img src="/files/card_images/{{ $card->multiverseid }}.jpg">
 								</div>
 							</td>	
-							<td>{!! $card->rating !!}</td>		
-							<td>{!! $card->actual_cmc !!}</td>					
+							<td>{{ $card->rating }}</td>		
+							<td>{{ $card->actual_cmc }}</td>					
 							<td>{!! $card->mana_cost !!}</td>
 							<td>{{ $card->middle_text }}</td>
 						</tr>

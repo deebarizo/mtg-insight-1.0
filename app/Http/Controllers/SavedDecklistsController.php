@@ -133,24 +133,68 @@ class SavedDecklistsController extends Controller
      */
     public function edit($id)
     {
-        $savedDecklist = DB::table('saved_decklists')
-                            ->select('saved_decklists.id', 
-                                     'saved_decklist_versions.name',
-                                     'latest_set_id',
-                                     'quantity', 
-                                     'saved_decklist_version_copies.card_id',
-                                     'role', 
-                                     'cards.name', 
-                                     'actual-cmc', 
-                                     'middle-text')
-                            ->join('sets', 'sets.id', '=', 'saved_decklists.latest_set_id')
-                            ->join('saved_decklist_versions', 'saved_decklist_versions.saved_decklist_id', '=', 'saved_decklists.id')
-                            ->join('saved_decklist_version_copies', 'saved_decklist_version_copies.saved_decklist_version_id', '=', 'saved_decklist_versions.id')
-                            ->leftJoin('cards', 'cards.id', '=', 'saved_decklist_version_copies.card_id')
-                            ->leftJoin('cards_actual_cmcs', 'cards_actual_cmcs.card_id', '=', 'saved_decklist_version_copies.card_id')
-                            ->get();
+        $setsProcessor = new SetsProcessor;
 
-        ddAll($savedDecklist);
+        $sets = $setsProcessor->getSets();
+
+        $cardsProcessor = new CardsProcessor;
+
+        list($cardsData, $actualCmcs) = $cardsProcessor->getCardsData();
+
+        $lands = json_encode($cardsProcessor->getLands());
+
+        $titleTag = 'Edit - Saved Decklists | ';
+        $format = $this->format;
+
+        /****************************************************************************************
+        ****************************************************************************************/   
+
+        $versionId = SavedDecklistVersion::where('saved_decklist_id', $id)->orderBy('id', 'desc')->take(1)->pluck('id');
+
+        $savedDecklistVersion = [];
+
+        $savedDecklistVersion['meta'] = DB::table('saved_decklists')
+                                            ->select('saved_decklist_id', 
+                                                     'saved_decklist_versions.name',
+                                                     'latest_set_id')
+                                            ->join('sets', 'sets.id', '=', 'saved_decklists.latest_set_id')
+                                            ->join('saved_decklist_versions', 'saved_decklist_versions.saved_decklist_id', '=', 'saved_decklists.id')
+                                            ->where('saved_decklist_versions.id', $versionId)
+                                            ->first();
+
+        $roles = ['md', 'sb'];
+
+        foreach ($roles as $role) {
+
+            $savedDecklistVersion[$role.'_copies'] = DB::table('saved_decklists')
+                                                        ->select('quantity', 
+                                                                 'saved_decklist_version_copies.card_id',
+                                                                 'role', 
+                                                                 'cards.name', 
+                                                                 'actual_cmc', 
+                                                                 'middle_text',
+                                                                 'multiverseid',
+                                                                 'rating',
+                                                                 'mana_cost')
+                                                        ->join('saved_decklist_versions', 'saved_decklist_versions.saved_decklist_id', '=', 'saved_decklists.id')
+                                                        ->join('saved_decklist_version_copies', 'saved_decklist_version_copies.saved_decklist_version_id', '=', 'saved_decklist_versions.id')
+                                                        ->join('sets_cards', 'sets_cards.card_id', '=', 'saved_decklist_version_copies.card_id')
+                                                        ->leftJoin('cards', 'cards.id', '=', 'saved_decklist_version_copies.card_id')
+                                                        ->leftJoin('cards_actual_cmcs', 'cards_actual_cmcs.card_id', '=', 'saved_decklist_version_copies.card_id')
+                                                        ->leftJoin('cards_ratings', 'cards_ratings.card_id', '=', 'saved_decklist_version_copies.card_id')
+                                                        ->where('role', $role)
+                                                        ->where('saved_decklist_versions.id', $versionId)
+                                                        ->get();
+
+            foreach ($savedDecklistVersion[$role.'_copies'] as $copy) {
+                
+                $copy->mana_cost = getManaSymbols($copy->mana_cost);
+            }
+        }
+
+        # ddAll($savedDecklistVersion);
+
+        return view('saved_decklists/edit', compact('titleTag', 'format', 'cardsData', 'actualCmcs', 'lands', 'sets', 'savedDecklistVersion'));
     }
 
     /**
