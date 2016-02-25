@@ -139,9 +139,20 @@ $(document).ready(function() {
 
 		var cardRowMiddleText = $(cardRow).data('card-middle-text');
 
-		if (cardRowMiddleText.indexOf(type) > -1) {
+		if (type == 'Nonland') {
 
-			return;
+			if (cardRowMiddleText.indexOf('Land') == -1) {
+
+				return;
+			}	
+		}
+
+		if (type == 'Land') {
+			
+			if (cardRowMiddleText.indexOf(type) > -1) {
+
+				return;
+			}
 		}
 
 		$(cardRow).addClass('hide-card-row');

@@ -21,6 +21,7 @@
 				<label>Type</label>
 				<select class="form-control type-filter" style="width: 10%; margin-right: 20px">
 				  	<option value="All">All</option>
+				  	<option value="Nonland">Nonland</option>
 				  	<option value="Land">Land</option>
 				</select>	
 
