@@ -171,15 +171,17 @@ var getCardMana = function(manaCost, type, id) {
 
 		var colors = {
 
-			white: /mana\-w/g,
+			white: /mi\-w/g,
 
-			blue: /mana\-u/g,
+			blue: /mi\-u/g,
 
-			black: /mana\-b/g,
+			black: /mi\-b/g,
 
-			red: /mana\-r/g,
+			red: /mi\-r/g,
 
-			green: /mana\-g/g
+			green: /mi\-g/g,
+
+			colorless: /mi\-c/g
 		};
 
 		for (var color in colors) {
