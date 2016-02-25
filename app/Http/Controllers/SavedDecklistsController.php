@@ -52,15 +52,7 @@ class SavedDecklistsController extends Controller
      */
     public function create() {
 
-        $setsProcessor = new SetsProcessor;
-
-        $sets = $setsProcessor->getSets();
-
-        $cardsProcessor = new CardsProcessor;
-
-        list($cardsData, $actualCmcs) = $cardsProcessor->getCardsData();
-
-        $lands = json_encode($cardsProcessor->getLands());
+        list($sets, $cardsData, $actualCmcs, $lands) = $this->generateCards();
 
         $titleTag = 'Create - Saved Decklists | ';
         $format = $this->format;
@@ -131,17 +123,9 @@ class SavedDecklistsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
-    {
-        $setsProcessor = new SetsProcessor;
-
-        $sets = $setsProcessor->getSets();
-
-        $cardsProcessor = new CardsProcessor;
-
-        list($cardsData, $actualCmcs) = $cardsProcessor->getCardsData();
-
-        $lands = json_encode($cardsProcessor->getLands());
+    public function edit($id) {
+        
+        list($sets, $cardsData, $actualCmcs, $lands) = $this->generateCards();
 
         $titleTag = 'Edit - Saved Decklists | ';
         $format = $this->format;
@@ -229,5 +213,25 @@ class SavedDecklistsController extends Controller
         SavedDecklist::where('id', $id)->delete();
 
         return redirect('saved_decklists');
+    }
+
+
+    /****************************************************************************************
+    HELPERS
+    ****************************************************************************************/
+
+    public function generateCards() {
+
+        $setsProcessor = new SetsProcessor;
+
+        $sets = $setsProcessor->getSets();
+
+        $cardsProcessor = new CardsProcessor;
+
+        list($cardsData, $actualCmcs) = $cardsProcessor->getCardsData();
+
+        $lands = json_encode($cardsProcessor->getLands());
+
+        return array($sets, $cardsData, $actualCmcs, $lands);
     }
 }
