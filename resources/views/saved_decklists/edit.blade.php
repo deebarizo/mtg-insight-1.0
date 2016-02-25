@@ -80,7 +80,7 @@
 				<label for="saved-decklist-name">Name</label>
 				<input class="form-control" name="saved-decklist-name" type="text" value="{{ $savedDecklistVersion['meta']->name }}" id="saved-decklist-name" style="margin-right: 20px">
 				<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-				<input type="hidden" name="saved_decklist_id" value="{{ $savedDecklistVersion['meta']->saved_decklist_id }}">
+				<input type="hidden" name="saved-decklist-id" value="{{ $savedDecklistVersion['meta']->saved_decklist_id }}" id="saved-decklist-id">
 
 				<label for="saved-decklist-latest-set-id">Latest Set</label>
 				<select class="form-control" id="saved-decklist-latest-set-id">
@@ -147,7 +147,7 @@
 			
 			</table>
 
-			<button style="width: 128px" class="btn btn-primary pull-right submit-decklist" type="submit">Submit Decklist</button>
+			<button style="width: 128px" class="btn btn-primary pull-right edit-decklist" type="submit">Edit Decklist</button>
 		
 		</div>
 

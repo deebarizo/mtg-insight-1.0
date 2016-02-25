@@ -148,6 +148,26 @@ $(document).ready(function() {
 
 	$('button.submit-decklist').on('click', function() {
 
+		processSavedDecklist('sumbit'); 
+	});
+
+
+	/****************************************************************************************
+	EDIT DECKLIST
+	****************************************************************************************/
+
+	$('button.edit-decklist').on('click', function() {
+
+		processSavedDecklist('edit');
+	});
+
+
+	/****************************************************************************************
+	PROCESS DECKLIST
+	****************************************************************************************/
+
+	var processSavedDecklist = function(type) {
+
 		var decklistIsValid = validateDecklist();
 
 		if (!decklistIsValid) {
@@ -155,7 +175,23 @@ $(document).ready(function() {
 			return false;
 		}
 
+		if (type == 'submit') {
+
+			var id = null;
+
+			var urlSlug = 'store';
+		}
+
+		if (type == 'edit') {
+
+			var id = $('#saved-decklist-id').val();
+
+			var urlSlug = 'update';
+		}
+
 		var savedDecklist = {
+
+			id: id, 
 
 			latestSetId: $('#saved-decklist-latest-set-id').val(),
 			
@@ -176,9 +212,11 @@ $(document).ready(function() {
 			};
 
 			savedDecklist.copies.push(copy);
-		});
+		});	
+		
+		$('button.'+type+'-decklist').html('<img src="'+baseUrl+'/images/ajax-loader.gif">');	
 
-		$('button.submit-decklist').html('<img src="'+baseUrl+'/images/ajax-loader.gif">');
+		// console.log(savedDecklist); return;
 
 		// CSRF protection
 		$.ajaxSetup({
@@ -191,7 +229,7 @@ $(document).ready(function() {
 
 		$.ajax({
 
-            url: baseUrl+'/saved_decklists/store/',
+            url: baseUrl+'/saved_decklists/'+urlSlug+'/',
            	
            	type: 'POST',
            	
@@ -204,7 +242,7 @@ $(document).ready(function() {
 
             	window.location.href = baseUrl+'/saved_decklists';
             }
-        }); 
-	});
+        }); 		
+	}
 
 });

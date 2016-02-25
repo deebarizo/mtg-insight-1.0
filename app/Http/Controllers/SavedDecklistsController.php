@@ -68,42 +68,7 @@ class SavedDecklistsController extends Controller
      */
     public function store(Request $request) {
 
-        $request = Request::all();
-        $input = $request['savedDecklist'];
-        
-        /****************************************************************************************
-        ****************************************************************************************/
-
-        $savedDecklist = new SavedDecklist;
-
-        $savedDecklist->latest_set_id = $input['latestSetId'];
-
-        $savedDecklist->save();
-
-        /****************************************************************************************
-        ****************************************************************************************/        
-
-        $savedDecklistVersion = new SavedDecklistVersion;
-
-        $savedDecklistVersion->saved_decklist_id = $savedDecklist->id;
-        $savedDecklistVersion->name = $input['name'];
-
-        $savedDecklistVersion->save();
-
-        /****************************************************************************************
-        ****************************************************************************************/        
-
-        foreach ($input['copies'] as $copy) {
-
-            $savedDecklistVersionCopy = new SavedDecklistVersionCopy;
-            
-            $savedDecklistVersionCopy->saved_decklist_version_id = $savedDecklistVersion->id;
-            $savedDecklistVersionCopy->quantity = $copy['quantity'];
-            $savedDecklistVersionCopy->card_id = $copy['cardId'];
-            $savedDecklistVersionCopy->role = $copy['role'];
-
-            $savedDecklistVersionCopy->save();
-        }
+        $this->storeNewVersion($request, 'store');
     }
 
     /**
@@ -188,9 +153,9 @@ class SavedDecklistsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request) {
+
+        $this->storeNewVersion($request, 'update');
     }
 
     /**
@@ -233,5 +198,61 @@ class SavedDecklistsController extends Controller
         $lands = json_encode($cardsProcessor->getLands());
 
         return array($sets, $cardsData, $actualCmcs, $lands);
+    }
+
+    public function storeNewVersion($request, $type) {
+
+        $request = Request::all();
+        $input = $request['savedDecklist'];
+
+        # prf($type);
+        # ddAll($input);
+
+        /****************************************************************************************
+        ****************************************************************************************/
+
+        if ($type == 'store') {
+
+            $savedDecklist = new SavedDecklist;
+
+            $savedDecklist->latest_set_id = $input['latestSetId'];
+
+            $savedDecklist->save();
+        }
+
+        /****************************************************************************************
+        ****************************************************************************************/        
+
+        if ($type == 'store') {
+
+            $savedDecklistId = $savedDecklist->id;
+        }
+
+        if ($type == 'update') {
+
+            $savedDecklistId = $input['id'];
+        }
+
+        $savedDecklistVersion = new SavedDecklistVersion;
+
+        $savedDecklistVersion->saved_decklist_id = $savedDecklistId;
+        $savedDecklistVersion->name = $input['name'];
+
+        $savedDecklistVersion->save();
+
+        /****************************************************************************************
+        ****************************************************************************************/        
+
+        foreach ($input['copies'] as $copy) {
+
+            $savedDecklistVersionCopy = new SavedDecklistVersionCopy;
+            
+            $savedDecklistVersionCopy->saved_decklist_version_id = $savedDecklistVersion->id;
+            $savedDecklistVersionCopy->quantity = $copy['quantity'];
+            $savedDecklistVersionCopy->card_id = $copy['cardId'];
+            $savedDecklistVersionCopy->role = $copy['role'];
+
+            $savedDecklistVersionCopy->save();
+        }
     }
 }

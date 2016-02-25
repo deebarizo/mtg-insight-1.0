@@ -34,6 +34,7 @@ SAVED DECKLISTS
 ****************************************************************************************/
 
 Route::post('saved_decklists/store', 'SavedDecklistsController@store'); // this is needed because i'm using ajax
+Route::post('saved_decklists/update', 'SavedDecklistsController@update'); // this is needed because i'm using ajax
 Route::resource('saved_decklists', 'SavedDecklistsController');
 
 
