@@ -98,7 +98,7 @@ var getDecklistTotals = function() {
 			}
 		},
 
-		drops: [null, null, null, null, null, null, null] // for mana curve chart
+		drops: [null, null, null, null, null, null, null, null] // for mana curve chart
 	};
 
 	var roles = ['md', 'sb'];
@@ -156,14 +156,21 @@ var getDecklistTotals = function() {
 
 					card['actualCmc'] = copyRow.data('card-actual-cmc');
 
-					manaCurveChartIndex = card['actualCmc'] - 1; // array index
+					if (card['actualCmc'] == 'variable') {
 
-					if (manaCurveChartIndex > 7) {
+						decklistTotals['drops'][7] += card['quantity'];
 
-						manaCurveChartIndex = 7;
+					} else {
+						
+						manaCurveChartIndex = card['actualCmc'] - 1; // array index
+
+						if (manaCurveChartIndex > 6) {
+
+							manaCurveChartIndex = 6;
+						}
+
+						decklistTotals['drops'][manaCurveChartIndex] += card['quantity'];
 					}
-
-					decklistTotals['drops'][manaCurveChartIndex] += card['quantity'];
 				}
 			}
 		});	

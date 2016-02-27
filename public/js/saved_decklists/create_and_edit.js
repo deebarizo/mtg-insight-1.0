@@ -1,6 +1,17 @@
 $(document).ready(function() {
 
 	/****************************************************************************************
+	CREATE DATA TABLE
+	****************************************************************************************/
+
+	$('#cards').dataTable({
+		"scrollY": "600px",
+		"paging": false,
+		"order": [[1, "desc"]]
+	});
+	
+
+	/****************************************************************************************
 	ADD CARD TO DECKLIST
 	****************************************************************************************/
 
@@ -148,7 +159,7 @@ $(document).ready(function() {
 
 	$('button.submit-decklist').on('click', function() {
 
-		processSavedDecklist('sumbit'); 
+		processSavedDecklist('submit'); 
 	});
 
 
@@ -174,6 +185,8 @@ $(document).ready(function() {
 
 			return false;
 		}
+
+		$('button.'+type+'-decklist').html('<img src="'+baseUrl+'/images/ajax-loader.gif">');	
 
 		if (type == 'submit') {
 
@@ -214,8 +227,6 @@ $(document).ready(function() {
 			savedDecklist.copies.push(copy);
 		});	
 		
-		$('button.'+type+'-decklist').html('<img src="'+baseUrl+'/images/ajax-loader.gif">');	
-
 		// console.log(savedDecklist); return;
 
 		// CSRF protection
@@ -244,16 +255,5 @@ $(document).ready(function() {
             }
         }); 		
 	}
-
-
-	/****************************************************************************************
-	CREATE DATA TABLE
-	****************************************************************************************/
-
-	$('#cards').dataTable({
-		"scrollY": "600px",
-		"paging": false,
-		"order": [[1, "desc"]]
-	});
 
 });

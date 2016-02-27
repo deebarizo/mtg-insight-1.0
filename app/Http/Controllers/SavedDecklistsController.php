@@ -120,6 +120,7 @@ class SavedDecklistsController extends Controller
                                                                  'saved_decklist_version_copies.card_id',
                                                                  'role', 
                                                                  'cards.name', 
+                                                                 'cmc', 
                                                                  'actual_cmc', 
                                                                  'middle_text',
                                                                  'multiverseid',
@@ -138,6 +139,11 @@ class SavedDecklistsController extends Controller
             foreach ($savedDecklistVersion[$role.'_copies'] as $copy) {
                 
                 $copy->mana_cost = getManaSymbols($copy->mana_cost);
+
+                if (is_null($copy->actual_cmc)) {
+
+                    $copy->actual_cmc = $copy->cmc;
+                }
             }
         }
 
