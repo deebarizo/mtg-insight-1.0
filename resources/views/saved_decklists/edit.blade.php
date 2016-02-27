@@ -233,84 +233,18 @@
 	<script type="text/javascript">
 
 		/****************************************************************************************
-		DATA TABLE
-		****************************************************************************************/
-
-		$('#cards').dataTable({
-			"scrollY": "600px",
-			"paging": false,
-			"order": [[1, "desc"]]
-		});
-
-		/****************************************************************************************
 		GLOBAL VARIABLES
 		****************************************************************************************/	
 
 		var lands = <?php echo $lands; ?>;
-
-		$(function () {
-		    $('#mana-curve').highcharts({
-		        chart: {
-		            type: 'column',
-		            spacingLeft: 0,
-		            spacingBottom: 0
-		        },
-		        xAxis: {
-		            categories: [
-		                '1',
-		                '2',
-		                '3',
-		                '4',
-		                '5',
-		                '6',
-		                '7+',
-		                'var'
-		            ],
-		            title: {
-		                text: 'Cost'
-		            }
-		        },
-		        title: {
-		        	text: null
-		        },
-		        yAxis: {
-		            min: 0,
-		            title: {
-		                text: 'Number of Cards'
-		            }
-		        },
-		        tooltip: {
-		            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-		            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-		                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-		            footerFormat: '</table>',
-		            shared: true,
-		            useHTML: true
-		        },
-		        plotOptions: {
-		            column: {
-		                pointPadding: 0.2,
-		                borderWidth: 0,
-		                dataLabels: {
-		                    enabled: true
-		                },
-		                enableMouseTracking: false
-		            }
-		        },
-		        series: [{
-		            showInLegend: false,
-		            data: [null, 11, 6, 7, 3, null, 2, 7]
-
-		        }],
-		        credits: false
-		    });
-		});
 
 		var baseUrl = '<?php echo url(); ?>';
 
 	</script>
 
 	<script src="/js/cards/index.js"></script>
+
+	<script src="/js/saved_decklists/mana_curve_chart.js"></script>
 
 	<script src="/js/saved_decklists/function_lib_single_cards.js"></script>
 

@@ -25,7 +25,13 @@ var updateDecklist = function(role, change) {
 		$('td.breakdown.'+colors[i]+'-symbols').text(decklist['totals']['mana'][colors[i]]['symbols']);
 		$('td.breakdown.'+colors[i]+'-sources').text(decklist['totals']['mana'][colors[i]]['sources']);
 	};
-	
+
+	for (var i = 0; i < decklist['totals']['drops'].length; i++) {
+		
+        manaCurveChart.series[0].data[i].update({
+            y: decklist['totals']['drops'][i]
+        }); 
+	}
 }
 
 
@@ -90,7 +96,9 @@ var getDecklistTotals = function() {
 
 				sources: 0
 			}
-		}
+		},
+
+		drops: [null, null, null, null, null, null, null] // for mana curve chart
 	};
 
 	var roles = ['md', 'sb'];
@@ -113,7 +121,9 @@ var getDecklistTotals = function() {
 
 				mana: {},
 
-				id: null
+				id: null,
+
+				actualCmc: null
 			};
 
 			card['quantity'] = Number(copyRow.find('td.quantity').text());
@@ -141,6 +151,20 @@ var getDecklistTotals = function() {
 						decklistTotals['mana'][color][manaType] += card['mana'][color][manaType] * card['quantity'];
 					};
 				};
+
+				if (card['type'] != 'lands') {
+
+					card['actualCmc'] = copyRow.data('card-actual-cmc');
+
+					manaCurveChartIndex = card['actualCmc'] - 1; // array index
+
+					if (manaCurveChartIndex > 7) {
+
+						manaCurveChartIndex = 7;
+					}
+
+					decklistTotals['drops'][manaCurveChartIndex] += card['quantity'];
+				}
 			}
 		});	
 	};

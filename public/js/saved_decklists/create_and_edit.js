@@ -79,7 +79,7 @@ $(document).ready(function() {
 		updateDecklist(role, 'add card');
 
 		/****************************************************************************************
-		TOOLTIPS FOR DYNAMIC CONTENT
+		CREATE TOOLTIPS FOR DYNAMIC CONTENT
 		****************************************************************************************/
 
 	    $('#md').on('mouseenter', 'a.card-name', function (event) {
@@ -244,5 +244,16 @@ $(document).ready(function() {
             }
         }); 		
 	}
+
+
+	/****************************************************************************************
+	CREATE DATA TABLE
+	****************************************************************************************/
+
+	$('#cards').dataTable({
+		"scrollY": "600px",
+		"paging": false,
+		"order": [[1, "desc"]]
+	});
 
 });
