@@ -76,19 +76,7 @@
 
 	</div>
 
-	<script type="text/javascript">
-
-		/****************************************************************************************
-		DATA TABLE
-		****************************************************************************************/
-
-		$('#cards').dataTable({
-			"scrollY": "600px",
-			"paging": false,
-			"order": [[0, "asc"]]
-		});
-
-	</script>
+	<script src="/js/cards/data_table.js"></script>
 
 	<script src="/js/cards/tooltips.js"></script>
 

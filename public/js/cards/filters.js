@@ -1,120 +1,74 @@
 $(document).ready(function() {
 
 	/****************************************************************************************
-	FILTER
+	FILTERS
 	****************************************************************************************/
 
-	var filter = {};
+	function FilterGroup(actualCmc, type) {
 
-	function runFilter() {
-		
-		filter = getFilter();
+		this.actualCmc = {
 
-		$('tr.card-row').removeClass('hide-card-row');
-
-		runActualCmcFilter(filter);
-		runTypeFilter(filter);
-	}
-
-	function getFilter() {
-		
-		var actualCmc = $('select.actual-cmc-filter').val();
-		var type = $('select.type-filter').val();
-
-		filter = {
-
-			actualCmc: actualCmc,
-			type: type
+			value: actualCmc,
+			columnIndex: 3
 		};
 
-		return filter;
-	}
+		this.type = {
 
+			value: type,
+			columnIndex: 5
+		};
+	} 
 
-	/********************************************
-	FILTER (ACTUAL CMC)
-	********************************************/
-
-	$('select.actual-cmc-filter').on('change', function() {
-
-		runFilter();
-	});
-
-	function runActualCmcFilter(filter) {
+	FilterGroup.prototype.execute = function() {
 		
-		if (filter.actualCmc == 'All') {
+		$('tr.card-row').removeClass('hide-card-row');
 
-			return;
-		}
+		for (key in this) {
 
-		$('tr.card-row').each(function() {
+			if (typeof this[key] !== 'function') {
 
-			var cardRow = $(this);
+				var filter = this[key];
 
-			hideActualCmcsNotSelected(cardRow, filter.actualCmc);
-		});				
-	}
+				if (filter.value === 'All') {
 
-	function hideActualCmcsNotSelected(cardRow, actualCmc) {
+					continue;
+				}
 
-		var cardRowActualCmc = $(cardRow).data('card-actual-cmc');
+				if (filter.value === 'Nonland') {
 
-		console.log(cardRowActualCmc);
-		console.log(actualCmc);
+					filter.value = 
+				}
 
-		if (cardRowActualCmc == actualCmc) {
+				$('tr.card-row').each(function() {
 
-			return;
-		}
+					var cardRow = $(this);
 
-		$(cardRow).addClass('hide-card-row');
-	}
-
-	/********************************************
-	FILTER (TYPE)
-	********************************************/
-
-	$('select.type-filter').on('change', function() {
-
-		runFilter();
-	});
-
-	function runTypeFilter(filter) {
-		
-		if (filter.type == 'All') {
-
-			return;
-		}
-
-		$('tr.card-row').each(function() {
-
-			var cardRow = $(this);
-
-			hideTypeNotSelected(cardRow, filter.type);
-		});				
-	}
-
-	function hideTypeNotSelected(cardRow, type) {
-
-		var cardRowMiddleText = $(cardRow).data('card-middle-text');
-
-		if (type == 'Nonland') {
-
-			if (cardRowMiddleText.indexOf('Land') == -1) {
-
-				return;
-			}	
-		}
-
-		if (type == 'Land') {
-			
-			if (cardRowMiddleText.indexOf(type) > -1) {
-
-				return;
+					oTable.fnFilter(filter.value, filter.columnIndex);
+				});
 			}
 		}
+	};
 
-		$(cardRow).addClass('hide-card-row');
+	/********************************************
+	EXECUTE
+	********************************************/	
+
+	var selectCssClasses = ['actual-cmc-filter', 'type-filter'];
+
+	for (var i = 0; i < selectCssClasses.length; i++) {
+		
+		$('select.'+selectCssClasses[i]).on('change', function() {
+
+			var actualCmc = $('select.actual-cmc-filter').val();
+			var type = $('select.type-filter').val();
+
+			filterGroup = new FilterGroup(actualCmc, type);
+
+			filterGroup.execute();
+		});
 	}
+
+
+
 
 });
