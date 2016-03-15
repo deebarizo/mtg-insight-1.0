@@ -90,6 +90,8 @@
 
 	</script>
 
-	<script src="/js/cards/index.js"></script>
+	<script src="/js/cards/tooltips.js"></script>
+
+	<script src="/js/cards/filters.js"></script>
 
 @stop

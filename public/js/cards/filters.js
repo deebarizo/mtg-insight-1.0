@@ -1,47 +1,6 @@
 $(document).ready(function() {
 
 	/****************************************************************************************
-	TOOLTIP (CARD IMAGE)
-	****************************************************************************************/
-
-	$('a.card-name').each(function() {
-
-        $(this).qtip({
-        
-            content: {
-        
-                text: $(this).next('.tool-tip-card-image')
-			},
-
-			position: {
-
-				my: 'bottom left',
-				at: 'top right',
-				target: $(this)
-			}
-        });
-	});
-
-	$('a.card-edit').each(function() {
-
-        $(this).qtip({
-        
-            content: {
-        
-                text: $(this).next('.tool-tip-card-image')
-			},
-
-			position: {
-
-				my: 'bottom left',
-				at: 'top right',
-				target: $(this)
-			}
-        });
-	});
-
-
-	/****************************************************************************************
 	FILTER
 	****************************************************************************************/
 
