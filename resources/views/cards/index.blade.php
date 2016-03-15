@@ -35,7 +35,7 @@
 						<th>Name</th>
 						<th>Mod</th>
 						<th>Rating</th>
-						<th>Actual CMC</th>
+						<th class="actualCmc">Actual CMC</th>
 						<th>Mana Cost</th>
 						<th>Middle Text</th>
 					</tr>
@@ -65,7 +65,7 @@
 								</div>
 							</td>	
 							<td>{{ $card->rating }}</td>		
-							<td>{{ $card->actual_cmc }}</td>					
+							<td class="actualCmc">{{ $card->actual_cmc }}</td>					
 							<td>{!! $card->mana_cost !!}</td>
 							<td>{{ $card->middle_text }}</td>
 						</tr>

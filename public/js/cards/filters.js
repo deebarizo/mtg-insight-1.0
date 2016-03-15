@@ -20,8 +20,6 @@ $(document).ready(function() {
 	} 
 
 	FilterGroup.prototype.execute = function() {
-		
-		$('tr.card-row').removeClass('hide-card-row');
 
 		for (key in this) {
 
@@ -31,22 +29,32 @@ $(document).ready(function() {
 
 				if (filter.value === 'All') {
 
+					// http://datatables.net/reference/api/column().search()
+					cardsTable.column(filter.columnIndex).search('.*', true, false); 
+
 					continue;
 				}
 
-				if (filter.value === 'Nonland') {
+				if (key === 'type' && filter.value === 'Nonland') {
 
-					filter.value = 
+					// http://stackoverflow.com/questions/1538512/how-can-i-invert-a-regular-expression-in-javascript
+					cardsTable.column(filter.columnIndex).search('^(?!.*Land)', true, false); 
+
+					continue;
 				}
 
-				$('tr.card-row').each(function() {
+				if (key === 'actualCmc') {
 
-					var cardRow = $(this);
+					cardsTable.column(filter.columnIndex).search('^'+filter.value+'$', true, false); 
 
-					oTable.fnFilter(filter.value, filter.columnIndex);
-				});
+					continue;
+				}
+
+				cardsTable.column(filter.columnIndex).search(filter.value); 
 			}
 		}
+
+		cardsTable.draw();
 	};
 
 	/********************************************
@@ -67,8 +75,5 @@ $(document).ready(function() {
 			filterGroup.execute();
 		});
 	}
-
-
-
 
 });

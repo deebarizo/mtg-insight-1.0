@@ -1,1 +1,0 @@
-The image files with names starting with 'sort' are for Data Tables. They are the arrows for sorting tables.

@@ -2,7 +2,7 @@
 DATA TABLE
 ****************************************************************************************/
 
-var cardsTable = $('#cards').dataTable({
+var cardsTable = $('#cards').DataTable({
 	
 	"scrollY": "600px",
 	"paging": false,
