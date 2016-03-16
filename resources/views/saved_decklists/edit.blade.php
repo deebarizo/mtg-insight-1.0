@@ -242,7 +242,7 @@
 
 	</script>
 
-	<script src="/js/cards/index.js"></script>
+	<script src="/js/cards/tooltips.js"></script>
 
 	<script src="/js/saved_decklists/mana_curve_chart.js"></script>
 

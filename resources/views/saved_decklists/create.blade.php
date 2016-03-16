@@ -8,24 +8,6 @@
 
 			<h3>Cards</h3>
 
-			<form class="form-inline" style="margin: 0 0 10px 0">
-
-				<label>Actual CMCs</label>
-				<select class="form-control actual-cmc-filter" style="width: 25%;">
-				  	<option value="All">All</option>
-				  	@foreach ($actualCmcs as $actualCmc)
-					  	<option value="{{ $actualCmc }}">{{ $actualCmc }}</option>
-				  	@endforeach
-				</select>	
-
-				<label>Type</label>
-				<select class="form-control type-filter" style="width: 25%; margin-right: 20px">
-				  	<option value="All">All</option>
-				  	<option value="Land">Land</option>
-				</select>	
-
-			</form>
-
 			<table style="font-size: 90%" id="cards" class="table table-striped table-bordered table-hover table-condensed">
 				<thead>
 					<tr>
@@ -233,7 +215,7 @@
 
 	</script>
 
-	<script src="/js/cards/index.js"></script>
+	<script src="/js/cards/tooltips.js"></script>
 
 	<script src="/js/saved_decklists/mana_curve_chart.js"></script>
 

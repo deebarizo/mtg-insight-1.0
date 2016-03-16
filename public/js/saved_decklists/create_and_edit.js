@@ -93,7 +93,9 @@ $(document).ready(function() {
 		CREATE TOOLTIPS FOR DYNAMIC CONTENT
 		****************************************************************************************/
 
-	    $('#md').on('mouseenter', 'a.card-name', function (event) {
+
+
+	    $('table#md, table#sb').on('mouseenter', 'a.card-name', function(event) {
 	        
 	        $(this).qtip({
 
@@ -104,7 +106,7 @@ $(document).ready(function() {
 
 				position: {
 
-					my: 'bottom left',
+					my: 'left center',
 					at: 'top right',
 					target: $(this)
 				},
