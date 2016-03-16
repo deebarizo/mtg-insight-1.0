@@ -93,8 +93,6 @@ $(document).ready(function() {
 		CREATE TOOLTIPS FOR DYNAMIC CONTENT
 		****************************************************************************************/
 
-
-
 	    $('table#md, table#sb').on('mouseenter', 'a.card-name', function(event) {
 	        
 	        $(this).qtip({

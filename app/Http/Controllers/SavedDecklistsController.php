@@ -57,7 +57,20 @@ class SavedDecklistsController extends Controller
         $titleTag = 'Create - Saved Decklists | ';
         $format = $this->format;
 
-        return view('saved_decklists/create', compact('titleTag', 'format', 'cardsData', 'actualCmcs', 'lands', 'sets'));
+        $savedDecklistVersion = [
+
+            'meta' => new \stdClass()
+        ];
+
+        $savedDecklistVersion['meta']->saved_decklist_id = null;
+        $savedDecklistVersion['meta']->name = '';
+        $savedDecklistVersion['meta']->latest_set_id = $sets[0]['id'];
+        $savedDecklistVersion['meta']->h3_tag = 'Create Decklist';
+
+        # ddAll($savedDecklistVersion);
+        # ddAll($sets);
+
+        return view('saved_decklists/create', compact('titleTag', 'format', 'cardsData', 'actualCmcs', 'lands', 'sets', 'savedDecklistVersion'));
     }
 
     /**
@@ -110,6 +123,8 @@ class SavedDecklistsController extends Controller
                                             ->join('saved_decklist_versions', 'saved_decklist_versions.saved_decklist_id', '=', 'saved_decklists.id')
                                             ->where('saved_decklist_versions.id', $versionId)
                                             ->first();
+
+        $savedDecklistVersion['meta']->h3_tag = 'Edit Decklist';
 
         $roles = ['md', 'sb'];
 

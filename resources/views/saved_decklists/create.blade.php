@@ -4,73 +4,9 @@
 
 	<div class="row">
 		
-		<div class="col-lg-5">
+		@include('saved_decklists._cards_table')
 
-			<h3>Cards</h3>
-
-			<table style="font-size: 90%" id="cards" class="table table-striped table-bordered table-hover table-condensed">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>R</th>
-						<th>C</th>
-						<th>MC</th>
-						<th>Add</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach ($cardsData as $card)
-						<tr class="card-row" 
-							data-card-id="{{ $card->id }}"
-							data-card-name="{{ $card->name }}"
-							data-card-rating="{{ $card->rating }}"
-							data-card-actual-cmc="{{ $card->actual_cmc }}"
-							data-card-mana-cost="{{ $card->mana_cost }}"
-							data-card-multiverseid="{{ $card->multiverseid }}"
-							data-card-middle-text="{{ $card->middle_text }}">
-							<td>
-								<a class="card-name" target="_blank" href="/cards/{{ $card->id }}">{{ $card->name }}</a>
-								<div style="display: none" class="tool-tip-card-image">
-									<img src="/files/card_images/{{ $card->multiverseid }}.jpg">
-								</div>
-							</td>
-							<td style="width: 10%">{{ $card->rating }}</td>		
-							<td style="width: 10%">{{ $card->actual_cmc }}</td>					
-							<td style="width: 20%">{!! $card->mana_cost !!}</td>
-							<td style="width: 10%">
-								<a class="add-card md" href="" style="margin-right: 5px">
-									<div class="icon plus md">
-										<span class="glyphicon glyphicon-plus"></span>
-									</div>
-								</a>
-								<a class="add-card sb" href="">
-									<div class="icon plus sb">
-										<span class="glyphicon glyphicon-plus"></span>
-									</div>
-								</a>
-							</td>
-						</tr>
-					@endforeach
-				</tbody>
-			</table>
-		</div>
-
-		<div class="col-lg-7 decklist">
-		
-			<h3>Create Decklist</h3>
-			<div class="form-inline">
-				<label for="saved-decklist-name">Name</label>
-				<input class="form-control" name="saved-decklist-name" type="text" value="" id="saved-decklist-name" style="margin-right: 20px">
-				<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-
-				<label for="saved-decklist-latest-set-id">Latest Set</label>
-				<select class="form-control" id="saved-decklist-latest-set-id">
-					@foreach ($sets as $set)
-					  	<option value="{{ $set['id'] }}">{{ $set['code'] }}</option>
-					@endforeach
-				</select>
-			</div>
-		</div>
+		@include('saved_decklists._version_meta')
 
 		<div class="col-lg-5 decklist">
 
