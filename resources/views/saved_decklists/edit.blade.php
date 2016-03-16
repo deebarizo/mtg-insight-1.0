@@ -13,8 +13,11 @@
 	@include('saved_decklists._scripts')
 
 	<script type="text/javascript">
+
+		$(document).ready(function() {
 		
-		updateDecklist();
+			updateDecklist();
+		});
 
 	</script>
 

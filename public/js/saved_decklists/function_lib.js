@@ -113,6 +113,8 @@ var getDecklistTotals = function() {
 
 				quantity: null,
 
+				name: null,
+
 				middleText: null,
 
 				type: null,
@@ -128,6 +130,8 @@ var getDecklistTotals = function() {
 
 			card['quantity'] = Number(copyRow.find('td.quantity').text());
 
+			card['name'] = copyRow.data('card-name');
+
 			decklistTotals[roles[i]] += card['quantity'];
 
 			if (roles[i] == 'md') {
@@ -142,7 +146,7 @@ var getDecklistTotals = function() {
 
 				card['id'] = copyRow.data('card-id');
 
-				card['mana'] = getCardMana(card['manaCost'], card['type'], card['id']);
+				card['mana'] = getCardMana(card['manaCost'], card['type'], card['id'], card['name']);
 
 				for (var color in card['mana']) {
 
@@ -194,7 +198,7 @@ var getCardType = function(middleText) {
 	return 'noncreatureSpells';
 }
 
-var getCardMana = function(manaCost, type, id) {
+var getCardMana = function(manaCost, type, id, name) {
 
 	var cardMana = {};
 
@@ -236,15 +240,15 @@ var getCardMana = function(manaCost, type, id) {
 
 	if (type == 'lands') {
 
-		cardMana = getLandSources(id);
+		cardMana = getLandSources(name);
 	}
 
 	return cardMana;
 }
 
-var getLandSources = function(id) {
+var getLandSources = function(name) {
 
-	var cardId = id;
+	var cardName = name;
 
 	var cardMana = {
 
@@ -279,7 +283,7 @@ var getLandSources = function(id) {
 		}
 	};
 
-	if (cardId == 1063) { // Evolving Wilds
+	if (cardName == 'Evolving Wilds') { // Evolving Wilds
 
 		cardMana = calculateSourcesForEvolvingWilds(cardMana);
 
@@ -288,7 +292,7 @@ var getLandSources = function(id) {
 
 	for (var i = 0; i < lands.length; i++) {
 
-		if (cardId == lands[i]['card_id']) {
+		if (cardName == lands[i]['name']) {
 
 			cardMana[lands[i]['color']]['sources'] += lands[i]['sources'];
 		}
