@@ -59,7 +59,9 @@ class SavedDecklistsController extends Controller
 
         $savedDecklistVersion = [
 
-            'meta' => new \stdClass()
+            'meta' => new \stdClass(),
+            'md_copies' => null,
+            'sb_copies' => null
         ];
 
         $savedDecklistVersion['meta']->saved_decklist_id = null;
@@ -67,10 +69,16 @@ class SavedDecklistsController extends Controller
         $savedDecklistVersion['meta']->latest_set_id = $sets[0]['id'];
         $savedDecklistVersion['meta']->h3_tag = 'Create Decklist';
 
+        $button = [
+
+            'css_class' => 'submit-decklist',
+            'anchor_text' => 'Submit Decklist'    
+        ];
+
         # ddAll($savedDecklistVersion);
         # ddAll($sets);
 
-        return view('saved_decklists/create', compact('titleTag', 'format', 'cardsData', 'actualCmcs', 'lands', 'sets', 'savedDecklistVersion'));
+        return view('saved_decklists/create', compact('titleTag', 'format', 'cardsData', 'actualCmcs', 'lands', 'sets', 'savedDecklistVersion', 'button'));
     }
 
     /**
@@ -162,9 +170,15 @@ class SavedDecklistsController extends Controller
             }
         }
 
+        $button = [
+
+            'css_class' => 'edit-decklist',
+            'anchor_text' => 'Edit Decklist'    
+        ];
+
         # ddAll($savedDecklistVersion);
 
-        return view('saved_decklists/edit', compact('titleTag', 'format', 'cardsData', 'actualCmcs', 'lands', 'sets', 'savedDecklistVersion'));
+        return view('saved_decklists/edit', compact('titleTag', 'format', 'cardsData', 'actualCmcs', 'lands', 'sets', 'savedDecklistVersion', 'button'));
     }
 
     /**
