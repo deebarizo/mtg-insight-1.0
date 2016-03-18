@@ -20,7 +20,7 @@ class CardsControllerTest extends TestCase {
     }
 
 	/** @test */
-    public function displays_form_fields_for_creating_nonland_card() {
+    public function displays_form_fields_for_creating_land_card() {
         
        	$this->visit('cards/create');
        	$this->type('green blue colorless', 'sources');
