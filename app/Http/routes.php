@@ -12,8 +12,11 @@ PAGES
 ****************************************************************************************/
 
 Route::get('/', function () {
-	$titleTag = '';
-    return view('pages/home', compact('titleTag'));
+	
+	return redirect('cards');
+
+	// $titleTag = '';
+    // return view('pages/home', compact('titleTag'));
 });
 
 Route::get('scrapers', function () {
