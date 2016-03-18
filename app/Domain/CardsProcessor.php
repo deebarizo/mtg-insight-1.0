@@ -31,7 +31,7 @@ class CardsProcessor {
 	SETUP VARIABLES
 	****************************************************************************************/	
 
-	$startingSetId = 3; // Starting set id of the Standard format
+	public $startingSetId = 3; // Starting set id of the Standard format
 
 
 	/****************************************************************************************

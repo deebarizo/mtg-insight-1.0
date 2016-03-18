@@ -62,6 +62,10 @@
 					<label for="sources">Sources - Only for Lands (Syntax: green blue colorless)</label>
 					<input class="form-control" style="width: 50%" name="sources" type="text" id="sources">
 				</div>
+
+				<div class="form-group">		
+					<input class="form-control btn btn-primary" style="width: 15%" type="submit" value="Submit">
+				</div>
 		
 			{!! Form::close() !!}
 		

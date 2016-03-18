@@ -6,7 +6,7 @@
 		
 		<div class="col-lg-12">
 
-			<h3>{{ $format }}</h3>
+			<h3>Cards</h3>
 
 			<form class="form-inline" style="margin: 0 0 10px 0">
 
