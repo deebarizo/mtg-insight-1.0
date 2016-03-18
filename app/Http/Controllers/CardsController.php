@@ -12,8 +12,6 @@ use App\Domain\SetsProcessor;
 
 class CardsController extends Controller
 {
-    private $format = CURRENT_FORMAT;
-
     /**
      * Display a listing of the resource.
      *
@@ -22,13 +20,12 @@ class CardsController extends Controller
     public function index()
     {
         $titleTag = 'Cards | ';
-        $format = $this->format;
 
         $cardsProcessor = new CardsProcessor;
 
         list($cardsData, $actualCmcs) = $cardsProcessor->getCardsData();
 
-        return view('cards/index', compact('titleTag', 'format', 'cardsData', 'actualCmcs'));
+        return view('cards/index', compact('titleTag', 'cardsData', 'actualCmcs'));
     }
 
     /**

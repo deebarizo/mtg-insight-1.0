@@ -21,8 +21,6 @@ use App\Domain\SetsProcessor;
 
 class SavedDecklistsController extends Controller
 {
-    private $format = CURRENT_FORMAT;
-
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +53,6 @@ class SavedDecklistsController extends Controller
         list($sets, $cardsData, $actualCmcs, $lands) = $this->generateCards();
 
         $titleTag = 'Create - Saved Decklists | ';
-        $format = $this->format;
 
         $savedDecklistVersion = [
 
@@ -78,7 +75,7 @@ class SavedDecklistsController extends Controller
         # ddAll($savedDecklistVersion);
         # ddAll($sets);
 
-        return view('saved_decklists/create', compact('titleTag', 'format', 'cardsData', 'actualCmcs', 'lands', 'sets', 'savedDecklistVersion', 'button'));
+        return view('saved_decklists/create', compact('titleTag', 'cardsData', 'actualCmcs', 'lands', 'sets', 'savedDecklistVersion', 'button'));
     }
 
     /**
@@ -114,7 +111,6 @@ class SavedDecklistsController extends Controller
         list($sets, $cardsData, $actualCmcs, $lands) = $this->generateCards();
 
         $titleTag = 'Edit - Saved Decklists | ';
-        $format = $this->format;
 
         /****************************************************************************************
         ****************************************************************************************/   
@@ -179,7 +175,7 @@ class SavedDecklistsController extends Controller
 
         # ddAll($savedDecklistVersion);
 
-        return view('saved_decklists/edit', compact('titleTag', 'format', 'cardsData', 'actualCmcs', 'lands', 'sets', 'savedDecklistVersion', 'button'));
+        return view('saved_decklists/edit', compact('titleTag', 'cardsData', 'actualCmcs', 'lands', 'sets', 'savedDecklistVersion', 'button'));
     }
 
     /**

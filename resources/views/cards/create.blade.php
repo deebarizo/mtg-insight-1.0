@@ -17,8 +17,8 @@
 				<div class="form-group">
 					<label for="set-code">Set Code</label>
 					<select class="form-control" name="set-code" id="set-code" style="width: 25%">
-						@foreach ($sets as $set)
-						  	<option value="{{ $set->code }}" <?php if (LATEST_SET_CODE === $set->code) { echo 'selected="selected"'; } ?> >{{ $set->code }}</option>
+						@foreach ($sets as $key => $set)
+						  	<option value="{{ $set->code }}" <?php if ($key === 0) { echo 'selected="selected"'; } ?> >{{ $set->code }}</option>
 						@endforeach
 					</select>
 				</div>
@@ -57,6 +57,11 @@
 					<label for="note">Note</label>
 					<textarea class="form-control" name="note" cols="50" rows="10" id="note"></textarea>
 				</div>		
+
+				<div class="form-group">
+					<label for="sources">Sources - Only for Lands (Syntax: green blue colorless)</label>
+					<input class="form-control" style="width: 50%" name="sources" type="text" id="sources">
+				</div>
 		
 			{!! Form::close() !!}
 		

@@ -10,13 +10,20 @@ class CardsControllerTest extends TestCase {
     public function displays_form_fields_for_creating_card() {
         
        	$this->visit('cards/create');
-       	$this->select(LATEST_SET_CODE, 'set-code');
+       	$this->select('BOB', 'set-code');
        	$this->type('Reality Smasher', 'name');
        	$this->type('{4}{C}', 'mana-cost');
        	$this->type(5, 'cmc');
        	$this->type('same', 'actual-cmc');
        	$this->type(4, 'rating');
        	$this->type('', 'note');
+    }
+
+	/** @test */
+    public function displays_form_fields_for_creating_nonland_card() {
+        
+       	$this->visit('cards/create');
+       	$this->type('green blue colorless', 'sources');
     }
 
 }

@@ -46,7 +46,7 @@
 				</div>
 
 				<div class="form-group">
-					{!! Form::label('sources_text', 'Sources (Only for Lands)') !!}
+					{!! Form::label('sources_text', 'Sources - Only for Lands (Syntax: green blue colorless)') !!}
 					{!! Form::text('sources_text', $cardData->sourcesText, ['class' => 'form-control', 'style' => 'width: 50%']) !!}
 				</div>
 		

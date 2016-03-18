@@ -28,6 +28,13 @@ use Session;
 class CardsProcessor {
 
 	/****************************************************************************************
+	SETUP VARIABLES
+	****************************************************************************************/	
+
+	$startingSetId = 3; // Starting set id of the Standard format
+
+
+	/****************************************************************************************
 	GET CARDS
 	****************************************************************************************/
 
@@ -48,7 +55,7 @@ class CardsProcessor {
 						->leftJoin('cards_ratings', 'cards_ratings.card_id', '=', 'cards.id')
 						->orderBy('cards.name')
 						->groupBy('cards.name')
-						->where('sets_cards.set_id', '>=', STARTING_SET_ID)
+						->where('sets_cards.set_id', '>=', $this->startingSetId)
 						->get();
 
 		$actualCmcs = [];
@@ -379,7 +386,7 @@ class CardsProcessor {
 							->join('sets', 'sets.id', '=', 'sets_cards.set_id')
 							->join('cards_sources', 'cards_sources.card_id', '=', 'cards.id')
 							->where('cards.middle_text', 'LIKE', '%Land%')
-							->where('sets.id', '>=', STARTING_SET_ID)
+							->where('sets.id', '>=', $this->startingSetId)
 							->get();
 
 		$landNames = DB::table('cards')
@@ -388,7 +395,7 @@ class CardsProcessor {
 							->join('sets', 'sets.id', '=', 'sets_cards.set_id')
 							->join('cards_sources', 'cards_sources.card_id', '=', 'cards.id')
 							->where('cards.middle_text', 'LIKE', '%Land%')
-							->where('sets.id', '>=', STARTING_SET_ID)
+							->where('sets.id', '>=', $this->startingSetId)
 							->lists('cards.name');
 
 		$landNames = array_unique($landNames);
