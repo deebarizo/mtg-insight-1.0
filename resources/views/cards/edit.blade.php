@@ -6,7 +6,7 @@
 		
 		<div class="col-lg-12">
 		
-			<h3>{{ $cardData->name }} | <a href="/cards/{{ $cardData->id }}">Show</a></h3>
+			<h3>Edit - {{ $cardData->name }} | <a href="/cards/{{ $cardData->id }}">Show</a></h3>
 
 			@if(Session::has('message'))
 				<div class="alert alert-{{ Session::get('alert') }} fade in" role="alert" style="width: 50%">
@@ -15,6 +15,10 @@
 			    </div>
 			@endif
 		
+		</div>
+
+		<div class="col-lg-12">
+			<p><a href="/cards/create">Create New Card</a></p>
 		</div>
 
 		<div class="col-lg-3">

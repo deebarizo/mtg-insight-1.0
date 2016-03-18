@@ -8,11 +8,23 @@
 		
 			<h3>Create New Card</h3>
 
+			@if (count($errors) > 0)
+			    <div class="alert alert-danger">
+			    	<p>Please try again.</p>
+
+			        <ul>
+			            @foreach ($errors->all() as $error)
+			                <li>{{ $error }}</li>
+			            @endforeach
+			        </ul>
+			    </div>
+			@endif
+
 		</div>
 
 		<div class="col-lg-9">
 
-			{!! Form::open() !!}
+			{!! Form::open(array('action' => ['CardsController@store'],'method' => 'POST')) !!}
 
 				<div class="form-group">
 					<label for="set-code">Set Code</label>
@@ -47,11 +59,6 @@
 					<label for="rating">Rating</label>
 					<input class="form-control" style="width: 25%" name="rating" type="number" id="rating">
 				</div>		
-
-				<div class="form-group">
-					<label for="rating">Rating</label>
-					<input class="form-control" style="width: 25%" name="rating" type="number" id="rating">
-				</div>	
 
 				<div class="form-group">
 					<label for="note">Note</label>

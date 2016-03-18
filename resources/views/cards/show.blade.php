@@ -17,6 +17,10 @@
 		
 		</div>
 
+		<div class="col-lg-12">
+			<p><a href="/cards/create">Create New Card</a></p>
+		</div>
+
 		<div class="col-lg-3">
 			<img src="/files/card_images/{{ $cardData->multiverseid }}.jpg">
 		</div>

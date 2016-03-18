@@ -13,6 +13,7 @@ Route::get('/', function () {
 });
 
 Route::get('scrapers', function () {
+	
 	$titleTag = 'Scrapers | ';
     return view('pages/scrapers', compact('titleTag'));
 });

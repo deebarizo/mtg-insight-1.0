@@ -29,7 +29,7 @@
 		</div>
 
 		<div class="col-lg-12">
-			<p><a href="cards/create">Create New Card</a></p>
+			<p><a href="/cards/create">Create New Card</a></p>
 		</div>
 		
 		<div class="col-lg-12">

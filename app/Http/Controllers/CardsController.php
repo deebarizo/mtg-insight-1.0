@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Request;
+use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
+
+use Validator;
 
 use App\Domain\CardsProcessor;
 use App\Domain\SetsProcessor;
@@ -52,7 +57,35 @@ class CardsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+
+            'set-code' => 'required',
+            'name' => 'required',
+            'cmc' => 'required',
+            'actual-cmc' => 'required'
+        ];
+
+        $messages = [
+
+            'set-code.required' => 'The Set Code field is required.',
+            'name.required' => 'The Name field is required.',
+            'cmc.required' => 'The CMC field is required.',
+            'actual-cmc.required' => 'The Actual CMC field is required.',
+        ];        
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+
+            # ddAll($validator->messages());
+
+            return redirect()->route('cards.create')
+                             ->withErrors($validator)
+                             ->withInput();
+        }
+      
+
+        return redirect()->route('cards.create');
     }
 
     /**

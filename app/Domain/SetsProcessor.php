@@ -2,10 +2,9 @@
 
 namespace App\Domain;
 
-use Request;
-
 use App\Models\Set;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 

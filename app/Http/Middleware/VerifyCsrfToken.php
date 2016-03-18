@@ -27,6 +27,12 @@ class VerifyCsrfToken extends BaseVerifier
 	    // the header. This way, we can use CSRF protection in ajax requests also.
 	    $token = $request->ajax() ? $request->header('X-CSRF-Token') : $request->input('_token');
 
+	    // https://disqus.com/home/discussion/laracast/testing_crash_course/#comment-1934413891
+        if (env('APP_ENV') === 'testing') {
+            
+            return true;
+        }
+
 	    return $request->session()->token() == $token;
 	}
 }
