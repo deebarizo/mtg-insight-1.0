@@ -11,7 +11,7 @@
 		<select class="form-control" id="saved-decklist-latest-set-id">
 
 			@foreach ($sets as $set)
-			  	<option value="{{ $set['id'] }}" <?php if ($savedDecklistVersion['meta']->latest_set_id == $set['id']) { echo 'selected="selected"'; } ?> >{{ $set['code'] }}</option>
+			  	<option value="{{ $set->id }}" <?php if ($savedDecklistVersion['meta']->latest_set_id === $set->id) { echo 'selected="selected"'; } ?> >{{ $set->code }}</option>
 			@endforeach
 		</select>
 	</div>

@@ -225,7 +225,7 @@ class SavedDecklistsController extends Controller
 
         $setsProcessor = new SetsProcessor;
 
-        $sets = $setsProcessor->getSets();
+        $sets = $setsProcessor->getSets(2);
 
         $cardsProcessor = new CardsProcessor;
 

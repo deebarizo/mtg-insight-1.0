@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Domain\CardsProcessor;
+use App\Domain\SetsProcessor;
 
 class CardsController extends Controller
 {
@@ -20,12 +21,12 @@ class CardsController extends Controller
      */
     public function index()
     {
+        $titleTag = 'Cards | ';
+        $format = $this->format;
+
         $cardsProcessor = new CardsProcessor;
 
         list($cardsData, $actualCmcs) = $cardsProcessor->getCardsData();
-
-        $titleTag = 'Cards | ';
-        $format = $this->format;
 
         return view('cards/index', compact('titleTag', 'format', 'cardsData', 'actualCmcs'));
     }
@@ -37,7 +38,13 @@ class CardsController extends Controller
      */
     public function create()
     {
-        //
+        $titleTag = 'Cards | Create';
+
+        $setsProcessor = new SetsProcessor;
+
+        $sets = $setsProcessor->getSets(6);
+
+        return view('cards/create', compact('titleTag', 'sets'));
     }
 
     /**
@@ -106,9 +113,6 @@ class CardsController extends Controller
 
             return redirect()->action('CardsController@edit', [$id])->with('message', $message);
         }
-
-
-        
     }
 
     /**

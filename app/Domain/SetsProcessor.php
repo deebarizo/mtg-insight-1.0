@@ -17,9 +17,9 @@ class SetsProcessor {
 	GET SETS
 	****************************************************************************************/
 
-	public function getSets() {
+	public function getSets($howMany) {
 
-		$sets = Set::take(2)->orderBy('id', 'desc')->get()->toArray();
+		$sets = Set::take($howMany)->orderBy('id', 'desc')->get();
 
 		return $sets;
 	}
