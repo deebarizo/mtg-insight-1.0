@@ -38,7 +38,7 @@ class CardsController extends Controller
      */
     public function create()
     {
-        $titleTag = 'Cards | Create';
+        $titleTag = 'Create Card | ';
 
         $setsProcessor = new SetsProcessor;
 
@@ -70,7 +70,7 @@ class CardsController extends Controller
 
         $cardData = $cardsProcessor->getCardData($id);
 
-        $titleTag = $cardData->name.' - Cards | ';
+        $titleTag = $cardData->name.' | ';
 
         return view('cards/show', compact('titleTag', 'cardData', 'message'));
     }
@@ -87,7 +87,7 @@ class CardsController extends Controller
 
         $cardData = $cardsProcessor->getCardData($id);
 
-        $titleTag = $cardData->name.' - Edit Cards | ';
+        $titleTag = 'Edit - '.$cardData->name.' | ';
 
         return view('cards/edit', compact('titleTag', 'cardData', 'message'));
     }

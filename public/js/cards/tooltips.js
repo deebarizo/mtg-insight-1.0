@@ -20,7 +20,7 @@ $(document).ready(function() {
 				position: {
 
 					my: 'left center',
-					at: 'top right',
+					at: 'center right',
 					target: $(this)
 				}
 	        });

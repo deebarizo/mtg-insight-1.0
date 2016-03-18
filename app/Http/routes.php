@@ -6,7 +6,7 @@ GLOBAL VARIABLES
 
 define('CURRENT_FORMAT','Shadows over Innistrad Standard');
 define('STARTING_SET_ID', 3);
-define('LATEST_SET_ID', 7);
+define('LATEST_SET_CODE', 'SOI');
 
 /****************************************************************************************
 PAGES
