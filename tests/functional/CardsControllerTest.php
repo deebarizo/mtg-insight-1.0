@@ -8,16 +8,6 @@ use Illuminate\Http\Request;
 
 class CardsControllerTest extends TestCase {
 
-    public function __construct() {
-
-        $this->mock = Mockery::mock('Eloquent', 'App\Models\Card');
-     }
-     
-    public function tearDown() {
-
-        Mockery::close();
-    }
-
 	/** @test */
     public function submits_form_fields_for_creating_card() {
         
@@ -38,47 +28,63 @@ class CardsControllerTest extends TestCase {
     /** @test */
     public function validates_required_inputs() {
 
-        Input::replace($input = [
+        $this->call('POST', 'cards', [
 
             'set-code' => '',
             'name' => '',
             'cmc' => '',
-            'actual-cmc' => '',
+            'actual-cmc' => '', 
             'image' => ''
         ]);
-
-        // http://code.tutsplus.com/tutorials/testing-laravel-controllers--net-31456
-        $this->app->instance('App\Models\Card', $this->mock); 
-
-        $this->call('POST', 'cards');
 
         $this->assertRedirectedToRoute('cards.create');
 
         $this->assertSessionHasErrors(['set-code', 'name', 'cmc', 'actual-cmc', 'image']);
+
+        $this->followRedirects();
+
+        $this->see('Please try again.');
     }
 
     /** @test */
-    public function stores_card() {  
+    public function validates_card_already_exists() {
 
-        Input::replace($input = [
+        $this->call('POST', 'cards', [
 
-            'set-code' => 'SOI',
+            'set-code' => 'OGW',
+            'name' => 'Reality Smasher',
+            'cmc' => '5',
+            'actual-cmc' => 'same', 
+            'image' => 'Reality Smasher.jpg'
+        ]);
+
+        $this->assertRedirectedToRoute('cards.create');
+
+        $this->assertSessionHasErrors(['name']);
+
+        $this->followRedirects();
+
+        $this->see('This card already exists.');
+    }    
+
+
+    /** @test */
+    public function stores_card() {
+
+        $this->call('POST', 'cards', [
+
+            'set-code' => 'TEST',
             'name' => 'Test Name',
-            'cmc' => '1',
-            'actual-cmc' => 'variable',
+            'cmc' => 1,
+            'actual-cmc' => 'same', 
             'image' => 'test.jpg'
         ]);
-    
-        $this->mock
-             ->shouldReceive('create')
-             ->once();
-        
-        // http://code.tutsplus.com/tutorials/testing-laravel-controllers--net-31456
-        $this->app->instance('App\Models\Card', $this->mock); 
 
-        $this->call('POST', 'cards');
+        $this->assertRedirectedToRoute('cards.create');
 
-        $this->assertRedirectedToRoute('cards.index');
+        $this->followRedirects();
+
+        $this->see('Success!');
     }  
 
 }

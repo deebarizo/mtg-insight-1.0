@@ -70,6 +70,7 @@ class CardsController extends Controller
 
             'set-code.required' => 'The Set Code field is required.',
             'name.required' => 'The Name field is required.',
+            'name.unique' => 'This card already exists.',
             'cmc.required' => 'The CMC field is required.',
             'actual-cmc.required' => 'The Actual CMC field is required.',
             'image.required' => 'The Image field is required.'
@@ -86,13 +87,11 @@ class CardsController extends Controller
                              ->withInput();
         }
 
-        $cardsProcessor = new CardsProcessor;
+        # $cardsProcessor = new CardsProcessor;
 
         # $cardsProcessor->addCard($request);
 
-        ddAll('bob');
-
-        return redirect()->route('cards.index')->with('message', 'Success!');
+        return redirect()->route('cards.create')->with('message', 'Success!');
     }
 
     /**
