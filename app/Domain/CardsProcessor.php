@@ -47,11 +47,52 @@ class CardsProcessor {
 		$card->cmc = $request->input('cmc');
 		$card->layout_id = 1;
 
-		$setId = Set::where('code', $request->input('set-code'))->pluck('id');
+		$card->save();
 
-		ddAll($card);
+		if ($request->input('actual-cmc') !== 'same') {
 
-        $imagesDirectory = 'files/card_images/'; // '/files/card_images/' doesn't work
+			$cardActualCmc = new CardActualCmc;
+
+			$cardActualCmc->card_id = $card->id;
+			$cardActualCmc->actual_cmc = $request->input('actual-cmc');
+
+			$cardActualCmc->save();
+		}
+
+		if ($request->input('rating') !== '') {
+
+			$cardRating = new CardRating;
+
+			$cardRating->card_id = $card->id;
+			$cardRating->rating = $request->input('rating');
+			$cardRating->note = $request->input('note');
+
+			$cardRating->save();
+		}
+
+		$sourcesPhrase = trim($request->input('sources'));
+
+		$sources = explode(' ', $sourcesPhrase);
+
+		foreach ($sources as $source) {
+			
+			$cardSource = new CardSource;
+
+			$cardSource->card_id = $card->id;
+			$cardSource->color = $source;
+			$cardSource->sources = 1;
+
+			$cardSource->save();
+		}
+
+		$setCard = new SetCard;
+
+		$setCard->set_id = Set::where('code', $request->input('set-code'))->pluck('id');
+		$setCard->card_id = $card->id;
+
+		$setCard->save();
+
+		$imagesDirectory = 'files/card_images/'; // '/files/card_images/' doesn't work
         $fileName = $request->input('name').'.jpg';
  
         Input::file('image')->move($imagesDirectory, $fileName);    

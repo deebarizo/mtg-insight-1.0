@@ -87,7 +87,7 @@
 				</div>	
 
 				<div class="form-group note">
-					<label for="note">Note</label>
+					<label for="note">Note (Cards with Notes Must Have a Rating)</label>
 					<textarea class="form-control" name="note" cols="50" rows="10" id="note"></textarea>
 				</div>	
 
