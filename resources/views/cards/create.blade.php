@@ -9,7 +9,9 @@
 			<h3>Create New Card</h3>
 
 			@if (count($errors) > 0)
-			    <div class="alert alert-danger">
+			    <div class="alert alert-danger fade in" role="alert">
+					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+			    	
 			    	<p>Please try again.</p>
 
 			        <ul>

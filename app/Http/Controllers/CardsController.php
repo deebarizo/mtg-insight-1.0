@@ -60,7 +60,7 @@ class CardsController extends Controller
         $rules = [
 
             'set-code' => 'required',
-            'name' => 'required',
+            'name' => 'required|unique:cards',
             'cmc' => 'required',
             'actual-cmc' => 'required',
             'image' => 'required'
@@ -85,7 +85,11 @@ class CardsController extends Controller
                              ->withErrors($validator)
                              ->withInput();
         }
-      
+
+        $imagesDirectory = 'files/card_images/'; // '/files/card_images/' doesn't work
+        $fileName = $request->input('name').'.jpg';
+ 
+        Input::file('image')->move($imagesDirectory, $fileName);      
 
         return redirect()->route('cards.create');
     }
