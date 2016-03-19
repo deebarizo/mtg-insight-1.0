@@ -137,6 +137,11 @@ class CardsProcessor {
 
 				array_push($actualCmcs, $card->actual_cmc);
 			}
+
+			if ($card->multiverseid == '') {
+
+				$card->multiverseid = $card->name;
+			}
 		}
 
 		$actualCmcs = array_unique($actualCmcs);
@@ -198,6 +203,11 @@ class CardsProcessor {
 		} else {
 
 			$cardData->sourcesText = '';
+		}
+
+		if ($cardData->multiverseid == '') {
+
+			$cardData->multiverseid = $cardData->name;
 		}
 
 		# ddAll($cardData);
