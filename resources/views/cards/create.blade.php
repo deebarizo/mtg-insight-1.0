@@ -22,6 +22,13 @@
 			    </div>
 			@endif
 
+			@if(Session::has('message'))
+				<div class="alert alert-info fade in success-message" role="alert">
+					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+					{{ Session::get('message') }}
+			    </div>
+			@endif
+
 		</div>
 
 		<div class="col-lg-12">

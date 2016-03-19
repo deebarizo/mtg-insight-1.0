@@ -35,12 +35,10 @@ class CardsControllerTest extends TestCase {
        	$this->press('Submit');
     }
 
-
-
     /** @test */
     public function validates_required_inputs() {
 
-        Input::replace([
+        Input::replace($input = [
 
             'set-code' => '',
             'name' => '',
@@ -48,7 +46,7 @@ class CardsControllerTest extends TestCase {
             'actual-cmc' => '',
             'image' => ''
         ]);
-        
+
         // http://code.tutsplus.com/tutorials/testing-laravel-controllers--net-31456
         $this->app->instance('App\Models\Card', $this->mock); 
 
@@ -58,5 +56,29 @@ class CardsControllerTest extends TestCase {
 
         $this->assertSessionHasErrors(['set-code', 'name', 'cmc', 'actual-cmc', 'image']);
     }
+
+    /** @test */
+    public function stores_card() {  
+
+        Input::replace($input = [
+
+            'set-code' => 'SOI',
+            'name' => 'Test Name',
+            'cmc' => '1',
+            'actual-cmc' => 'variable',
+            'image' => 'test.jpg'
+        ]);
+    
+        $this->mock
+             ->shouldReceive('create')
+             ->once();
+        
+        // http://code.tutsplus.com/tutorials/testing-laravel-controllers--net-31456
+        $this->app->instance('App\Models\Card', $this->mock); 
+
+        $this->call('POST', 'cards');
+
+        $this->assertRedirectedToRoute('cards.index');
+    }  
 
 }

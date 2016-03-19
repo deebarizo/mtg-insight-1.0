@@ -86,12 +86,13 @@ class CardsController extends Controller
                              ->withInput();
         }
 
-        $imagesDirectory = 'files/card_images/'; // '/files/card_images/' doesn't work
-        $fileName = $request->input('name').'.jpg';
- 
-        Input::file('image')->move($imagesDirectory, $fileName);      
+        $cardsProcessor = new CardsProcessor;
 
-        return redirect()->route('cards.create');
+        # $cardsProcessor->addCard($request);
+
+        ddAll('bob');
+
+        return redirect()->route('cards.index')->with('message', 'Success!');
     }
 
     /**

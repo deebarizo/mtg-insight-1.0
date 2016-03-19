@@ -35,6 +35,30 @@ class CardsProcessor {
 
 
 	/****************************************************************************************
+	ADD CARD
+	****************************************************************************************/
+
+	public function addCard($request) {
+
+		$card = new Card;
+
+		$card->name = $request->input('name');
+		$card->mana_cost = $request->input('mana-cost');
+		$card->cmc = $request->input('cmc');
+		$card->layout_id = 1;
+
+		$setId = Set::where('code', $request->input('set-code'))->pluck('id');
+
+		ddAll($card);
+
+        $imagesDirectory = 'files/card_images/'; // '/files/card_images/' doesn't work
+        $fileName = $request->input('name').'.jpg';
+ 
+        Input::file('image')->move($imagesDirectory, $fileName);    
+	}
+
+
+	/****************************************************************************************
 	GET CARDS
 	****************************************************************************************/
 
