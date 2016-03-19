@@ -62,7 +62,8 @@ class CardsController extends Controller
             'set-code' => 'required',
             'name' => 'required',
             'cmc' => 'required',
-            'actual-cmc' => 'required'
+            'actual-cmc' => 'required',
+            'image' => 'required'
         ];
 
         $messages = [
@@ -71,6 +72,7 @@ class CardsController extends Controller
             'name.required' => 'The Name field is required.',
             'cmc.required' => 'The CMC field is required.',
             'actual-cmc.required' => 'The Actual CMC field is required.',
+            'image.required' => 'The Image field is required.'
         ];        
 
         $validator = Validator::make($request->all(), $rules, $messages);

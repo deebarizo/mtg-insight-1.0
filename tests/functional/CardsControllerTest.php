@@ -30,10 +30,8 @@ class CardsControllerTest extends TestCase {
        	$this->type(4, 'rating');
        	$this->type('', 'note');
        	$this->type('', 'sources');
-        $this->type('Reality Smasher', 'image-file')
-             ->attach('files/card_images/', 'image')
-             ->press('Upload')
-             ->see('Upload Successful!');
+        $this->type('Reality Smasher', 'image')
+             ->attach('files/card_images/', 'image');
        	$this->press('Submit');
     }
 
@@ -47,7 +45,8 @@ class CardsControllerTest extends TestCase {
             'set-code' => '',
             'name' => '',
             'cmc' => '',
-            'actual-cmc' => ''
+            'actual-cmc' => '',
+            'image' => ''
         ]);
         
         // http://code.tutsplus.com/tutorials/testing-laravel-controllers--net-31456
@@ -57,7 +56,7 @@ class CardsControllerTest extends TestCase {
 
         $this->assertRedirectedToRoute('cards.create');
 
-        $this->assertSessionHasErrors(['set-code', 'name', 'cmc', 'actual-cmc']);
+        $this->assertSessionHasErrors(['set-code', 'name', 'cmc', 'actual-cmc', 'image']);
     }
 
 }

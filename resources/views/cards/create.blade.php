@@ -22,13 +22,30 @@
 
 		</div>
 
-		<div class="col-lg-9">
+		<div class="col-lg-12">
 
-			{!! Form::open(array('action' => ['CardsController@store'],'method' => 'POST')) !!}
+			<style>
+				div.form-group {
+					width: 20%;
+					float: left;
+					margin-right: 30px;
+				}
+
+				div.form-group.note {
+					width: 486px;
+				}
+
+				div.form-group.submit {
+					width: 10%;
+					margin-top: 30px;
+				}
+			</style>
+
+			{!! Form::open(array('action' => ['CardsController@store'],'method' => 'POST', 'files' => true)) !!}
 
 				<div class="form-group">
 					<label for="set-code">Set Code</label>
-					<select class="form-control" name="set-code" id="set-code" style="width: 25%">
+					<select class="form-control" name="set-code" id="set-code">
 						@foreach ($sets as $key => $set)
 						  	<option value="{{ $set->code }}" <?php if ($key === 0) { echo 'selected="selected"'; } ?> >{{ $set->code }}</option>
 						@endforeach
@@ -37,41 +54,46 @@
 
 				<div class="form-group">
 					<label for="name">Name</label>
-					<input class="form-control" style="width: 25%" name="name" type="text" id="name">
+					<input class="form-control" name="name" type="text" id="name">
 				</div>
 
 				<div class="form-group">
 					<label for="mana-cost">Mana Cost</label>
-					<input class="form-control" style="width: 25%" name="mana-cost" type="text" id="mana-cost">
+					<input class="form-control" name="mana-cost" type="text" id="mana-cost">
 				</div>
 
 				<div class="form-group">
 					<label for="mana-cost">CMC</label>
-					<input class="form-control" style="width: 25%" name="cmc" type="number" id="cmc">
+					<input class="form-control" name="cmc" type="number" id="cmc">
 				</div>
 
 				<div class="form-group">
 					<label for="actual-cmc">Actual CMC</label>
-					<input class="form-control" style="width: 25%" name="actual-cmc" type="text" value='same' id="actual-cmc">
+					<input class="form-control" name="actual-cmc" type="text" value='same' id="actual-cmc">
 				</div>
 
 				<div class="form-group">
 					<label for="rating">Rating</label>
-					<input class="form-control" style="width: 25%" name="rating" type="number" id="rating">
-				</div>		
+					<input class="form-control" name="rating" type="number" id="rating">
+				</div>	
 
-				<div class="form-group">
+				<div class="form-group note">
 					<label for="note">Note</label>
 					<textarea class="form-control" name="note" cols="50" rows="10" id="note"></textarea>
-				</div>		
+				</div>	
 
-				<div class="form-group">
+				<div class="form-group" style="clear: both">
 					<label for="sources">Sources - Only for Lands (Syntax: green blue colorless)</label>
-					<input class="form-control" style="width: 50%" name="sources" type="text" id="sources">
+					<input class="form-control" name="sources" type="text" id="sources">
 				</div>
 
-				<div class="form-group">		
-					<input class="form-control btn btn-primary" style="width: 15%" type="submit" value="Submit">
+				<div class="form-group">
+					<label for="image">Image (Size: 223 x 311)</label>
+					<input name="image" type="file" id="image">
+				</div>
+
+				<div class="form-group submit" style="clear: both">		
+					<input class="form-control btn btn-primary" type="submit" value="Submit">
 				</div>
 		
 			{!! Form::close() !!}
