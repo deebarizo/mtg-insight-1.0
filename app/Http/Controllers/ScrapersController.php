@@ -31,4 +31,16 @@ class ScrapersController extends Controller {
 		return redirect()->action('ScrapersController@cardsJson')->with('message', $message);
 	}
 
+	public function sites() {
+
+		$titleTag = 'Sites - Scrapers | ';
+
+		return view('scrapers/sites', compact('titleTag'));
+	}
+
+	public function scrapeSites() {
+
+
+	}
+
 }

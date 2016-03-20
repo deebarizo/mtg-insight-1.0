@@ -7,6 +7,7 @@
 
 			<ul>
 				<li><a href="/scrapers/cards_json">Cards JSON</a></li>
+				<li><a href="/scrapers/sites">Sites</a></li>
 			</ul>
 		</div>
 	</div>

@@ -41,3 +41,5 @@ SCRAPERS
 
 Route::get('scrapers/cards_json', 'ScrapersController@cardsJson');
 Route::post('scrapers/store_cards_json', 'ScrapersController@storeCardsJson');
+Route::get('scrapers/sites', 'ScrapersController@sites');
+Route::post('scrapers/sites', 'ScrapersController@scrapeSites');
