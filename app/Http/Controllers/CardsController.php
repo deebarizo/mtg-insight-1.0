@@ -87,12 +87,9 @@ class CardsController extends Controller
                              ->withInput();
         }
 
-        if ($request->input('name') !== 'Test Name') { // for testing
-            
-            $cardsProcessor = new CardsProcessor;
+        $cardsProcessor = new CardsProcessor;
 
-            $cardsProcessor->addCard($request);
-        }
+        $cardsProcessor->addCard($request);
 
         return redirect()->route('cards.create')->with('message', 'Success!');
     }

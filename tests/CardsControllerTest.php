@@ -6,13 +6,24 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 use Illuminate\Http\Request;
 
+use App\Models\Set;
+use App\Models\Card;
+use App\Models\Layout;
+
 class CardsControllerTest extends TestCase {
+
+    use DatabaseTransactions;
 
 	/** @test */
     public function submits_form_fields_for_creating_card() {
+
+        factory(Set::class)->create([
         
+            'code' => 'SOI'
+        ]);
+
        	$this->visit('cards/create');
-       	$this->select('SOI', 'set-code');
+        $this->select('SOI', 'set-code');
        	$this->type('Reality Smasher', 'name');
        	$this->type('{4}{C}', 'mana-cost');
        	$this->type(5, 'cmc');
@@ -49,6 +60,17 @@ class CardsControllerTest extends TestCase {
     /** @test */
     public function validates_card_already_exists() {
 
+        factory(Layout::class)->create([
+        
+            'id' => 1,
+            'layout' => 'normal'
+        ]);
+
+        factory(Card::class)->create([
+        
+            'name' => 'Reality Smasher'
+        ]);
+
         $this->call('POST', 'cards', [
 
             'set-code' => 'OGW',
@@ -71,9 +93,20 @@ class CardsControllerTest extends TestCase {
     /** @test */
     public function stores_card() {
 
+        factory(Set::class)->create([
+        
+            'code' => 'SOI'
+        ]);
+
+        factory(Layout::class)->create([
+        
+            'id' => 1,
+            'layout' => 'normal'
+        ]);
+
         $this->call('POST', 'cards', [
 
-            'set-code' => 'TEST',
+            'set-code' => 'SOI',
             'name' => 'Test Name',
             'cmc' => 1,
             'actual-cmc' => 'same', 
