@@ -8,6 +8,8 @@ var updateDecklist = function(role, change) {
 
 	decklist['totals'] = getDecklistTotals();
 
+	console.log(decklist);
+
 	/****************************************************************************************
 	UPDATE DECKLIST VIEW
 	****************************************************************************************/

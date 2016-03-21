@@ -38,64 +38,59 @@ class CardsProcessor {
 	ADD CARD
 	****************************************************************************************/
 
-	public function addCard($request) {
+	public function addCard($input) {
 
 		$card = new Card;
 
-		$card->name = $request->input('name');
-		$card->mana_cost = $request->input('mana-cost');
-		$card->cmc = $request->input('cmc');
+		$card->name = $input['name'];
+		$card->mana_cost = $input['mana-cost'];
+		$card->cmc = $input['cmc'];
 		$card->layout_id = 1;
 
 		$card->save();
 
-		if ($request->input('actual-cmc') !== 'same') {
+		$cardRating = new CardRating;
+
+		$cardRating->card_id = $card->id;
+		$cardRating->rating = $input['rating'];
+		$cardRating->note = $input['note'];
+
+		$cardRating->save();
+
+		if ($input['actual-cmc'] !== 'same') {
 
 			$cardActualCmc = new CardActualCmc;
 
 			$cardActualCmc->card_id = $card->id;
-			$cardActualCmc->actual_cmc = $request->input('actual-cmc');
+			$cardActualCmc->actual_cmc = $input['actual-cmc'];
 
 			$cardActualCmc->save();
 		}
 
-		if ($request->input('rating') !== '') {
+		if ($input['sources'] !== '') {
 
-			$cardRating = new CardRating;
+			$sourcesPhrase = trim($input['sources']);
 
-			$cardRating->card_id = $card->id;
-			$cardRating->rating = $request->input('rating');
-			$cardRating->note = $request->input('note');
+			$sources = explode(' ', $sourcesPhrase);
 
-			$cardRating->save();
-		}
+			foreach ($sources as $source) {
+				
+				$cardSource = new CardSource;
 
-		$sourcesPhrase = trim($request->input('sources'));
+				$cardSource->card_id = $card->id;
+				$cardSource->color = $source;
+				$cardSource->sources = 1;
 
-		$sources = explode(' ', $sourcesPhrase);
-
-		foreach ($sources as $source) {
-			
-			$cardSource = new CardSource;
-
-			$cardSource->card_id = $card->id;
-			$cardSource->color = $source;
-			$cardSource->sources = 1;
-
-			$cardSource->save();
+				$cardSource->save();
+			}
 		}
 
 		$setCard = new SetCard;
 
-		$setCard->set_id = Set::where('code', $request->input('set-code'))->pluck('id');
+		$setCard->set_id = Set::where('code', $input['set-code'])->pluck('id');
 		$setCard->card_id = $card->id;
 
 		$setCard->save();
-
-		$imagesDirectory = 'files/card_images/'; // '/files/card_images/' doesn't work
-        $fileName = $request->input('name').'.jpg';
- 
-        Input::file('image')->move($imagesDirectory, $fileName);    
 	}
 
 

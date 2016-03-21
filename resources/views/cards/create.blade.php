@@ -67,7 +67,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="mana-cost">Mana Cost</label>
+					<label for="mana-cost">Mana Cost (Syntax: {4}{B})</label>
 					<input class="form-control" name="mana-cost" type="text" id="mana-cost">
 				</div>
 
@@ -82,12 +82,12 @@
 				</div>
 
 				<div class="form-group">
-					<label for="rating">Rating</label>
+					<label for="rating">Rating (Required)</label>
 					<input class="form-control" name="rating" type="number" id="rating">
 				</div>	
 
 				<div class="form-group note">
-					<label for="note">Note (Cards with Notes Must Have a Rating)</label>
+					<label for="note">Note</label>
 					<textarea class="form-control" name="note" cols="50" rows="10" id="note"></textarea>
 				</div>	
 

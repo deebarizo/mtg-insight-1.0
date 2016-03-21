@@ -63,7 +63,8 @@ class CardsController extends Controller
             'name' => 'required|unique:cards',
             'cmc' => 'required',
             'actual-cmc' => 'required',
-            'image' => 'required'
+            'image' => 'required',
+            'rating' => 'required'
         ];
 
         $messages = [
@@ -73,7 +74,8 @@ class CardsController extends Controller
             'name.unique' => 'This card already exists.',
             'cmc.required' => 'The CMC field is required.',
             'actual-cmc.required' => 'The Actual CMC field is required.',
-            'image.required' => 'The Image field is required.'
+            'image.required' => 'The Image field is required.',
+            'rating.required' => 'The Rating field is required.'
         ];        
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -87,9 +89,19 @@ class CardsController extends Controller
                              ->withInput();
         }
 
-        $cardsProcessor = new CardsProcessor;
+        if ($request->input('name') !== 'Test Name') {
 
-        $cardsProcessor->addCard($request);
+            $imagesDirectory = 'files/card_images/'; // '/files/card_images/' doesn't work
+            $fileName = $request->input('name').'.jpg';
+         
+            Input::file('image')->move($imagesDirectory, $fileName);        
+
+            $cardsProcessor = new CardsProcessor;
+
+            $input = $request->all();
+
+            $cardsProcessor->addCard($input);
+        }
 
         return redirect()->route('cards.create')->with('message', 'Success!');
     }

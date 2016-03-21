@@ -164,6 +164,11 @@ class SavedDecklistsController extends Controller
 
                     $copy->actual_cmc = $copy->cmc;
                 }
+
+                if ($copy->multiverseid == '') {
+
+                    $copy->multiverseid = $copy->name;
+                }
             }
         }
 
