@@ -48,7 +48,7 @@ $(document).ready(function() {
 				copyRow.filter('.'+role).find('td.quantity').text(card['quantity']);
 				copyRow.filter('.'+role).attr('data-card-quantity', card['quantity']);
 
-				updateDecklist(role, 'add card');
+				updateDecklist();
 
 				return false;
 			}
@@ -87,7 +87,7 @@ $(document).ready(function() {
 			$('table#'+role+' tbody').append(copyRowHtml);
 		}
 
-		updateDecklist(role, 'add card');
+		updateDecklist();
 
 		/****************************************************************************************
 		CREATE TOOLTIPS FOR DYNAMIC CONTENT
@@ -149,7 +149,7 @@ $(document).ready(function() {
 		copyRow.find('td.quantity').text(card['quantity']);
 		copyRow.attr('data-card-quantity', card['quantity']);
 
-		updateDecklist(role, 'remove card');
+		updateDecklist();
 	});
 
 

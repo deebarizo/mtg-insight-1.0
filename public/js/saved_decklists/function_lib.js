@@ -2,7 +2,7 @@
 UPDATE DECKLIST
 ****************************************************************************************/
 
-var updateDecklist = function(role, change) {
+var updateDecklist = function() {
 
 	var decklist = {};
 
@@ -14,7 +14,12 @@ var updateDecklist = function(role, change) {
 	UPDATE DECKLIST VIEW
 	****************************************************************************************/
 
-	$('span.decklist-totals.'+role).text(decklist['totals'][role]);
+	var role = ['md', 'sb'];
+
+	for (var i = 0; i < role.length; i++) {
+		
+		$('span.decklist-totals.'+role[i]).text(decklist['totals'][role[i]]);
+	}
 
 	$('td.breakdown.creature-spells').text(decklist['totals']['creatureSpells']);
 	$('td.breakdown.noncreature-spells').text(decklist['totals']['noncreatureSpells']);
