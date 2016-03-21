@@ -83,6 +83,10 @@ class CardsProcessor {
 
 				$cardSource->save();
 			}
+
+			$card->middle_text = 'Land';
+
+			$card->save();
 		}
 
 		$setCard = new SetCard;

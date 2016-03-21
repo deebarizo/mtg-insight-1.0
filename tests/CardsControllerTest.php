@@ -229,6 +229,10 @@ class CardsControllerTest extends TestCase {
         $cardSource = CardSource::where('color', 'green')->orWhere('color', 'blue')->orWhere('color', 'colorless')->get();
 
         $this->assertCount(3, $cardSource);
+
+        $cards = Card::where('name', 'Test Name')->where('middle_text', 'Land')->get();
+
+        $this->assertCount(1, $cards);
     }
 
 }
