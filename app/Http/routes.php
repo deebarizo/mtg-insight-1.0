@@ -7,9 +7,6 @@ PAGES
 Route::get('/', function () {
 	
 	return redirect('cards');
-
-	// $titleTag = '';
-    // return view('pages/home', compact('titleTag'));
 });
 
 Route::get('scrapers', function () {

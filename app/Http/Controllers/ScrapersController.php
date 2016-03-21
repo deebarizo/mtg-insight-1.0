@@ -7,6 +7,8 @@ use Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Model\Set;
+
 use App\Domain\Scraper;
 
 class ScrapersController extends Controller {
