@@ -485,7 +485,7 @@ var isCardBasicLand = function(cardName) {
 
 
 /****************************************************************************************
-INSERT SPOT FOR COPY ROW
+GET INSERT SPOT FOR COPY ROW
 ****************************************************************************************/
 
 var getInsertSpotForCopyRow = function(card, role) {

@@ -153,6 +153,7 @@ class SavedDecklistsController extends Controller
                                                         ->leftJoin('cards_ratings', 'cards_ratings.card_id', '=', 'saved_decklist_version_copies.card_id')
                                                         ->where('role', $role)
                                                         ->where('saved_decklist_versions.id', $versionId)
+                                                        ->orderBy('cmc', 'asc')
                                                         ->groupBy('sets_cards.card_id')
                                                         ->get();
 

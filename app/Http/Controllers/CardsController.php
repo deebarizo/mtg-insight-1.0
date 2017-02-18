@@ -89,7 +89,7 @@ class CardsController extends Controller
                              ->withInput();
         }
 
-        if ($request->input('name') !== 'Test Name') {
+        if ($request->input('csv') !== 'Test Name') {
 
             $imagesDirectory = 'files/card_images/'; // '/files/card_images/' doesn't work
             $fileName = $request->input('name').'.jpg';

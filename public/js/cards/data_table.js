@@ -6,5 +6,5 @@ var cardsTable = $('#cards').DataTable({
 	
 	"scrollY": "600px",
 	"paging": false,
-	"order": [[0, "asc"]]
+	"order": [[2, "desc"]]
 });
